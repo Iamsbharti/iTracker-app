@@ -7,12 +7,18 @@
     <div class="home__box__intro">
       <p>
         Plan, track, and manage your agile and software development projects in
-        iTracker. Collaborate and build
+        <span>i</span>Tracker. Collaborate and build
       </p>
     </div>
     <div class="home__box__navigation">
-      <button [routerLink]="['/login']" class="home__login__btn">Login</button>
-      <button [routerLink]="['/signup']" class="home__signup__btn">
+      <button mat-raised-button [routerLink]="['/login']" class="button__login">
+        Login
+      </button>
+      <button
+        mat-stroked-button
+        [routerLink]="['/signup']"
+        class="button__signup"
+      >
         SignUp
       </button>
     </div>
