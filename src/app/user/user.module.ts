@@ -9,7 +9,13 @@ import { UserService } from './user.service';
 import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [LoginComponent, SignupComponent],
-  imports: [CommonModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule,
+  ],
   providers: [UserService],
 })
 export class UserModule {}

@@ -1,9 +1,33 @@
 <div class="login">
   <img src="assets/virus.png" alt="" />
   <h2>Login to iTracker</h2>
-  <form class="login__inputs">
-    <input type="text" name="username" placeholder="username or email" />
-    <input type="password" name="password" placeholder="your secret" />
-    <button mat-raised-button class="button__login" disabled>Login</button>
+  <form class="login__inputs" #loginForm="ngForm" (ngSubmit)="loginUser()">
+    <input
+      type="text"
+      name="username"
+      placeholder="username or email"
+      required
+      [(ngModel)]="loginId"
+      #_loginId="ngModel"
+    />
+    <input
+      type="password"
+      name="password"
+      placeholder="your secret"
+      required
+      [(ngModel)]="password"
+      #_pwd="ngModel"
+    />
+    <button
+      mat-raised-button
+      class="button__login"
+      [disabled]="!loginForm.form.valid"
+    >
+      Login
+    </button>
+    <br /><span class=""></span>
+    <h4 onclick="navigateToHome()">Cancel?</h4>
+    <div class="loginMessage">{{ loginResponse }}</div>
   </form>
 </div>
+<router-outlet></router-outlet>
