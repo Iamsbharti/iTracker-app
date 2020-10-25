@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   public password: String;
   public loginResponse: String;
   public responseType: Boolean;
+  public showBar: Boolean = true;
   constructor(
     private userService: UserService,
     private _router: Router,
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   //login
   public loginUser(): any {
-    let userData = {
+    const userData = {
       loginId: this.loginId,
       password: this.password,
     };
@@ -32,10 +33,11 @@ export class LoginComponent implements OnInit {
     this.userService.loginService(userData).subscribe(
       /**sucess */
       (response) => {
+        this.showBar = false;
         console.log('login res:', response);
         this.loginResponse = `${response.message} --taking you to dashboard`;
         this.responseType = true;
-
+        this.showBar = true;
         /**store userinfo for further authorizartion purpose */
         const { name, email, username, userId, authToken } = response.data;
         Cookie.set('name', name);

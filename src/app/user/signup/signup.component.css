@@ -49,14 +49,7 @@
   width: 150px;
   cursor: pointer !important;
 }
-.signup__success {
-  color: green;
-  transition: ease-in 2sec;
-}
-.signup__error {
-  color: red;
-  transition: ease-in 2sec;
-}
+
 .signup__content > button:hover {
   background-color: blue;
 }
@@ -72,4 +65,22 @@
 .signup__content > form > button:hover {
   background-color: rgb(64, 148, 175) !important;
   color: aliceblue !important;
+}
+button:disabled,
+button[disabled] {
+  border: 1px solid var(--tracker-color) !important;
+  background-color: #f8f4e3 !important;
+  font-weight: 900 !important;
+  color: #000 !important;
+}
+.signup__response {
+  margin-top: 3px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.successMessage {
+  color: green;
+}
+.errorMessage {
+  color: red;
 }

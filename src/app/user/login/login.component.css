@@ -76,9 +76,9 @@ h4:hover {
   margin-left: auto;
   margin-right: auto;
 }
-.successLoginMessage {
+.successMessage {
   color: green;
 }
-.errorLoginMessage {
+.errorMessage {
   color: red;
 }

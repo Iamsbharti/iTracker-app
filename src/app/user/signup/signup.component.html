@@ -2,30 +2,68 @@
   <div class="signup__content">
     <div class="signup__nav"><img src="assets/virus.png" alt="" /></div>
     <p>Create your account</p>
-    <form>
-      <input name="name" type="text" placeholder="name" required="" value="" />
-      <input name="email" type="text" placeholder="email" value="" /><input
+    <form #signUpForm="ngForm" (ngSubmit)="registerUser()">
+      <input
+        name="name"
+        type="text"
+        placeholder="name"
+        required=""
+        value=""
+        [(ngModel)]="name"
+      />
+      <input
+        name="email"
+        type="text"
+        placeholder="email"
+        value=""
+        [(ngModel)]="email"
+      />
+      <input
         name="username"
         type="text"
         placeholder="create a username"
         value=""
+        required
+        [(ngModel)]="username"
       />
       <input
         name="password"
         type="password"
         placeholder="your secret"
         value=""
-      /><input
-        name="cfnPwd"
+        [(ngModel)]="password"
+      />
+      <div [hidden]="validatePassword()" class="alert alert-danger">
+        {{ passwordError }}
+      </div>
+      <input
+        name="cfnPassword"
         type="password"
         placeholder="confirm your secret"
         value=""
+        [(ngModel)]="cfnPassword"
       />
-      <button class="mat-raised-button" tabindex="0" type="submit">
+      <div [hidden]="comparePassword()" class="alert alert-danger">
+        Password doesn't match
+      </div>
+      <button
+        class="mat-raised-button"
+        tabindex="0"
+        [disabled]="!signUpForm.form.valid || !acceptedPwd || !equalPwd"
+      >
         Sign up
       </button>
+      <div
+        class="signup__response"
+        [ngClass]="{
+          successMessage: responseType,
+          errorMessage: !responseType
+        }"
+      >
+        {{ signUpResponse }}
+      </div>
     </form>
-    <br /><span class=""></span>
-    <h4>Cancel?</h4>
+    <br /><span></span>
+    <h4 (click)="navigateToHome()">Cancel?</h4>
   </div>
 </div>
