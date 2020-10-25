@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   public loginId: String;
   public password: String;
   public loginResponse: String;
+  public responseType: Boolean;
   constructor(
     private userService: UserService,
     private _router: Router,
@@ -27,6 +28,44 @@ export class LoginComponent implements OnInit {
       loginId: this.loginId,
       password: this.password,
     };
+
+    this.userService.loginService(userData).subscribe(
+      /**sucess */
+      (response) => {
+        console.log('login res:', response);
+        this.loginResponse = `${response.message} --taking you to dashboard`;
+        this.responseType = true;
+
+        /**store userinfo for further authorizartion purpose */
+        const { name, email, username, userId, authToken } = response.data;
+        Cookie.set('name', name);
+        Cookie.set('email', email);
+        Cookie.set('username', username);
+        Cookie.set('userId', userId);
+        Cookie.set('authToken', authToken);
+
+        /**set to localstorage */
+        this.userService.setUserAuth(response.data);
+
+        /**toast sucess */
+        this.toaster.open({ text: response.message, type: 'success' });
+
+        /**Redirect to Personalized Dashboard view */
+        setTimeout(() => this._router.navigate(['/dashboard']), 2000);
+      },
+      /**error */
+      (error) => {
+        console.warn('Error Login', error);
+        this.loginResponse = error.error.message + '- Try Again';
+        this.responseType = false;
+        this.toaster.open({ text: 'Login Error', type: 'danger' });
+        /**clear input field */
+        setTimeout(() => {
+          (this.loginId = ''), (this.password = '');
+          this.loginResponse = '';
+        }, 3000);
+      }
+    );
   }
 
   //naviagation

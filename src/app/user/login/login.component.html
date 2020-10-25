@@ -27,7 +27,16 @@
     </button>
     <br /><span class=""></span>
     <h4 (click)="navigateToHome()">Cancel?</h4>
-    <div class="loginMessage">{{ loginResponse }}</div>
+
+    <div
+      class="login__response"
+      [ngClass]="{
+        successLoginMessage: responseType,
+        errorLoginMessage: !responseType
+      }"
+    >
+      {{ loginResponse }}
+    </div>
   </form>
 </div>
 <router-outlet></router-outlet>

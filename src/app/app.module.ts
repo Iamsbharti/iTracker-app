@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastNotificationsModule } from 'ngx-toast-notifications';
 import { UserModule } from './user/user.module';
+import { IssuesModule } from './issues/issues.module';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 
@@ -17,6 +18,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
     BrowserAnimationsModule,
     UserModule,
     MatButtonModule,
+    IssuesModule,
     ToastNotificationsModule.forRoot({
       duration: 3500,
       type: 'primary',
