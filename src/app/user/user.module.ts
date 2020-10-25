@@ -6,10 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './user.service';
-
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [LoginComponent, SignupComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
   providers: [UserService],
 })
 export class UserModule {}
