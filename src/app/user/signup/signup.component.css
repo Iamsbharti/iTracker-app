@@ -4,10 +4,11 @@
   font-family: "Montserrat", sans-serif;
 }
 .signup {
-  display: flex;
+  display: grid;
   padding: 20px;
   margin: 20px;
   margin-top: 25px;
+  justify-items: center;
 }
 .signup__content {
   box-sizing: border-box;
