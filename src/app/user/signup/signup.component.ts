@@ -10,20 +10,19 @@ import { Cookie } from 'ng2-cookies';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  /**define fields */
-  public name: String;
-  public email: String;
-  public username: String;
-  public password: String;
-  public cfnPassword: String;
-  public equalPwd: Boolean = false;
-  public acceptedPwd: Boolean = false;
-  public signUpResponse: String;
-  public passwordError: String;
-  public responseType: Boolean;
+  public name: string;
+  public email: string;
+  public username: string;
+  public password: string;
+  public cfnPassword: string;
+  public equalPwd: boolean;
+  public acceptedPwd: boolean;
+  public signUpResponse: string;
+  public passwordError: string;
+  public responseType: boolean;
   constructor(
     private userService: UserService,
-    private _router: Router,
+    private router: Router,
     private toaster: Toaster
   ) {
     this.passwordError = `Password should have at least 1 Lowercase,Uppercase,Special
@@ -32,7 +31,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  //register user
+  // register user
   public registerUser(): any {
     const userData = {
       name: this.name,
@@ -49,15 +48,14 @@ export class SignupComponent implements OnInit {
         this.signUpResponse = response.message + 'Redirecting to Login page';
         this.toaster.open({ text: 'SignUp Succes', type: 'success' });
 
-        /**redirect to login page */
-        setTimeout(() => this._router.navigate(['/login']), 2000);
+        setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       (error) => {
         console.warn('Error Login', error);
         this.signUpResponse = error.error.message + '- Try Again';
         this.responseType = false;
         this.toaster.open({ text: 'SignUp Error', type: 'danger' });
-        /**clear input field */
+
         setTimeout(() => {
           this.name = '';
           this.password = '';
@@ -69,22 +67,24 @@ export class SignupComponent implements OnInit {
       }
     );
   }
-  /**compare password */
-  public comparePassword(): Boolean {
+
+  public comparePassword(): boolean {
     this.equalPwd = this.password === this.cfnPassword;
     return this.equalPwd;
   }
-  public validatePassword(): Boolean {
-    let pattern = new RegExp(
+  public validatePassword(): boolean {
+    const pattern = new RegExp(
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
     );
-    if (this.password === undefined) return true;
+    if (this.password === undefined) {
+      return true;
+    }
     this.acceptedPwd = pattern.test(this.password.toString());
     return this.acceptedPwd;
   }
-  //naviagation
+  // naviagation
   public navigateToHome(): any {
     console.log('navigation');
-    this._router.navigate(['/home']);
+    this.router.navigate(['/home']);
   }
 }

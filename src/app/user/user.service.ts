@@ -1,44 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  //initialize
+  // initialize
   public baseUrl = 'http://localhost:3001/api/v1';
-  constructor(private _http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  //handle exceptions
-  public handleError(error: HttpErrorResponse) {
+  // handle exceptions
+  public handleError(error: HttpErrorResponse): any {
     console.error('Http Error:', error.message);
-    return Observable.throw(error.message);
+    return throwError(error.message);
   }
 
-  //user registration service
+  // user registration service
   public signUpService(newUser): any {
     console.log('Signup service apicall', newUser);
-    let signUpRes = this._http.post(`${this.baseUrl}/user/register`, newUser);
+    const signUpRes = this.http.post(`${this.baseUrl}/user/register`, newUser);
     return signUpRes;
   }
 
-  //login service
+  // login service
   public loginService(userData): any {
     console.log('Login api call', userData);
-    let loginRes = this._http.post(`${this.baseUrl}/user/login`, userData);
+    const loginRes = this.http.post(`${this.baseUrl}/user/login`, userData);
     return loginRes;
   }
 
-  //store authenticated user info
+  // store authenticated user info
   public setUserAuth(data): any {
     console.log('Set user auth data', data);
     localStorage.setItem('userInfo', JSON.stringify(data));
   }
 
-  //get auth info
+  // get auth info
   public getUserAuth(): any {
     console.log('get user auth');
-    let authInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const authInfo = JSON.parse(localStorage.getItem('userInfo'));
     return authInfo === null ? '' : authInfo;
   }
 }
