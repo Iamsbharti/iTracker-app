@@ -31,12 +31,42 @@
   padding: 10px;
   background-image: var(--navbar-grad);
 }
+.dashboard__navbar > img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
 .navbar__icons {
 }
-
+.navbar__icons > img {
+  width: 30px;
+  height: 30px;
+}
+.navbar__icons > span {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 800;
+  margin-left: 3px;
+}
+code {
+  color: blue;
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 15px;
+  font-weight: 800;
+}
+.dashboard__navbar__welcome {
+  margin-top: 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #171a21;
+}
 .navbar__button__create {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  text-transform: inherit !important;
+  cursor: pointer !important;
+  margin-left: 370px;
 }
 .navbar__input__search {
-}
-.navbar__button__logout {
 }

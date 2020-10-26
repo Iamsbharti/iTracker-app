@@ -1,17 +1,28 @@
 <div class="dashboard">
   <div class="dashboard__navbar">
     <div class="navbar__icons">
-      <img src="" alt="" />
-      <span>iTracker</span>
+      <img src="assets/virus.png" alt="" />
+      <span>i</span><code>Tracker</code>
     </div>
-    <button class="navbar__button__create">Create</button>
+    <div class="dashboard__navbar__welcome">
+      <p>Welcome To iTracker</p>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      class="navbar__button__create"
+      title="create a issue"
+    >
+      Create
+    </button>
     <input
       type="search"
       name="search"
       placeholder="Search"
       class="navbar__input__search"
+      title="search by keywords"
     />
-    <button class="navbar__button__logout">logout</button>
+    <img src="assets/shutdown-96.png" title="logout" alt="" />
   </div>
   <div class="dasboard__sidebar"></div>
   <div class="dashboard__issue__list"></div>
