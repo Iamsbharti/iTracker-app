@@ -56,7 +56,9 @@
           <div *ngFor="let issue of backlogsIssues">
             <div class="issue__card">
               <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority">{{ issue.priority }}</p>
+              <p class="issue__priority__high">
+                {{ issue.priority }}
+              </p>
             </div>
           </div>
         </div>
@@ -69,7 +71,9 @@
           <div *ngFor="let issue of progressIssues">
             <div class="issue__card">
               <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority">{{ issue.priority }}</p>
+              <p class="issue__priority__high">
+                {{ issue.priority }}
+              </p>
             </div>
           </div>
         </div>
@@ -82,7 +86,9 @@
           <div *ngFor="let issue of testIssues">
             <div class="issue__card">
               <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority">{{ issue.priority }}</p>
+              <p class="issue__priority__high">
+                {{ issue.priority }}
+              </p>
             </div>
           </div>
         </div>
@@ -95,7 +101,9 @@
           <div *ngFor="let issue of doneIssues">
             <div class="issue__card">
               <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority">{{ issue.priority }}</p>
+              <p class="issue__priority__high">
+                {{ issue.priority }}
+              </p>
             </div>
           </div>
         </div>

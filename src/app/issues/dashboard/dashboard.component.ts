@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   public testIssues: Array<any>;
   public doneIssues: Array<any>;
 
+  public pageSize: number;
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,

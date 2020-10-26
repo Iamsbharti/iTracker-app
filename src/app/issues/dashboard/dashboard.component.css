@@ -320,10 +320,20 @@ i {
   font-size: 15px;
   color: #202c59;
 }
-.issue__priority {
+.issue__priority__high {
   font-weight: 300;
   font-size: 12px;
   color: #931f1d;
+}
+.issue__priority__medium {
+  font-weight: 300;
+  font-size: 12px;
+  color: green;
+}
+.issue__priority__low {
+  font-weight: 300;
+  font-size: 12px;
+  color: black;
 }
 .mat-paginator-container {
   display: flex;
