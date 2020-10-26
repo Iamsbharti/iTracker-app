@@ -13,11 +13,11 @@ export class DashboardComponent implements OnInit {
   // define fields
   public userName: string;
   public userId: string;
-  public allIssues: Object[];
-  public backlogsIssues: Object[];
-  public progressIssues: Object[];
-  public testIssues: Object[];
-  public doneIssues: Object[];
+  public allIssues: Array<any>;
+  public backlogsIssues: Array<any>;
+  public progressIssues: Array<any>;
+  public testIssues: Array<any>;
+  public doneIssues: Array<any>;
 
   constructor(
     private issueService: IssuesService,
@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  public filterIssuesBasedOnStatus(allIssues: Object[]) {
+  public filterIssuesBasedOnStatus(allIssues: Array<any>) {
     this.backlogsIssues = this.allIssues.filter(
       (iss) => iss.status === 'backlog'
     );
