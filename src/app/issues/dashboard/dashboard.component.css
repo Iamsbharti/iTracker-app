@@ -66,7 +66,14 @@ code {
   font-weight: 700 !important;
   text-transform: inherit !important;
   cursor: pointer !important;
-  margin-left: 370px;
+  margin-left: 370px !important;
 }
 .navbar__input__search {
+  border-radius: 6px;
+  border-color: #7a93ac;
+  font-size: 15px;
+}
+.dashboard__navbar > button:hover {
+  background-color: rgb(64, 148, 175) !important;
+  color: aliceblue !important;
 }

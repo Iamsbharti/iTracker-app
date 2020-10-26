@@ -31,11 +31,9 @@ export class LoginComponent implements OnInit {
 
     this.userService.loginService(userData).subscribe(
       (response) => {
-        this.showBar = false;
         console.log('login res:', response);
         this.loginResponse = `${response.message} --taking you to dashboard`;
         this.responseType = true;
-        this.showBar = true;
 
         const { name, email, username, userId, authToken } = response.data;
         Cookie.set('name', name);
