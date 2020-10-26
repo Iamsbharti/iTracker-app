@@ -10,6 +10,8 @@ import { IssuesModule } from './issues/issues.module';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
   imports: [
@@ -19,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     UserModule,
     MatButtonModule,
     MatIconModule,
+    MatPaginatorModule,
     IssuesModule,
     ToastNotificationsModule.forRoot({
       duration: 3500,

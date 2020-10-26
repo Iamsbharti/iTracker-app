@@ -306,3 +306,21 @@ code {
 i {
   cursor: pointer;
 }
+
+.mat-paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  flex-wrap: wrap-reverse;
+  width: 50% !important;
+}
+.issues__paginator {
+  width: fit-content !important;
+  padding: 0px !important;
+  background-image: var(--bg-grad) !important;
+}
+
+.paginator__div {
+  margin-top: -111px;
+}
