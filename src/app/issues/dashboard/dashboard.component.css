@@ -212,7 +212,39 @@ code {
   min-width: 250px;
   padding-left: 20px;
   padding-right: 10px;
+  padding-top: 50px;
   background-image: var(--navbar-grad);
+  border-right: 1px solid var(--bg-grad);
+}
+.option__bold__text {
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.div__break__line {
+  height: 1px;
+  background-color: gray;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.dashboard__filter__list {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.filters {
+  padding-bottom: 16px;
+  padding-top: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.filters:hover {
+  background-image: var(--bg-grad);
+  color: blue;
+  font-size: 20px;
+  transition: color 100ms ease-out;
 }
 .dashboard__issue__list {
   flex: 0.8;
