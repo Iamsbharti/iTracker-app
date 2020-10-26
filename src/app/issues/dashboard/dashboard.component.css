@@ -244,7 +244,10 @@ code {
   background-image: var(--bg-grad);
   color: blue;
   font-size: 20px;
-  transition: color 100ms ease-out;
+  font-weight: 900;
+  border-radius: 9px;
+  margin-left: 5px;
+  transition: color 400ms ease-out;
 }
 .dashboard__issue__list {
   flex: 0.8;
