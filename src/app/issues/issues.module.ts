@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { IssuesService } from './issues.service';
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
@@ -19,5 +19,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatPaginatorModule,
   ],
+  providers: [IssuesService],
 })
 export class IssuesModule {}

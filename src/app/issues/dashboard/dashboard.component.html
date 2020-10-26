@@ -47,48 +47,49 @@
     </div>
     <div class="dashboard__issue__list">
       <div class="issue__list__main__div">
-        <div class="issue__list__backlog">
+        <div class="issue__list__backlog" *ngFor="let issue of backlogsIssues">
           <div class="issue__column__header">
             <p>Backlogs</p>
             <i class="material-icons" title="sort">sort</i>
           </div>
           <div class="col__break__line"></div>
           <div class="issue__card">
-            <p class="issue__title">Title</p>
-            <p class="issue__priority">High</p>
+            <p>{{ issue.title }}</p>
+            <p class="issue__priority">{{ issue.priority }}</p>
           </div>
-          <div class="issue__card"></div>
-          <div class="issue__card"></div>
         </div>
-        <div class="issue__list__progress">
+        <div class="issue__list__progress" *ngFor="let issue of progressIssues">
           <div class="issue__column__header">
             <p>Progress</p>
             <i class="material-icons" title="sort">sort</i>
           </div>
           <div class="col__break__line"></div>
-          <div class="issue__card"></div>
-          <div class="issue__card"></div>
-          <div class="issue__card"></div>
+          <div class="issue__card">
+            <p>{{ issue.title }}</p>
+            <p class="issue__priority">{{ issue.priority }}</p>
+          </div>
         </div>
-        <div class="issue__list__test">
+        <div class="issue__list__test" *ngFor="let issue of testIssues">
           <div class="issue__column__header">
             <p>Test</p>
             <i class="material-icons" title="sort">sort</i>
           </div>
           <div class="col__break__line"></div>
-          <div class="issue__card"></div>
-          <div class="issue__card"></div>
-          <div class="issue__card"></div>
+          <div class="issue__card">
+            <p>{{ issue.title }}</p>
+            <p class="issue__priority">{{ issue.priority }}</p>
+          </div>
         </div>
-        <div class="issue__list__resolved">
+        <div class="issue__list__resolved" *ngFor="let issue of doneIssues">
           <div class="issue__column__header">
             <p>Done</p>
             <i class="material-icons" title="sort">sort</i>
           </div>
           <div class="col__break__line"></div>
-          <div class="issue__card"></div>
-          <div class="issue__card"></div>
-          <div class="issue__card"></div>
+          <div class="issue__card">
+            <p>{{ issue.title }}</p>
+            <p class="issue__priority">{{ issue.priority }}</p>
+          </div>
         </div>
       </div>
       <div class="paginator__div">
