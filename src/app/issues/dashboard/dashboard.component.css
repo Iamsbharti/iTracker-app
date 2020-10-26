@@ -324,8 +324,6 @@ i {
   font-weight: 300;
   font-size: 12px;
   color: #931f1d;
-  position: absolute;
-  top: 34%;
 }
 .mat-paginator-container {
   display: flex;

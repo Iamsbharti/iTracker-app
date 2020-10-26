@@ -64,14 +64,18 @@ export class DashboardComponent implements OnInit {
     );
   }
   public filterIssuesBasedOnStatus(allIssues: Array<any>) {
-    this.backlogsIssues = this.allIssues.filter(
-      (iss) => iss.status === 'backlog'
-    );
-    this.progressIssues = this.allIssues.filter(
-      (iss) => iss.status === 'progress'
-    );
-    this.testIssues = this.allIssues.filter((iss) => iss.status === 'test');
-    this.doneIssues = this.allIssues.filter((iss) => iss.status === 'done');
+    this.backlogsIssues = this.allIssues
+      .filter((iss) => iss.status === 'backlog')
+      .splice(0, 3);
+    this.progressIssues = this.allIssues
+      .filter((iss) => iss.status === 'progress')
+      .splice(0, 3);
+    this.testIssues = this.allIssues
+      .filter((iss) => iss.status === 'test')
+      .splice(0, 3);
+    this.doneIssues = this.allIssues
+      .filter((iss) => iss.status === 'done')
+      .splice(0, 3);
 
     console.log('backlog isssue,', this.backlogsIssues);
     console.log('progress isssue,', this.progressIssues);
