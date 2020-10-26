@@ -315,7 +315,18 @@ code {
 i {
   cursor: pointer;
 }
-
+.issue__title {
+  font-weight: 500;
+  font-size: 15px;
+  color: #202c59;
+}
+.issue__priority {
+  font-weight: 300;
+  font-size: 12px;
+  color: #931f1d;
+  position: absolute;
+  top: 34%;
+}
 .mat-paginator-container {
   display: flex;
   align-items: center;
