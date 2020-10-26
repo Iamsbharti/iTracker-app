@@ -254,3 +254,42 @@ code {
   min-width: fit-content;
   background-image: var(--bg-grad);
 }
+.issue__list__main__div {
+  display: flex;
+  height: 100vh;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.issue__list__backlog {
+  flex: 0.25;
+  min-width: fit-content;
+  border-right: 1px solid var(--twitter-bg);
+}
+.issue__list__progress {
+  flex: 0.25;
+  min-width: fit-content;
+  border-right: 1px solid var(--twitter-bg);
+}
+.issue__list__test {
+  flex: 0.25;
+  min-width: fit-content;
+  border-right: 1px solid var(--twitter-bg);
+}
+.issue__list__resolved {
+  flex: 0.25;
+  min-width: fit-content;
+  border-right: 1px solid var(--twitter-bg);
+}
+.issue__card {
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+  width: 200px;
+  height: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
