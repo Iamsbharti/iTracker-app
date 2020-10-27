@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   public pageSize: number;
   public showCategorizedIssues: boolean;
   public showFilteredIssues: boolean;
-
+  public displayFilterType: string;
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,
@@ -100,6 +100,26 @@ export class DashboardComponent implements OnInit {
       name,
     };
     console.log(filterOptions);
+    switch (option) {
+      case 'all':
+        this.displayFilterType = 'All issues in the tracker';
+        break;
+      case 'reportedByMe':
+        this.displayFilterType = 'issues reported by you';
+        break;
+      case 'openIssues':
+        this.displayFilterType = 'your open issues';
+        break;
+      case 'closedIssues':
+        this.displayFilterType = 'your resolved issues';
+        break;
+      case 'resolvedRecent':
+        this.displayFilterType = 'recent resolved issues';
+        break;
+      case 'updatedRecent':
+        this.displayFilterType = 'recent updated issues';
+        break;
+    }
     this.issueService.getFilteredIssues(filterOptions).subscribe(
       // success
       (response) => {

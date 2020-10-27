@@ -36,6 +36,9 @@
       <div class="div__break__line"></div>
       <div class="dashboard__filter__list">
         <p class="option__bold__text">Filters</p>
+        <p class="filters" (click)="getAllIssues()">
+          Main view (status-filtered)
+        </p>
         <p
           class="filters"
           (click)="filterIssues(userId, 'all', 'status', userName)"
@@ -150,6 +153,12 @@
 
     <div class="dashboard__footbar"></div>
     <div class="dashboard__issue__filtered__list" [hidden]="showFilteredIssues">
+      <div class="issue__column__header">
+        <p>
+          Currently showing
+          <span style="color: blueviolet">{{ displayFilterType }}</span>
+        </p>
+      </div>
       <div class="issue__list__filtered__div">
         <div *ngFor="let issue of allIssues">
           <div class="issue__card__filtered">
