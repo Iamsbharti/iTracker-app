@@ -24,13 +24,24 @@ export class IssuesService {
       authToken: this.userService.getUserAuth().authToken,
     }),
   };
-  // get all issues
-  public getAllIssuesService(userInfo): any {
+  // get all issues for a id
+  public getAllIssuesByIdService(userInfo): any {
     console.log('Get All Issue Service', userInfo);
     const allIssuesRes = this.http.get(
       `${this.baseUrl}/issue/allIssues?userId=${userInfo.userId}`,
       this.httpHeaderOptions
     );
     return allIssuesRes;
+  }
+
+  // get allIssues in the system
+  public getFilteredIssues(filterOptions): any {
+    console.log('filter issues in the system', filterOptions);
+    const { userId, name, option, type } = filterOptions;
+    const allIssues = this.http.get(
+      `${this.baseUrl}/issue/filter?userId=${userId}&name=${name}&option=${option}&type=${type}`,
+      this.httpHeaderOptions
+    );
+    return allIssues;
   }
 }

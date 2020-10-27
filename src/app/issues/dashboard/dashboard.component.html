@@ -5,7 +5,7 @@
 <div class="dashboard">
   <div class="dashboard__navbar">
     <div class="navbar__icons">
-      <img src="assets/virus.png" alt="" />
+      <img src="assets/virus.png" alt="" (click)="getAllIssues()" />
       <span>i</span><code>Tracker</code>
     </div>
     <div class="dashboard__navbar__welcome">
@@ -36,16 +36,48 @@
       <div class="div__break__line"></div>
       <div class="dashboard__filter__list">
         <p class="option__bold__text">Filters</p>
-        <p class="filters">All Issues</p>
-        <p class="filters">Reported by me</p>
-        <p class="filters">My Open Issues</p>
-        <p class="filters">Done Issues</p>
-        <p class="filters">Resolved recently</p>
-        <p class="filters">Updated recently</p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'all', 'status', userName)"
+        >
+          All Issues
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'reportedByMe', 'status', name)"
+        >
+          Reported by me
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'openIssues', 'status', userName)"
+        >
+          My Open Issues
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'closedIssues', 'status', userName)"
+        >
+          Done Issues
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'resolvedRecent', 'time', userName)"
+        >
+          Resolved recently
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'updatedRecent', 'time', userName)"
+        >
+          Updated recently
+        </p>
         <div class="div__break__line"></div>
       </div>
     </div>
-    <div class="dashboard__issue__list">
+    <!--categorized view start-->
+
+    <div class="dashboard__issue__list" [hidden]="showCategorizedIssues">
       <div class="issue__list__main__div">
         <div class="issue__list__backlog">
           <div class="issue__column__header">
@@ -113,6 +145,26 @@
         </mat-paginator>
       </div>
     </div>
+
+    <!--categorized view end-->
+
+    <div class="dashboard__footbar"></div>
+    <div class="dashboard__issue__filtered__list" [hidden]="showFilteredIssues">
+      <div class="issue__list__filtered__div">
+        <div *ngFor="let issue of allIssues">
+          <div class="issue__card__filtered">
+            <p class="issue__title">{{ issue.title }}</p>
+            <p class="issue__priority__high">
+              {{ issue.priority }}
+            </p>
+            <p>-{{ issue.reporter.split(" ")[0] }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="paginator__div">
+        <mat-paginator class="issues__paginator" [length]="100" [pageSize]="3">
+        </mat-paginator>
+      </div>
+    </div>
   </div>
-  <div class="dashboard__footbar"></div>
 </div>
