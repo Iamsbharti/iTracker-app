@@ -8,8 +8,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { IssuesService } from './issues.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateIssueComponent } from './create-issue/create-issue.component';
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, CreateIssueComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -18,6 +20,7 @@ import { IssuesService } from './issues.service';
     MatButtonModule,
     MatIconModule,
     MatPaginatorModule,
+    NgbModule,
   ],
   providers: [IssuesService],
 })

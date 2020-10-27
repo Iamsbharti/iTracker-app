@@ -16,6 +16,7 @@
       color="primary"
       class="navbar__button__create"
       title="create a issue"
+      (click)="open(createModal)"
     >
       Create
     </button>
@@ -176,4 +177,22 @@
       </div>
     </div>
   </div>
+  <!--Create Issue Modal-->
+  <ng-template #createModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-create">You are creating...</h4>
+    </div>
+    <div class="modal-body">
+      <app-create-issue (closeModal)="modal.close()"></app-create-issue>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Done?
+      </button>
+    </div>
+  </ng-template>
 </div>

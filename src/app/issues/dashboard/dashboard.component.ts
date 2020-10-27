@@ -4,6 +4,7 @@ import { UserService } from '../../user/user.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
 import { Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -20,14 +21,21 @@ export class DashboardComponent implements OnInit {
   public testIssues: Array<any>;
   public doneIssues: Array<any>;
 
+  // pagination
   public pageSize: number;
+
+  // display content
   public showCategorizedIssues: boolean;
   public showFilteredIssues: boolean;
   public displayFilterType: string;
+
+  // create issue modal
+  public closeResult: string;
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.userName = Cookie.get('username');
     this.userId = Cookie.get('userId');
@@ -143,5 +151,22 @@ export class DashboardComponent implements OnInit {
         this.toaster.open({ text: error.error.message, type: 'danger' });
       }
     );
+  }
+
+  /**open modal */
+  open(content) {
+    //console.debug('modal open::', ops, id);
+
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-create' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed`;
+        }
+      );
+    //console.debug('Modal closed::', this.closeResult);
   }
 }

@@ -11,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
   imports: [
@@ -23,6 +23,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatPaginatorModule,
     IssuesModule,
+    NgbModule,
     ToastNotificationsModule.forRoot({
       duration: 3500,
       type: 'primary',
