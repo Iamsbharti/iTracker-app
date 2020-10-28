@@ -44,4 +44,37 @@ export class IssuesService {
     );
     return allIssues;
   }
+
+  // get watchlist/assignee list
+  public getAllUsers(authDetails): any {
+    console.log('Get all users service', authDetails);
+    const { userId } = authDetails;
+    const allUsers = this.http.get(
+      `${this.baseUrl}/user/all?userId=${userId}`,
+      this.httpHeaderOptions
+    );
+    return allUsers;
+  }
+
+  //create issue
+  public createIssue(issueDetails): any {
+    console.log('Create issue service', issueDetails);
+    const {
+      userId,
+      title,
+      description,
+      status,
+      reporter,
+      priority,
+      estimates,
+      assignee,
+    } = issueDetails;
+    const createdIssue = this.http.get(
+      `${this.baseUrl}/issue/create?userId=${userId}
+      &title=${title}&description=${description}&status=${status}
+      &reporter=${reporter}&priority=${priority}&estimates=${estimates}
+      &assignee=${assignee}`
+    );
+    return createdIssue;
+  }
 }

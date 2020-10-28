@@ -19,14 +19,16 @@
           Title is Required
         </div>
         <label for="description">Decription</label>
-        <ckeditor [(ngModel)]="description"></ckeditor>
+        <ckeditor
+          [(ngModel)]="description"
+          [ngModelOptions]="{ standalone: true }"
+        ></ckeditor>
         <label for="reporter">Reporter<span style="color: red">*</span></label>
         <input
           class="form-control mt-1"
           name="reporter"
           required
           placeholder="Reporter"
-          value="reporter"
           [(ngModel)]="reporter"
           #_reporter="ngModel"
         />
@@ -41,7 +43,6 @@
           name="priority"
           required
           [(ngModel)]="priority"
-          #_pri="ngModel"
           class="form-control mt-1"
         >
           <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
@@ -53,7 +54,6 @@
           required
           placeholder="Original Estimate"
           [(ngModel)]="originalEstimates"
-          #_oest="ngModel"
         />
         <label for="status">Status<span style="color: red">*</span></label>
         <select
@@ -68,7 +68,6 @@
         <input
           type="file"
           placeholder="attachements"
-          [(ngModel)]="attachment"
           class="form-control mt-1"
         />
         <label for="assignee">Assignee</label>
@@ -88,7 +87,7 @@
             mat-raised-button
             color="primary"
             class="button__create"
-            [disabled]="!createIssueForm.form.valid"
+            [disabled]="createIssueForm.form.valid"
           >
             Create
           </button>
