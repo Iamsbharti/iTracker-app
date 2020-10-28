@@ -19,13 +19,3 @@ button[disabled] {
   font-weight: 400 !important;
   color: #000 !important;
 }
-h4 {
-  color: var(--tracker-color);
-  cursor: pointer;
-  margin-top: 3px;
-  font-size: 15px;
-  margin-left: 3px;
-}
-h4:hover {
-  color: blue;
-}
