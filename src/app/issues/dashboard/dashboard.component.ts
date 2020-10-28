@@ -163,8 +163,12 @@ export class DashboardComponent implements OnInit {
           this.allIssues = this.allIssues.splice(0, 8);
           this.toaster.open({ text: 'Filtered Issues', type: 'success' });
           // show categorized view and hide the filtered one
-          this.showCategorizedIssues = true;
-          this.showFilteredIssues = false;
+          this.showCategorizedIssues = false;
+
+          // pagination values
+          // init pagination values
+          this.pageSize = this.allIssues.length;
+          this.length = response.data.length;
         }
       },
       // error

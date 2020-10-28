@@ -62,3 +62,25 @@
   <mat-paginator class="issues__paginator" [length]="100" [pageSize]="3">
   </mat-paginator>
 </div>
+
+<div class="dashboard__issue__filtered__list" [hidden]="showFilteredIssues">
+  <div class="issue__column__header">
+    <p>
+      Currently showing
+      <span style="color: blueviolet">{{ displayFilterType }}</span>
+    </p>
+  </div>
+  <div class="issue__list__filtered__div">
+    <div *ngFor="let issue of allIssues">
+      <div class="issue__card__filtered">
+        <p class="issue__title">{{ issue.title }}</p>
+        <p class="issue__priority__high">{{ issue.priority }}</p>
+        <p>-{{ issue.reporter.split(" ")[0] }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="paginator__div">
+    <mat-paginator class="issues__paginator" [length]="100" [pageSize]="3">
+    </mat-paginator>
+  </div>
+</div>
