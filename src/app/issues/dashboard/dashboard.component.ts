@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IssuesService } from '../issues.service';
-import { UserService } from '../../user/user.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
 import { Router } from '@angular/router';
@@ -178,13 +177,34 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+  // sort columns asending and decending
+  public sortIssueColumn(sortingItem): any {
+    console.log('sorting finction', sortingItem);
+    this.allIssues = this.allIssues.sort((a, b) => {
+      var nameA = a.status.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.status.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
 
+      // names must be equal
+      return 0;
+    });
+    console.log(this.allIssues);
+  }
   /**open modal */
   open(content) {
     //console.debug('modal open::', ops, id);
 
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-create' })
+      .open(content, {
+        ariaLabelledBy: 'modal-create',
+        size: 'lg',
+        scrollable: true,
+      })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;

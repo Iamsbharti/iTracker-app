@@ -1,1 +1,106 @@
-<p>create-issue works!</p>
+<div class="create__issue">
+  <div class="create__issue__header"></div>
+  <div class="create__issue__contents">
+    <form #createIssueForm="ngForm" (ngSubmit)="createIssue()">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          name="title"
+          required
+          placeholder="title"
+          class="form-control"
+          [(ngModel)]="title"
+          #_title="ngModel"
+        />
+        <div
+          [hidden]="_title.valid || _title.pristine"
+          class="alert alert-danger"
+        >
+          Title is Required
+        </div>
+        <label for="description">Decription</label>
+        <textarea
+          class="form-control mt-1"
+          name="description"
+          required
+          placeholder="decription"
+          [(ngModel)]="description"
+          #_desc="ngModel"
+        ></textarea>
+        <div
+          [hidden]="_desc.valid || _desc.pristine"
+          class="alert alert-danger"
+        >
+          Description is Required
+        </div>
+        <label for="reporter">Reporter</label>
+        <input
+          class="form-control mt-1"
+          name="reporter"
+          required
+          placeholder="Reporter"
+          value="reporter"
+          [(ngModel)]="reporter"
+          #_reporter="ngModel"
+        />
+        <div
+          [hidden]="_reporter.valid || _reporter.pristine"
+          class="alert alert-danger"
+        >
+          Reporter is Required
+        </div>
+        <label for="priority">Priority</label>
+        <select
+          name="priority"
+          required
+          [(ngModel)]="priority"
+          #_pri="ngModel"
+          class="form-control mt-1"
+        >
+          <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
+        </select>
+        <label for="originalEstimates">Original Estimate</label>
+        <input
+          class="form-control mt-1"
+          name="originalEstimates"
+          required
+          placeholder="Original Estimate"
+          [(ngModel)]="originalEstimates"
+          #_oest="ngModel"
+        />
+        <label for="status">Status</label>
+        <select
+          name="status"
+          required
+          [(ngModel)]="status"
+          class="form-control mt-1"
+        >
+          <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+        </select>
+        <label for="attachment">Attachment</label>
+        <input
+          type="file"
+          placeholder="attachements"
+          [(ngModel)]="attachment"
+          class="form-control mt-1"
+        />
+        <label for="assignee">Assignee</label>
+        <select
+          name="assignee"
+          required
+          [(ngModel)]="assignee"
+          class="form-control mt-1"
+        >
+          <option *ngFor="let assig of assigneeOptions" [value]="assig._id">
+            {{ assig.name }}
+          </option>
+        </select>
+
+        <div class="issuee__create__btn">
+          <button class="mat-raised-button">Create</button>
+          <h4>Cancel?</h4>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

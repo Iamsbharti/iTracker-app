@@ -84,3 +84,37 @@
     </mat-paginator>
   </div>
 </div>
+
+---------------
+
+<form>
+  <label for="title">Title</label>
+  <input name="title" required placeholder="title" />
+  <label for="description">Decription</label>
+  <textarea name="description" required placeholder="decription"></textarea>
+  <label for="reporter">Reporter</label>
+  <input name="reporter" required placeholder="Reporter" value="reporter" />
+  <label for="proirity">Proirity</label>
+  <select name="proirity" required>
+    <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
+  </select>
+  <label for="originalest">Original Estimate</label>
+  <input name="originalest" required placeholder="Original Estimate" />
+  <label for="status">Status</label>
+  <select name="status" required>
+    <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+  </select>
+  <label for="attachment">Attachment</label>
+  <input type="file" placeholder="attachements" />
+  <label for="assignee">Assignee</label>
+  <select name="assignee" required>
+    <option *ngFor="let assig of assigneeOptions" [value]="assig._id">
+      {{ assig.name }}
+    </option>
+  </select>
+
+  <div class="issuee__create__btn">
+    <button class="mat-raised-button">Create</button>
+    <h4>Cancel?</h4>
+  </div>
+</form>

@@ -92,18 +92,37 @@
         <table>
           <tr>
             <th>
-              Title <i class="material-icons sort__icon" title="sort">sort</i>
-            </th>
-            <th>
-              Reporter<i class="material-icons sort__icon" title="sort">sort</i>
-            </th>
-            <th>
-              Created On<i class="material-icons sort__icon" title="sort"
+              Title
+              <i
+                class="material-icons sort__icon"
+                title="sort"
+                (click)="sortIssueColumn('title')"
                 >sort</i
               >
             </th>
             <th>
-              Status<i class="material-icons sort__icon" title="sort">sort</i>
+              Reporter<i
+                class="material-icons sort__icon"
+                title="sort"
+                (click)="sortIssueColumn('reporter')"
+                >sort</i
+              >
+            </th>
+            <th>
+              Created On<i
+                class="material-icons sort__icon"
+                title="sort"
+                (click)="sortIssueColumn('createDate')"
+                >sort</i
+              >
+            </th>
+            <th>
+              Status<i
+                class="material-icons sort__icon"
+                title="sort"
+                (click)="sortIssueColumn('status')"
+                >sort</i
+              >
             </th>
           </tr>
           <tr *ngFor="let issue of allIssues">
@@ -130,9 +149,11 @@
   <!--Create Issue Modal-->
   <ng-template #createModal let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-create">You are creating...</h4>
+      <p class="modal-title mt-3 ml-3 font-weight-bold" id="modal-create">
+        You are creating an Issue
+      </p>
     </div>
-    <div class="modal-body">
+    <div class="modal-body modal__size">
       <app-create-issue (closeModal)="modal.close()"></app-create-issue>
     </div>
     <div class="modal-footer">

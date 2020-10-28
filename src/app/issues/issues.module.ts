@@ -11,7 +11,8 @@ import { IssuesService } from './issues.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateIssueComponent } from './create-issue/create-issue.component';
 import { MatTableModule } from '@angular/material/table';
-import { CdkTableModule } from '@angular/cdk/table';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
   declarations: [DashboardComponent, CreateIssueComponent],
   imports: [
@@ -24,6 +25,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatPaginatorModule,
     NgbModule,
     MatTableModule,
+    MatInputModule,
   ],
   providers: [IssuesService],
 })

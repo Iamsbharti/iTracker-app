@@ -22,8 +22,10 @@ export class CreateIssueComponent implements OnInit {
   public originalEstimates: string;
   public assigneeOptions: Array<any>;
   public assignee: string;
-
+  public attachment: any;
   constructor() {}
 
   ngOnInit(): void {}
+
+  public createIssue(): any {}
 }

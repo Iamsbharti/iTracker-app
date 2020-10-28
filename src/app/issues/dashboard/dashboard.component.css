@@ -418,3 +418,6 @@ i {
   left: 900px;
   top: 550px;
 }
+.modal-content {
+  width: 500px !important;
+}

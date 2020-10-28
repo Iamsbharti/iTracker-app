@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
@@ -27,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
     IssuesModule,
     NgbModule,
     MatTableModule,
+    MatInputModule,
     ToastNotificationsModule.forRoot({
       duration: 3500,
       type: 'primary',
