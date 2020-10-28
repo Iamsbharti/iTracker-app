@@ -10,6 +10,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { IssuesService } from './issues.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateIssueComponent } from './create-issue/create-issue.component';
+import { MatTableModule } from '@angular/material/table';
+import { CdkTableModule } from '@angular/cdk/table';
 @NgModule({
   declarations: [DashboardComponent, CreateIssueComponent],
   imports: [
@@ -21,6 +23,7 @@ import { CreateIssueComponent } from './create-issue/create-issue.component';
     MatIconModule,
     MatPaginatorModule,
     NgbModule,
+    MatTableModule,
   ],
   providers: [IssuesService],
 })

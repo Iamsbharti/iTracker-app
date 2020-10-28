@@ -82,71 +82,29 @@
     <!--categorized view start-->
 
     <div class="dashboard__issue__list" [hidden]="showCategorizedIssues">
-      <div class="issue__list__main__div">
-        <div class="issue__list__backlog">
-          <div class="issue__column__header">
-            <p>Backlogs</p>
-            <i class="material-icons" title="sort">sort</i>
-          </div>
-          <div class="col__break__line"></div>
-          <div *ngFor="let issue of backlogsIssues">
-            <div class="issue__card">
-              <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority__high">
-                {{ issue.priority }}
-              </p>
-            </div>
-          </div>
+      <div>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Reporter</th>
+            <th>Created On</th>
+            <th>Status</th>
+          </tr>
+          <tr *ngFor="let issue of allIssues">
+            <td>{{ issue.title }}</td>
+            <td>{{ issue.reporter }}</td>
+            <td>{{ issue.createDate | date }}</td>
+            <td>{{ issue.status }}</td>
+          </tr>
+        </table>
+        <div class="paginator__div">
+          <mat-paginator
+            class="issues__paginator"
+            [length]="100"
+            [pageSize]="3"
+          >
+          </mat-paginator>
         </div>
-        <div class="issue__list__progress">
-          <div class="issue__column__header">
-            <p>Progress</p>
-            <i class="material-icons" title="sort">sort</i>
-          </div>
-          <div class="col__break__line"></div>
-          <div *ngFor="let issue of progressIssues">
-            <div class="issue__card">
-              <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority__high">
-                {{ issue.priority }}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="issue__list__test">
-          <div class="issue__column__header">
-            <p>Test</p>
-            <i class="material-icons" title="sort">sort</i>
-          </div>
-          <div class="col__break__line"></div>
-          <div *ngFor="let issue of testIssues">
-            <div class="issue__card">
-              <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority__high">
-                {{ issue.priority }}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="issue__list__resolved">
-          <div class="issue__column__header">
-            <p>Done</p>
-            <i class="material-icons" title="sort">sort</i>
-          </div>
-          <div class="col__break__line"></div>
-          <div *ngFor="let issue of doneIssues">
-            <div class="issue__card">
-              <p class="issue__title">{{ issue.title }}</p>
-              <p class="issue__priority__high">
-                {{ issue.priority }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="paginator__div">
-        <mat-paginator class="issues__paginator" [length]="100" [pageSize]="3">
-        </mat-paginator>
       </div>
     </div>
 

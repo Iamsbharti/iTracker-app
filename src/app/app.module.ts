@@ -12,6 +12,8 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
   imports: [
@@ -24,6 +26,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatPaginatorModule,
     IssuesModule,
     NgbModule,
+    MatTableModule,
     ToastNotificationsModule.forRoot({
       duration: 3500,
       type: 'primary',

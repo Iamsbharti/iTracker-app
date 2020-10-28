@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { IssuesService } from '../issues.service';
 import { UserService } from '../../user/user.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,14 +24,14 @@ export class DashboardComponent implements OnInit {
   public userName: string;
   public userId: string;
   public name: string;
-  public allIssues: Array<any>;
+  public allIssues: Array<any> = [];
   public backlogsIssues: Array<any>;
   public progressIssues: Array<any>;
   public testIssues: Array<any>;
   public doneIssues: Array<any>;
 
   // pagination
-  public pageSize: number;
+  //public pageSize: number;
 
   // display content
   public showCategorizedIssues: boolean;
@@ -31,6 +40,8 @@ export class DashboardComponent implements OnInit {
 
   // create issue modal
   public closeResult: string;
+  public dataSource: any;
+
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,
@@ -53,9 +64,15 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllIssues();
-
     this.showFilteredIssues = false;
   }
+  /*
+  displayedColumns: string[] = ['title', 'reporter', 'createDate', 'status'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  ngAfterViewInit() {
+    //this.dataSource.paginator = this.paginator;
+  }
+  */
   public getAllIssues(): any {
     console.log('get all issue api call');
     const userInfo = {
@@ -67,6 +84,12 @@ export class DashboardComponent implements OnInit {
       (response) => {
         console.log('All issues response', response);
         this.allIssues = response.data;
+        /*this.dataSource = new MatTableDataSource<Object>(
+          this.allIssues.splice(0, 5)
+        );
+        this.dataSource.paginator = this.paginator;
+        console.log(this.paginator);
+        console.log(this.dataSource.paginator);*/
         console.log('all issues:', this.allIssues);
         if (response.status === 200) {
           this.filterIssuesBasedOnStatus(this.allIssues);
@@ -74,6 +97,7 @@ export class DashboardComponent implements OnInit {
           // show categorized view and hide the filtered one
           this.showCategorizedIssues = false;
           this.showFilteredIssues = true;
+          //return this.allIssues;
         }
       },
       // error handler
