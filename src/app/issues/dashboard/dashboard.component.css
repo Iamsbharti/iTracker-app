@@ -263,8 +263,7 @@ code {
   margin-right: auto;
 }
 .issue__table {
-  width: 50px;
-  height: 100vh;
+  padding-top: 20px;
 }
 table {
   width: 100%;
@@ -279,9 +278,27 @@ th {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: blue;
 }
 tr:nth-child(even) {
   background-color: #dddddd;
+  background-image: var(--bg-grad);
+}
+.issue__table__header {
+  padding-top: 17px;
+  margin-top: 20px;
+  margin-bottom: 4px;
+  margin-left: 10px;
+  font-weight: 800;
+  font-size: 14px;
+}
+.table__header {
+  display: flex;
+}
+.sort__icon {
+  display: grid;
+  justify-items: flex-end;
+  margin-top: -25px;
 }
 .dashboard__issue__filtered__list {
   flex: 0.8;

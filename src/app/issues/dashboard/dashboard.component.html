@@ -79,19 +79,35 @@
         <div class="div__break__line"></div>
       </div>
     </div>
-    <!--categorized view start-->
+    <!--categorized table view start-->
 
     <div class="dashboard__issue__list" [hidden]="showCategorizedIssues">
-      <div>
+      <div class="issue__table__header">
+        <p>
+          Currently showing
+          <span style="color: blueviolet"> all assined issues</span>
+        </p>
+      </div>
+      <div class="issue__table">
         <table>
           <tr>
-            <th>Title</th>
-            <th>Reporter</th>
-            <th>Created On</th>
-            <th>Status</th>
+            <th>
+              Title <i class="material-icons sort__icon" title="sort">sort</i>
+            </th>
+            <th>
+              Reporter<i class="material-icons sort__icon" title="sort">sort</i>
+            </th>
+            <th>
+              Created On<i class="material-icons sort__icon" title="sort"
+                >sort</i
+              >
+            </th>
+            <th>
+              Status<i class="material-icons sort__icon" title="sort">sort</i>
+            </th>
           </tr>
           <tr *ngFor="let issue of allIssues">
-            <td>{{ issue.title }}</td>
+            <td class="title__col">{{ issue.title }}</td>
             <td>{{ issue.reporter }}</td>
             <td>{{ issue.createDate | date }}</td>
             <td>{{ issue.status }}</td>
@@ -100,15 +116,15 @@
         <div class="paginator__div">
           <mat-paginator
             class="issues__paginator"
-            [length]="100"
-            [pageSize]="3"
+            [length]="length"
+            [pageSize]="pageSize"
           >
           </mat-paginator>
         </div>
       </div>
     </div>
 
-    <!--categorized view end-->
+    <!--categorized table view end-->
 
     <div class="dashboard__footbar"></div>
     <div class="dashboard__issue__filtered__list" [hidden]="showFilteredIssues">

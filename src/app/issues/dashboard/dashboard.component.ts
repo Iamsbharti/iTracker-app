@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  Input,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IssuesService } from '../issues.service';
 import { UserService } from '../../user/user.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
@@ -31,7 +25,8 @@ export class DashboardComponent implements OnInit {
   public doneIssues: Array<any>;
 
   // pagination
-  //public pageSize: number;
+  public pageSize: number;
+  public length: number;
 
   // display content
   public showCategorizedIssues: boolean;
@@ -97,7 +92,10 @@ export class DashboardComponent implements OnInit {
           // show categorized view and hide the filtered one
           this.showCategorizedIssues = false;
           this.showFilteredIssues = true;
-          //return this.allIssues;
+
+          // init pagination values
+          this.pageSize = 9;
+          this.length = this.allIssues.length;
         }
       },
       // error handler
