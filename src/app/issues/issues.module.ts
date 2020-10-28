@@ -12,7 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateIssueComponent } from './create-issue/create-issue.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-
+import { CKEditorModule } from 'ckeditor4-angular';
 @NgModule({
   declarations: [DashboardComponent, CreateIssueComponent],
   imports: [
@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
     NgbModule,
     MatTableModule,
     MatInputModule,
+    CKEditorModule,
   ],
   providers: [IssuesService],
 })

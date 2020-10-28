@@ -3,7 +3,7 @@
   <div class="create__issue__contents">
     <form #createIssueForm="ngForm" (ngSubmit)="createIssue()">
       <div class="form-group">
-        <label for="title">Title</label>
+        <label for="title">Title<span style="color: red">*</span></label>
         <input
           name="title"
           required
@@ -19,21 +19,8 @@
           Title is Required
         </div>
         <label for="description">Decription</label>
-        <textarea
-          class="form-control mt-1"
-          name="description"
-          required
-          placeholder="decription"
-          [(ngModel)]="description"
-          #_desc="ngModel"
-        ></textarea>
-        <div
-          [hidden]="_desc.valid || _desc.pristine"
-          class="alert alert-danger"
-        >
-          Description is Required
-        </div>
-        <label for="reporter">Reporter</label>
+        <ckeditor [(ngModel)]="description"></ckeditor>
+        <label for="reporter">Reporter<span style="color: red">*</span></label>
         <input
           class="form-control mt-1"
           name="reporter"
@@ -49,7 +36,7 @@
         >
           Reporter is Required
         </div>
-        <label for="priority">Priority</label>
+        <label for="priority">Priority<span style="color: red">*</span></label>
         <select
           name="priority"
           required
@@ -68,7 +55,7 @@
           [(ngModel)]="originalEstimates"
           #_oest="ngModel"
         />
-        <label for="status">Status</label>
+        <label for="status">Status<span style="color: red">*</span></label>
         <select
           name="status"
           required
@@ -97,7 +84,14 @@
         </select>
 
         <div class="issuee__create__btn">
-          <button class="mat-raised-button">Create</button>
+          <button
+            mat-raised-button
+            color="primary"
+            class="button__create"
+            [disabled]="!createIssueForm.form.valid"
+          >
+            Create
+          </button>
           <h4>Cancel?</h4>
         </div>
       </div>

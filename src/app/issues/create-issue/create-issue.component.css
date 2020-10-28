@@ -2,3 +2,30 @@
   margin-left: 12px;
   margin-right: 12px;
 }
+label {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+.issuee__create__btn {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid var(--tracker-color) !important;
+  background-color: #f8f4e3 !important;
+  font-weight: 400 !important;
+  color: #000 !important;
+}
+h4 {
+  color: var(--tracker-color);
+  cursor: pointer;
+  margin-top: 3px;
+  font-size: 15px;
+  margin-left: 3px;
+}
+h4:hover {
+  color: blue;
+}

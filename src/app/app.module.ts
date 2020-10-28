@@ -14,7 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-
+import { CKEditorModule } from 'ckeditor4-angular';
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
   imports: [
@@ -29,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
     NgbModule,
     MatTableModule,
     MatInputModule,
+    CKEditorModule,
     ToastNotificationsModule.forRoot({
       duration: 3500,
       type: 'primary',
