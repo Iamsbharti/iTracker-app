@@ -4,8 +4,8 @@ import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,6 +39,8 @@ export class DashboardComponent implements OnInit {
   public displayFilterType: string;
   public isIssueListEmpty: boolean;
   public emptyIssueMessage: string;
+  //sort
+  public sortedData = [];
 
   // create issue modal
   public closeResult: string;
@@ -54,6 +56,7 @@ export class DashboardComponent implements OnInit {
     this.userId = Cookie.get('userId');
     this.name = Cookie.get('name');
     this.pageSizeOptions = [5, 10];
+    this.sortedData = this.activePageDataChunks.slice();
 
     if (
       this.userName == null ||
@@ -191,27 +194,10 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  // sort columns asending and decending
-  public sortIssueColumn(sortingItem): any {
-    console.log('sorting finction', sortingItem);
-    this.allIssues = this.allIssues.sort((a, b) => {
-      var nameA = a.status.toUpperCase(); // ignore upper and lowercase
-      var nameB = b.status.toUpperCase(); // ignore upper and lowercase
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
 
-      // names must be equal
-      return 0;
-    });
-    console.log(this.allIssues);
-  }
   /**open modal */
   open(content) {
-    //console.debug('modal open::', ops, id);
+    // console.debug('modal open::', ops, id);
 
     this.modalService
       .open(content, {
@@ -227,7 +213,7 @@ export class DashboardComponent implements OnInit {
           this.closeResult = `Dismissed`;
         }
       );
-    //console.debug('Modal closed::', this.closeResult);
+    // console.debug('Modal closed::', this.closeResult);
   }
 
   // listener for new created issue
@@ -235,4 +221,31 @@ export class DashboardComponent implements OnInit {
     console.log('new issue from modal:', value);
     this.allIssues.push(value);
   }
+  // sort columns asending and decending
+  public sortData(sort: Sort) {
+    const data = this.activePageDataChunks.slice();
+    if (!sort.active || sort.direction === '') {
+      this.activePageDataChunks = data;
+      return;
+    }
+
+    this.activePageDataChunks = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'title':
+          return compareIssues(a.title, b.title, isAsc);
+        case 'reporter':
+          return compareIssues(a.reporter, b.reporter, isAsc);
+        case 'createDate':
+          return compareIssues(a.createDate, b.createDate, isAsc);
+        case 'status':
+          return compareIssues(a.status, b.status, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+}
+function compareIssues(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

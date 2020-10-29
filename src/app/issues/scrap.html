@@ -118,3 +118,46 @@
     <h4>Cancel?</h4>
   </div>
 </form>
+--------------------------
+<table matSort (matSortChange)="sortData($event)">
+  <tr>
+    <th mat-sort-header="Title">
+      <i
+        class="material-icons sort__icon"
+        title="arrow_downward"
+        (click)="sortIssueColumn('title')"
+        >arrow_downward</i
+      >
+    </th>
+    <th>
+      Reporter<i
+        class="material-icons sort__icon"
+        title="arrow_downward"
+        (click)="sortIssueColumn('reporter')"
+        >arrow_downward</i
+      >
+    </th>
+    <th>
+      Created On<i
+        class="material-icons sort__icon"
+        title="arrow_downward"
+        (click)="sortIssueColumn('createDate')"
+        >arrow_downward</i
+      >
+    </th>
+    <th>
+      Status<i
+        class="material-icons sort__icon"
+        title="arrow_downward"
+        (click)="sortIssueColumn('status')"
+        >arrow_downward</i
+      >
+    </th>
+  </tr>
+  <tr *ngFor="let issue of activePageDataChunks">
+    <td class="title__col">{{ issue.title }}</td>
+    <td>{{ issue.reporter }}</td>
+    <td>{{ issue.createDate | date }}</td>
+    <td>{{ issue.status }}</td>
+  </tr>
+</table>

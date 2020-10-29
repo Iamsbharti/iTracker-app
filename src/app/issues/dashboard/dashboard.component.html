@@ -87,41 +87,12 @@
         </p>
       </div>
       <div class="issue__table">
-        <table>
+        <table matSort (matSortChange)="sortData($event)">
           <tr>
-            <th>
-              Title
-              <i
-                class="material-icons sort__icon"
-                title="sort"
-                (click)="sortIssueColumn('title')"
-                >sort</i
-              >
-            </th>
-            <th>
-              Reporter<i
-                class="material-icons sort__icon"
-                title="sort"
-                (click)="sortIssueColumn('reporter')"
-                >sort</i
-              >
-            </th>
-            <th>
-              Created On<i
-                class="material-icons sort__icon"
-                title="sort"
-                (click)="sortIssueColumn('createDate')"
-                >sort</i
-              >
-            </th>
-            <th>
-              Status<i
-                class="material-icons sort__icon"
-                title="sort"
-                (click)="sortIssueColumn('status')"
-                >sort</i
-              >
-            </th>
+            <th mat-sort-header="title">Title</th>
+            <th mat-sort-header="reporter">Reporter</th>
+            <th mat-sort-header="createDate">created On</th>
+            <th mat-sort-header="status">Status</th>
           </tr>
           <tr *ngFor="let issue of activePageDataChunks">
             <td class="title__col">{{ issue.title }}</td>

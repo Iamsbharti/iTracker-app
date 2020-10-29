@@ -13,6 +13,7 @@ import { CreateIssueComponent } from './create-issue/create-issue.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   declarations: [DashboardComponent, CreateIssueComponent],
   imports: [
@@ -27,6 +28,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
     MatTableModule,
     MatInputModule,
     CKEditorModule,
+    MatSortModule,
   ],
   providers: [IssuesService],
 })

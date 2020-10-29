@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
   imports: [
@@ -30,6 +31,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
     MatTableModule,
     MatInputModule,
     CKEditorModule,
+    MatSortModule,
     ToastNotificationsModule.forRoot({
       duration: 3500,
       type: 'primary',
