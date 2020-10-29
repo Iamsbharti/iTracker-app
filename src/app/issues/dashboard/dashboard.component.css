@@ -421,3 +421,11 @@ i {
 .modal-content {
   width: 500px !important;
 }
+.issuee__not__found {
+  display: flex;
+  justify-content: center;
+  margin: 230px;
+  font-weight: 900;
+  font-size: 20px;
+  color: #931f1d;
+}

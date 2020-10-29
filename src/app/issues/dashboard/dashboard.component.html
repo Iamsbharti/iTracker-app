@@ -37,9 +37,7 @@
       <div class="div__break__line"></div>
       <div class="dashboard__filter__list">
         <p class="option__bold__text">Filters</p>
-        <p class="filters" (click)="getAllIssues()">
-          Main view (status-filtered)
-        </p>
+        <p class="filters" (click)="getAllIssues()">Main view</p>
         <p
           class="filters"
           (click)="filterIssues(userId, 'all', 'status', userName)"
@@ -85,7 +83,7 @@
       <div class="issue__table__header">
         <p>
           Currently showing
-          <span style="color: blueviolet"> all assigned issues</span>
+          <span style="color: blueviolet"> {{ displayFilterType }}</span>
         </p>
       </div>
       <div class="issue__table">
@@ -145,35 +143,41 @@
       </div>
     </div>
     <!--categorized table view end-->
-    <div class="dashboard__footbar"></div>
-  </div>
+    <div class="dashboard__issue__list" [hidden]="!showCategorizedIssues">
+      <div class="issuee__not__found">
+        {{ emptyIssueMessage }}
+        <i class="material-icons">warning</i>
+      </div>
+      <div class="dashboard__footbar"></div>
+    </div>
 
-  <!--Create Issue Modal-->
-  <ng-template #createModal let-modal>
-    <div class="modal-header">
-      <p class="modal-title mt-3 ml-3 font-weight-bold" id="modal-create">
-        You are creating an Issue
-      </p>
-    </div>
-    <div class="modal-body modal__size">
-      <app-create-issue
-        [userId]="userId"
-        [username]="userName"
-        (closeModal)="modal.close()"
-        (newCreatedIssue)="updateIssueList($event)"
-      >
-      </app-create-issue>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        mat-raised-button
-        class="mt-2 mr-2 mb-2"
-        color="warn"
-        (click)="modal.close('Save click')"
-      >
-        Close
-      </button>
-    </div>
-  </ng-template>
+    <!--Create Issue Modal-->
+    <ng-template #createModal let-modal>
+      <div class="modal-header">
+        <p class="modal-title mt-3 ml-3 font-weight-bold" id="modal-create">
+          You are creating an Issue
+        </p>
+      </div>
+      <div class="modal-body modal__size">
+        <app-create-issue
+          [userId]="userId"
+          [username]="userName"
+          (closeModal)="modal.close()"
+          (newCreatedIssue)="updateIssueList($event)"
+        >
+        </app-create-issue>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          mat-raised-button
+          class="mt-2 mr-2 mb-2"
+          color="warn"
+          (click)="modal.close('Save click')"
+        >
+          Close
+        </button>
+      </div>
+    </ng-template>
+  </div>
 </div>

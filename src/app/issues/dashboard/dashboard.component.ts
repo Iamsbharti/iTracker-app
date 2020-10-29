@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit {
   public showCategorizedIssues: boolean;
   public showFilteredIssues: boolean;
   public displayFilterType: string;
+  public isIssueListEmpty: boolean;
+  public emptyIssueMessage: string;
 
   // create issue modal
   public closeResult: string;
@@ -95,15 +97,21 @@ export class DashboardComponent implements OnInit {
         this.allIssues = response.data;
         console.log('all issues:', this.allIssues);
         if (response.status === 200) {
-          // show categorized view and hide the filtered one
-          this.showCategorizedIssues = false;
+          // conditional render the issue table
+          if (this.allIssues.length <= 0) {
+            this.showCategorizedIssues = true;
+            this.isIssueListEmpty = true;
+            this.emptyIssueMessage = 'No Issues Found';
+            this.displayFilterType = 'your assgined issues';
+          } else {
+            this.showCategorizedIssues = false;
+            this.displayFilterType = 'your assgined issues';
+          }
 
           // init pagination values
-
           this.pageSize = 5;
           this.length = this.allIssues.length;
-          this.dataSource.push(this.allIssues);
-          console.log('dataSource:', this.dataSource);
+
           // chunks
           this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
           console.log('active page chunks:', this.activePageDataChunks);
@@ -156,23 +164,24 @@ export class DashboardComponent implements OnInit {
           //clear any previous data
           this.allIssues = [];
           this.allIssues = response.data;
-          // splice to 8 items
-          console.log(
-            'size of allissues before splice,',
-            this.allIssues.length
-          );
-          //this.allIssues = this.allIssues.splice(0, 8);
+          // conditional render issue table
+          if (this.allIssues.length <= 0) {
+            this.showCategorizedIssues = true;
+            this.emptyIssueMessage = 'No Issues Found';
+            this.isIssueListEmpty = true;
+          } else {
+            // init pagination values
+            this.pageSize = 5;
+            this.length = this.allIssues.length;
 
-          // init pagination values
-          this.pageSize = 5;
+            // chunks
+            this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
+            console.log('active page chunks:', this.activePageDataChunks);
 
-          // chunks
-          this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-          console.log('active page chunks:', this.activePageDataChunks);
-
-          this.toaster.open({ text: 'Filtered Issues', type: 'success' });
-          // show categorized view and hide the filtered one
-          this.showCategorizedIssues = false;
+            this.toaster.open({ text: 'Filtered Issues', type: 'success' });
+            // show categorized view and hide the filtered one
+            this.showCategorizedIssues = false;
+          }
         }
       },
       // error
