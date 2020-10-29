@@ -59,16 +59,7 @@ export class IssuesService {
   //create issue
   public createIssue(issueDetails): any {
     console.log('Create issue service', issueDetails);
-    const {
-      userId,
-      title,
-      description,
-      status,
-      reporter,
-      priority,
-      estimates,
-      assignee,
-    } = issueDetails;
+    const { userId } = issueDetails;
     const createdIssue = this.http.post(
       `${this.baseUrl}/issue/create?userId=${userId}`,
       issueDetails,
