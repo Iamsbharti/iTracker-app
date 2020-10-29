@@ -125,7 +125,7 @@
               >
             </th>
           </tr>
-          <tr *ngFor="let issue of allIssues">
+          <tr *ngFor="let issue of activePageDataChunks">
             <td class="title__col">{{ issue.title }}</td>
             <td>{{ issue.reporter }}</td>
             <td>{{ issue.createDate | date }}</td>
@@ -137,6 +137,8 @@
             class="issues__paginator"
             [length]="length"
             [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageChanged($event)"
           >
           </mat-paginator>
         </div>

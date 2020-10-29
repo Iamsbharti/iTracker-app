@@ -4,7 +4,7 @@ import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -23,9 +23,15 @@ export class DashboardComponent implements OnInit {
   public testIssues: Array<any>;
   public doneIssues: Array<any>;
 
-  // pagination
+  // pagination inputs
   public pageSize: number;
   public length: number;
+  public pageSizeOptions: number[];
+
+  // pagination outputs
+  public pageEvent: PageEvent;
+  public datasource = [];
+  public activePageDataChunks = [];
 
   // display content
   public showCategorizedIssues: boolean;
@@ -34,7 +40,7 @@ export class DashboardComponent implements OnInit {
 
   // create issue modal
   public closeResult: string;
-  public dataSource: any;
+  public dataSource = [];
 
   constructor(
     private issueService: IssuesService,
@@ -45,6 +51,7 @@ export class DashboardComponent implements OnInit {
     this.userName = Cookie.get('username');
     this.userId = Cookie.get('userId');
     this.name = Cookie.get('name');
+    this.pageSizeOptions = [5, 10];
 
     if (
       this.userName == null ||
@@ -55,18 +62,26 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-
+  // set page chunks
+  public setPageSizeOptions(setPageSizeOptionsInput: string) {
+    this.pageSizeOptions = setPageSizeOptionsInput
+      .split(',')
+      .map((str) => +str);
+  }
   ngOnInit(): void {
     this.getAllIssues();
     this.showFilteredIssues = false;
   }
-  /*
-  displayedColumns: string[] = ['title', 'reporter', 'createDate', 'status'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  ngAfterViewInit() {
-    //this.dataSource.paginator = this.paginator;
+  // page event change
+  public onPageChanged(e) {
+    console.log('on page change event', e);
+    let firstCut = e.pageIndex * e.pageSize;
+    console.log(firstCut);
+    let secondCut = firstCut + e.pageSize;
+    console.log(secondCut);
+    this.activePageDataChunks = this.allIssues.slice(firstCut, secondCut);
   }
-  */
+
   public getAllIssues(): any {
     console.log('get all issue api call');
     const userInfo = {
@@ -78,23 +93,23 @@ export class DashboardComponent implements OnInit {
       (response) => {
         console.log('All issues response', response);
         this.allIssues = response.data;
-        /*this.dataSource = new MatTableDataSource<Object>(
-          this.allIssues.splice(0, 5)
-        );
-        this.dataSource.paginator = this.paginator;
-        console.log(this.paginator);
-        console.log(this.dataSource.paginator);*/
         console.log('all issues:', this.allIssues);
         if (response.status === 200) {
-          this.filterIssuesBasedOnStatus(this.allIssues);
-          this.toaster.open({ text: 'Issues Fetched', type: 'success' });
           // show categorized view and hide the filtered one
           this.showCategorizedIssues = false;
-          this.showFilteredIssues = true;
 
           // init pagination values
-          this.pageSize = 9;
+
+          this.pageSize = 5;
           this.length = this.allIssues.length;
+          this.dataSource.push(this.allIssues);
+          console.log('dataSource:', this.dataSource);
+          // chunks
+          this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
+          console.log('active page chunks:', this.activePageDataChunks);
+
+          // toast
+          this.toaster.open({ text: 'Issues Fetched', type: 'success' });
         }
       },
       // error handler
@@ -103,21 +118,6 @@ export class DashboardComponent implements OnInit {
         this.toaster.open({ text: 'Something went wrong', type: 'danger' });
       }
     );
-  }
-  // filter issues based on status and allow only 3 in each category
-  public filterIssuesBasedOnStatus(allIssues: Array<any>) {
-    this.backlogsIssues = this.allIssues
-      .filter((iss) => iss.status === 'backlog')
-      .splice(0, 3);
-    this.progressIssues = this.allIssues
-      .filter((iss) => iss.status === 'progress')
-      .splice(0, 3);
-    this.testIssues = this.allIssues
-      .filter((iss) => iss.status === 'test')
-      .splice(0, 3);
-    this.doneIssues = this.allIssues
-      .filter((iss) => iss.status === 'done')
-      .splice(0, 3);
   }
 
   // filter issues based on conditions
@@ -153,21 +153,26 @@ export class DashboardComponent implements OnInit {
       // success
       (response) => {
         if (response.status === 200) {
+          //clear any previous data
+          this.allIssues = [];
           this.allIssues = response.data;
           // splice to 8 items
           console.log(
             'size of allissues before splice,',
             this.allIssues.length
           );
-          this.allIssues = this.allIssues.splice(0, 8);
+          //this.allIssues = this.allIssues.splice(0, 8);
+
+          // init pagination values
+          this.pageSize = 5;
+
+          // chunks
+          this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
+          console.log('active page chunks:', this.activePageDataChunks);
+
           this.toaster.open({ text: 'Filtered Issues', type: 'success' });
           // show categorized view and hide the filtered one
           this.showCategorizedIssues = false;
-
-          // pagination values
-          // init pagination values
-          this.pageSize = this.allIssues.length;
-          this.length = response.data.length;
         }
       },
       // error
