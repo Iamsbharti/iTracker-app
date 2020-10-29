@@ -69,11 +69,10 @@ export class IssuesService {
       estimates,
       assignee,
     } = issueDetails;
-    const createdIssue = this.http.get(
-      `${this.baseUrl}/issue/create?userId=${userId}
-      &title=${title}&description=${description}&status=${status}
-      &reporter=${reporter}&priority=${priority}&estimates=${estimates}
-      &assignee=${assignee}`
+    const createdIssue = this.http.post(
+      `${this.baseUrl}/issue/create?userId=${userId}`,
+      issueDetails,
+      this.httpHeaderOptions
     );
     return createdIssue;
   }

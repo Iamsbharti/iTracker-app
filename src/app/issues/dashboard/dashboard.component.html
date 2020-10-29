@@ -154,8 +154,12 @@
       </p>
     </div>
     <div class="modal-body modal__size">
-      <app-create-issue>
-        [userId]="userId" [username]="userName" (closeModal)="modal.close()"
+      <app-create-issue
+        [userId]="userId"
+        [username]="userName"
+        (closeModal)="modal.close()"
+        (newCreatedIssue)="updateIssueList($event)"
+      >
       </app-create-issue>
     </div>
     <div class="modal-footer">

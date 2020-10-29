@@ -79,7 +79,7 @@
           [(ngModel)]="assignee"
           class="form-control mt-1"
         >
-          <option *ngFor="let assig of assigneeOptions" [value]="assig._id">
+          <option *ngFor="let assig of assigneeOptions" [value]="assig.userId">
             {{ assig.name }}
           </option>
         </select>
@@ -89,7 +89,7 @@
             mat-raised-button
             color="primary"
             class="button__create"
-            [disabled]="createIssueForm.form.valid"
+            [disabled]="!createIssueForm.form.valid"
           >
             Create
           </button>

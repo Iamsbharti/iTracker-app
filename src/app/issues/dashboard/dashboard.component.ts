@@ -215,4 +215,10 @@ export class DashboardComponent implements OnInit {
       );
     //console.debug('Modal closed::', this.closeResult);
   }
+
+  // listener for new created issue
+  public updateIssueList(value): any {
+    console.log('new issue from modal:', value);
+    this.allIssues.push(value);
+  }
 }
