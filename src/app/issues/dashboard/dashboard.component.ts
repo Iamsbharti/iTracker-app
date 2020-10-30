@@ -339,7 +339,10 @@ export class DashboardComponent implements OnInit {
     );
 
     console.log('Single Issue details', this.issueDetails);
-    this.toaster.open({ text: `openning ${this.issueDetails.title}` });
+    this.toaster.open({
+      text: `openning ${this.issueDetails.title}`,
+      type: 'dark',
+    });
   }
 }
 function compareIssues(a: number | string, b: number | string, isAsc: boolean) {

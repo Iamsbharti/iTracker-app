@@ -134,11 +134,11 @@
     <!--No Issue Found Div End-->
 
     <!--Single Issue Component Start-->
-    <div [hidden]="showSingleIssue">
-      <div class="dashboard__issue__list">
-        <app-single-issue></app-single-issue>
-      </div>
+
+    <div class="dashboard__issue__list" [hidden]="showSingleIssue">
+      <app-single-issue [issueDetails]="issueDetails"></app-single-issue>
     </div>
+
     <!--Single Issue Compoenent End-->
 
     <!--Create Issue Modal-->
