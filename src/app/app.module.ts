@@ -34,7 +34,7 @@ import { MatSortModule } from '@angular/material/sort';
     CKEditorModule,
     MatSortModule,
     ToastNotificationsModule.forRoot({
-      duration: 3500,
+      duration: 1200,
       type: 'primary',
       autoClose: true,
       position: 'top-right',

@@ -196,6 +196,7 @@ code {
   border-radius: 6px;
   border-color: #7a93ac;
   font-size: 15px;
+  padding-left: 10px;
 }
 .dashboard__navbar > button:hover {
   background-color: rgb(64, 148, 175) !important;
