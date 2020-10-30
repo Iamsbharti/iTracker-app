@@ -56,7 +56,7 @@ export class IssuesService {
     return allUsers;
   }
 
-  //create issue
+  // create issue
   public createIssue(issueDetails): any {
     console.log('Create issue service', issueDetails);
     const { userId } = issueDetails;
@@ -66,5 +66,15 @@ export class IssuesService {
       this.httpHeaderOptions
     );
     return createdIssue;
+  }
+  // search Issue
+  public searchIssues(searchDeatils): any {
+    console.log('Issue Search', searchDeatils);
+    const { userId, search } = searchDeatils;
+    const searchResults = this.http.get(
+      `${this.baseUrl}/issue/search?userId=${userId}&search=${search}`,
+      this.httpHeaderOptions
+    );
+    return searchResults;
   }
 }
