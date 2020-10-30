@@ -83,10 +83,25 @@ export class DashboardComponent implements OnInit {
     let secondCut = firstCut + e.pageSize;
     this.activePageDataChunks = this.allIssues.slice(firstCut, secondCut);
   }
-  /**listener for new issue creates*/
+  // listener for new issue creates
   public updateNewIssue(values): any {
     console.debug('new issue from create-issue-compoennet', values);
     this.activePageDataChunks.push(values);
+  }
+  // logout user
+  public logout(): any {
+    console.log('logout clicks');
+    // delete cookies
+    Cookie.delete('name');
+    Cookie.delete('email');
+    Cookie.delete('username');
+    Cookie.delete('userId');
+    Cookie.delete('authToken');
+
+    // delete localstorage
+    localStorage.removeItem('userInfo');
+
+    setTimeout(() => this.router.navigate(['/login']), 1200);
   }
   public getAllIssues(): any {
     console.log('get all issue api call');
