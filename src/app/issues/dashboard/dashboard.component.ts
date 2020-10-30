@@ -6,7 +6,20 @@ import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-
+export interface Issue {
+  description?: string;
+  createDate?: string;
+  watchList?: Array<Object>;
+  comments?: Array<Object>;
+  attachment?: Array<Object>;
+  issueId: string;
+  userId: string;
+  title: string;
+  status: string;
+  reporter: string;
+  priority: string;
+  estimates: string;
+}
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -32,7 +45,7 @@ export class DashboardComponent implements OnInit {
   // pagination outputs
   public pageEvent: PageEvent;
   public datasource = [];
-  public activePageDataChunks = [];
+  public activePageDataChunks: Array<Issue> = [];
 
   // display content
   public showCategorizedIssues: boolean;
@@ -46,6 +59,12 @@ export class DashboardComponent implements OnInit {
   // create issue modal
   public closeResult: string;
   public dataSource = [];
+
+  // single issue fields
+  public showSingleIssue: boolean;
+  public issueDetails: Issue;
+
+  // issue interface
 
   constructor(
     private issueService: IssuesService,
@@ -118,6 +137,7 @@ export class DashboardComponent implements OnInit {
 
         if (response.status === 200) {
           // conditional render the issue table
+          this.showSingleIssue = true;
           if (this.allIssues.length <= 0) {
             this.showCategorizedIssues = true;
             this.isIssueListEmpty = true;
@@ -187,6 +207,7 @@ export class DashboardComponent implements OnInit {
           // conditional render issue table
           if (this.allIssues.length <= 0) {
             this.showCategorizedIssues = true;
+
             this.emptyIssueMessage = 'No Issues Found';
             this.isIssueListEmpty = true;
           } else {
@@ -201,6 +222,7 @@ export class DashboardComponent implements OnInit {
             this.toaster.open({ text: 'Filtered Issues', type: 'success' });
             // show categorized view and hide the filtered one
             this.showCategorizedIssues = false;
+            this.showSingleIssue = true;
           }
         }
       },
@@ -272,6 +294,7 @@ export class DashboardComponent implements OnInit {
           this.allIssues = response.data;
 
           // conditional render the issue table
+
           if (this.allIssues.length <= 0) {
             this.showCategorizedIssues = true;
             this.isIssueListEmpty = true;
@@ -279,6 +302,7 @@ export class DashboardComponent implements OnInit {
             this.displayFilterType = 'Search Results';
           } else {
             this.showCategorizedIssues = false;
+            this.showSingleIssue = true;
             this.displayFilterType = 'Search Results';
           }
 
@@ -299,6 +323,23 @@ export class DashboardComponent implements OnInit {
         this.toaster.open({ text: error.error.message, type: 'danger' });
       }
     );
+  }
+
+  // single issue view
+  public viewSingleIssue(issueId): any {
+    console.log('View single Issue component');
+
+    // hide categorized table view
+    this.showCategorizedIssues = true;
+    this.showSingleIssue = false;
+
+    // find the single issue details
+    this.issueDetails = this.activePageDataChunks.find(
+      (iss) => iss.issueId === issueId
+    );
+
+    console.log('Single Issue details', this.issueDetails);
+    this.toaster.open({ text: `openning ${this.issueDetails.title}` });
   }
 }
 function compareIssues(a: number | string, b: number | string, isAsc: boolean) {

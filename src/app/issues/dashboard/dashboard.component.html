@@ -101,7 +101,9 @@
             <th mat-sort-header="status">Status</th>
           </tr>
           <tr *ngFor="let issue of activePageDataChunks">
-            <td class="title__col">{{ issue.title }}</td>
+            <td class="title__col" (click)="viewSingleIssue(issue.issueId)">
+              {{ issue.title }}
+            </td>
             <td>{{ issue.reporter }}</td>
             <td>{{ issue.createDate | date }}</td>
             <td>{{ issue.status }}</td>
@@ -120,13 +122,24 @@
       </div>
     </div>
     <!--categorized table view end-->
-    <div class="dashboard__issue__list" [hidden]="!showCategorizedIssues">
+
+    <!--No issue Found Div Start-->
+    <div class="dashboard__issue__list" [hidden]="!isIssueListEmpty">
       <div class="issuee__not__found">
         {{ emptyIssueMessage }}
         <i class="material-icons">warning</i>
       </div>
       <div class="dashboard__footbar"></div>
     </div>
+    <!--No Issue Found Div End-->
+
+    <!--Single Issue Component Start-->
+    <div [hidden]="showSingleIssue">
+      <div class="dashboard__issue__list">
+        <app-single-issue></app-single-issue>
+      </div>
+    </div>
+    <!--Single Issue Compoenent End-->
 
     <!--Create Issue Modal-->
     <ng-template #createModal let-modal>
@@ -158,3 +171,4 @@
     </ng-template>
   </div>
 </div>
+<router-outlet></router-outlet>

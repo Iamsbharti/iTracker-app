@@ -14,8 +14,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { MatSortModule } from '@angular/material/sort';
+import { SingleIssueComponent } from './single-issue/single-issue.component';
 @NgModule({
-  declarations: [DashboardComponent, CreateIssueComponent],
+  declarations: [
+    DashboardComponent,
+    CreateIssueComponent,
+    SingleIssueComponent,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
