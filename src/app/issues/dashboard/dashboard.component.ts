@@ -79,14 +79,15 @@ export class DashboardComponent implements OnInit {
   }
   // page event change
   public onPageChanged(e) {
-    console.log('on page change event', e);
     let firstCut = e.pageIndex * e.pageSize;
-    console.log(firstCut);
     let secondCut = firstCut + e.pageSize;
-    console.log(secondCut);
     this.activePageDataChunks = this.allIssues.slice(firstCut, secondCut);
   }
-
+  /**listener for new issue creates*/
+  public updateNewIssue(values): any {
+    console.debug('new issue from create-issue-compoennet', values);
+    this.activePageDataChunks.push(values);
+  }
   public getAllIssues(): any {
     console.log('get all issue api call');
     const userInfo = {
@@ -96,9 +97,9 @@ export class DashboardComponent implements OnInit {
     this.issueService.getAllIssuesByIdService(userInfo).subscribe(
       // success response
       (response) => {
-        console.log('All issues response', response);
+        console.log('All issues response');
         this.allIssues = response.data;
-        console.log('all issues:', this.allIssues);
+
         if (response.status === 200) {
           // conditional render the issue table
           if (this.allIssues.length <= 0) {
@@ -117,7 +118,7 @@ export class DashboardComponent implements OnInit {
 
           // chunks
           this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-          console.log('active page chunks:', this.activePageDataChunks);
+          console.debug('active page chunks:', this.activePageDataChunks);
 
           // toast
           this.toaster.open({ text: 'Issues Fetched', type: 'success' });
@@ -133,7 +134,7 @@ export class DashboardComponent implements OnInit {
 
   // filter issues based on conditions
   public filterIssues(userId, option, type, name): any {
-    let filterOptions = {
+    const filterOptions = {
       userId,
       option,
       type,
@@ -179,7 +180,7 @@ export class DashboardComponent implements OnInit {
 
             // chunks
             this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-            console.log('active page chunks:', this.activePageDataChunks);
+            console.debug('active page chunks:', this.activePageDataChunks);
 
             this.toaster.open({ text: 'Filtered Issues', type: 'success' });
             // show categorized view and hide the filtered one
@@ -216,11 +217,6 @@ export class DashboardComponent implements OnInit {
     // console.debug('Modal closed::', this.closeResult);
   }
 
-  // listener for new created issue
-  public updateIssueList(value): any {
-    console.log('new issue from modal:', value);
-    this.allIssues.push(value);
-  }
   // sort columns asending and decending
   public sortData(sort: Sort) {
     const data = this.activePageDataChunks.slice();

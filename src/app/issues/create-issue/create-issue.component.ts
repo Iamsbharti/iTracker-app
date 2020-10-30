@@ -63,7 +63,8 @@ export class CreateIssueComponent implements OnInit {
           console.log('issue create success');
           this.toaster.open({ text: 'Issue Created', type: 'success' });
           this.closeModal.emit();
-          this.newCreatedIssue.emit(response.data);
+          console.log('New Issue Create event', typeof response.data);
+          this.newCreatedIssue.emit('response.data');
         }
       },
       (error) => {
