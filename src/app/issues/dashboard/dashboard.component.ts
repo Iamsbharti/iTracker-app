@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   public userName: string;
   public userId: string;
   public name: string;
+  public search: string;
   public allIssues: Array<any> = [];
   public backlogsIssues: Array<any>;
   public progressIssues: Array<any>;
@@ -255,6 +256,49 @@ export class DashboardComponent implements OnInit {
           return 0;
       }
     });
+  }
+  // search issues
+  public searchIssues(search: string): any {
+    console.log('Seach issue service call', search);
+    const searchDetails = {
+      userId: this.userId,
+      search: search,
+    };
+    this.issueService.searchIssues(searchDetails).subscribe(
+      // success
+      (response) => {
+        console.log('Search issue response:', response);
+        if (response.status === 200) {
+          this.allIssues = response.data;
+
+          // conditional render the issue table
+          if (this.allIssues.length <= 0) {
+            this.showCategorizedIssues = true;
+            this.isIssueListEmpty = true;
+            this.emptyIssueMessage = 'No Issues Found';
+            this.displayFilterType = 'Search Results';
+          } else {
+            this.showCategorizedIssues = false;
+            this.displayFilterType = 'Search Results';
+          }
+
+          // init pagination values
+          this.pageSize = 5;
+          this.length = this.allIssues.length;
+
+          // chunks
+          this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
+          console.debug('active page chunks:', this.activePageDataChunks);
+
+          this.toaster.open({ text: 'Searched Issues', type: 'success' });
+        }
+      },
+      // error
+      (error) => {
+        console.error('Error Fetching Issues', error);
+        this.toaster.open({ text: error.error.message, type: 'danger' });
+      }
+    );
   }
 }
 function compareIssues(a: number | string, b: number | string, isAsc: boolean) {

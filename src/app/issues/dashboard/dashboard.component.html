@@ -26,6 +26,7 @@
       placeholder="Search"
       class="navbar__input__search"
       title="search by keywords"
+      (change)="searchIssues($event.target.value)"
     />
     <img
       src="assets/shutdown-96.png"
