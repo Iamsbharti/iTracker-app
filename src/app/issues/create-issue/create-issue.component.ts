@@ -10,8 +10,9 @@ import { Cookie } from 'ng2-cookies';
 })
 export class CreateIssueComponent implements OnInit {
   // Input field
-  @Input() userId: any;
-  @Input() username: any;
+  @Input() userId: string;
+  @Input() username: string;
+  @Input() name: string;
 
   // component willemit
   @Output()
@@ -49,7 +50,7 @@ export class CreateIssueComponent implements OnInit {
       title: this.title,
       description: this.description,
       status: this.status,
-      reporter: this.reporter,
+      reporter: this.name,
       priority: this.priority,
       estimates: this.originalEstimates,
       assignee: this.assignee,

@@ -152,6 +152,7 @@
         <app-create-issue
           [userId]="userId"
           [username]="userName"
+          [name]="name"
           (closeModal)="modal.close()"
           (newCreatedIssue)="updateNewIssue($event)"
         >

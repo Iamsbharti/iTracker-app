@@ -27,17 +27,19 @@
         <input
           class="form-control mt-1"
           name="reporter"
+          [value]="name"
           required
           placeholder="Reporter"
-          [(ngModel)]="reporter"
-          #_reporter="ngModel"
+          disabled
         />
-        <div
+        <!--
+          <div
           [hidden]="_reporter.valid || _reporter.pristine"
           class="alert alert-danger"
         >
           Reporter is Required
         </div>
+        -->
         <label for="priority">Priority<span style="color: red">*</span></label>
         <select
           name="priority"
@@ -45,7 +47,10 @@
           [(ngModel)]="priority"
           class="form-control mt-1"
         >
-          <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
+          <option [ngValue]="undefined" disabled>Select Priority</option>
+          <option *ngFor="let p of priorityOptions" [value]="p">
+            {{ p }}
+          </option>
         </select>
         <label for="originalEstimates">Original Estimate</label>
         <input
@@ -62,6 +67,7 @@
           [(ngModel)]="status"
           class="form-control mt-1"
         >
+          <option [ngValue]="undefined" disabled>Select Status</option>
           <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
         </select>
         <div class="upload_cover">
@@ -79,6 +85,7 @@
           [(ngModel)]="assignee"
           class="form-control mt-1"
         >
+          <option [ngValue]="undefined" disabled>Add Assignee</option>
           <option *ngFor="let assig of assigneeOptions" [value]="assig.userId">
             {{ assig.name }}
           </option>

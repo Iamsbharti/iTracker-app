@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   public dataSource = [];
 
   // single issue fields
-  public showSingleIssue: boolean;
+  public showSingleIssue = true;
   public issueDetails: Issue;
 
   // issue interface
