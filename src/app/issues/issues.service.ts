@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { UserService } from '../user/user.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -76,5 +77,16 @@ export class IssuesService {
       this.httpHeaderOptions
     );
     return searchResults;
+  }
+  // upload attachment
+  public uploadAttachment(fileDetails): any {
+    console.log('Attachment upload:', fileDetails);
+    const { userId, issueId, formData } = fileDetails;
+    const uploadResults = this.http.post(
+      `${this.baseUrl}/issue/upload?userId=${userId}&issueId=${issueId}`,
+      formData,
+      this.httpHeaderOptions
+    );
+    return uploadResults;
   }
 }

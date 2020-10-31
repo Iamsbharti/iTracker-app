@@ -17,6 +17,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { MatSortModule } from '@angular/material/sort';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
   imports: [
@@ -33,6 +35,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     CKEditorModule,
     MatSortModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     ToastNotificationsModule.forRoot({
       duration: 1200,
       type: 'primary',

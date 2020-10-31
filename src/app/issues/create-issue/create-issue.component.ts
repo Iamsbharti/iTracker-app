@@ -1,4 +1,12 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  Input,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { IssuesService } from '../issues.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
@@ -32,6 +40,7 @@ export class CreateIssueComponent implements OnInit {
   public assigneeOptions: Array<any>;
   public assignee: string;
   public attachment: any;
+
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     // init select type of fields
     this.statusOptions = ['Backlogs', 'Progress', 'Test', 'Done'];
