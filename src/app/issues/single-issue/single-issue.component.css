@@ -200,3 +200,6 @@ input[type="text"] {
   outline: none !important;
   color: #0353a4 !important;
 }
+.comments__text {
+  margin-left: 46px;
+}

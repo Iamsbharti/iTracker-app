@@ -87,7 +87,17 @@
               <i class="material-icons face__icon">face</i>
               <p>{{ name }}</p>
             </div>
-            <div class="comments__list"></div>
+            <div class="comments__list">
+              <div *ngFor="let co of issueDetails.comments">
+                <p class="comments__text">
+                  {{ co.text }}
+                  <div class="comment__edit__div">
+                    <span>Edit</span>
+                    <span>Delete</span>
+                  </div>
+                </p>
+              </div>
+            </div>
           </div>
           <div class="add__comment__section">
             <div class="add__comments__header" [hidden]="!showCommentEditor">

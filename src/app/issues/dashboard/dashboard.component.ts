@@ -11,7 +11,7 @@ export interface Issue {
   description?: string;
   createDate?: string;
   watchList?: Array<Object>;
-  comments?: Array<Object>;
+  comments?: Array<any>;
   attachment?: Array<Object>;
   issueId: string;
   userId: string;

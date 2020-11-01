@@ -3,6 +3,7 @@ import { Issue } from '../dashboard/dashboard.component';
 import { IssuesService } from '../issues.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
+import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-single-issue',
@@ -21,7 +22,7 @@ export class SingleIssueComponent implements OnInit {
   public updatedTitle: string;
   public editorDesc: string;
   public commentText: string;
-
+  public commentsList: Array<any>;
   public name: string;
   public userId: string;
 
@@ -43,7 +44,8 @@ export class SingleIssueComponent implements OnInit {
   }
   // hide and show update fields
   public showUpdateField(field): any {
-    console.debug('hide/show update options');
+    console.log('hide/show update options', this.issueDetails.comments[0].text);
+
     switch (field) {
       case 'title':
         this.showTitleInput = !this.showTitleInput;
@@ -53,6 +55,7 @@ export class SingleIssueComponent implements OnInit {
         break;
       case 'comment':
         this.showCommentEditor = !this.showCommentEditor;
+        this.commentsList = this.issueDetails.comments;
         break;
     }
   }
@@ -91,7 +94,12 @@ export class SingleIssueComponent implements OnInit {
         console.debug('description updated', this.editorDesc);
         updateIssue = {
           ...updateIssue,
-          updates: { description: this.editorDesc },
+          updates: {
+            description:
+              this.editorDesc === undefined
+                ? this.issueDetails.description
+                : this.editorDesc,
+          },
         };
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
