@@ -25,14 +25,14 @@ export class SingleIssueComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.issueDetails) {
-      console.log('UPDATING I?P FIELDS::', this.issueDetails);
+      console.debug('UPDATING I?P FIELDS::', this.issueDetails);
       this.updatedTitle = this.issueDetails.title;
       this.editorDesc = this.issueDetails.description;
     }
   }
   // hide and show update fields
   public showUpdateField(field): any {
-    console.log('hide/show update options');
+    console.debug('hide/show update options');
     switch (field) {
       case 'title':
         this.showTitleInput = !this.showTitleInput;
@@ -44,7 +44,7 @@ export class SingleIssueComponent implements OnInit {
   }
   // capture the editor's content
   public onChange(event: any, field) {
-    console.log(event.data);
+    console.debug(event.data);
     switch (field) {
       case 'title':
         this.updatedTitle = event.target.value;
@@ -57,7 +57,7 @@ export class SingleIssueComponent implements OnInit {
 
   // update fields
   public updateField(field): any {
-    console.log('updating field', field);
+    console.debug('updating field', field);
     let updateIssue = {
       userId: this.issueDetails.userId,
       issueId: this.issueDetails.issueId,
@@ -65,13 +65,13 @@ export class SingleIssueComponent implements OnInit {
     };
     switch (field) {
       case 'title':
-        console.log('title updated,', this.updatedTitle);
+        console.debug('title updated,', this.updatedTitle);
         updateIssue = { ...updateIssue, updates: { title: this.updatedTitle } };
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
         break;
       case 'desc':
-        console.log('description updated', this.editorDesc);
+        console.debug('description updated', this.editorDesc);
         updateIssue = {
           ...updateIssue,
           updates: { description: this.editorDesc },
@@ -92,7 +92,7 @@ export class SingleIssueComponent implements OnInit {
   ) {
     this.issueService.updateIssue(updateIssue).subscribe(
       (response) => {
-        console.log('update issue response:', response);
+        console.debug('update issue response:', response);
         if (response.status === 200) {
           this.toaster.open({ text: 'Issue Updated', type: 'info' });
           // close the edit option
@@ -112,7 +112,7 @@ export class SingleIssueComponent implements OnInit {
     field: string,
     updateIssue: { userId: string; issueId: string; updates: any }
   ) {
-    console.log('updating current object');
+    console.debug('updating current object');
     switch (field) {
       case 'title':
         this.issueDetails = {
@@ -130,7 +130,7 @@ export class SingleIssueComponent implements OnInit {
   }
   // upload attachments
   public handleUpload(value): any {
-    console.log('handle upload', value.target.files);
+    console.debug('handle upload', value.target.files);
     let data = new FormData();
     data.append('file', value.target.files[0]);
     const fileDetails = {
