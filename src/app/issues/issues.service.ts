@@ -89,4 +89,15 @@ export class IssuesService {
     );
     return uploadResults;
   }
+  // update issue
+  public updateIssue(issueDetails): any {
+    console.log('Update Issue:', issueDetails);
+    const { userId } = issueDetails;
+    const updatedIssues = this.http.put(
+      `${this.baseUrl}/issue/update?userId=${userId}`,
+      issueDetails,
+      this.httpHeaderOptions
+    );
+    return updatedIssues;
+  }
 }
