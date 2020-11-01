@@ -21,16 +21,28 @@ export class SingleIssueComponent implements OnInit {
   ngOnInit(): void {}
   // hide and show update fields
   public showUpdateField(field): any {
+    console.log('hide/show update options');
     switch (field) {
       case 'title':
-        this.showTitleInput = false;
+        this.showTitleInput = !this.showTitleInput;
         break;
       case 'desc':
-        this.showDescEditor = false;
+        this.showDescEditor = !this.showDescEditor;
         break;
     }
   }
-
+  // update fields
+  public updateField(field): any {
+    console.log('updating field', field);
+    switch (field) {
+      case 'title':
+        console.log('title updated');
+        break;
+      case 'desc':
+        console.log('description updated');
+        break;
+    }
+  }
   // upload attachments
   public handleUpload(value): any {
     console.log('handle upload', value.target.files);

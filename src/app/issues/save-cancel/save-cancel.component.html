@@ -1,5 +1,11 @@
 <div class="save__cancel__main">
-  <button mat-raised-button color="primary" class="button__save" title="save">
+  <button
+    mat-raised-button
+    color="primary"
+    class="button__save"
+    title="save"
+    (click)="save()"
+  >
     Save
   </button>
   <button
@@ -7,6 +13,7 @@
     color="secondary"
     class="button__cancel"
     title="cancel"
+    (click)="cancel()"
   >
     Cancel
   </button>

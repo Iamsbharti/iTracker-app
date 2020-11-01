@@ -31,7 +31,10 @@
               name="title"
               [value]="issueDetails.title"
             />
-            <app-save-cancel></app-save-cancel>
+            <app-save-cancel
+              (saveOps)="updateField('title')"
+              (cancelOps)="showUpdateField('title')"
+            ></app-save-cancel>
           </div>
         </div>
         <div class="edit__desc__div">
@@ -43,28 +46,32 @@
           >
             {{ issueDetails.description }}
           </p>
-          <ckeditor
-            [hidden]="showDescEditor"
-            [ngModelOptions]="{ standalone: true }"
-            [data]="issueDetails.description"
-            [config]="{
-              toolbar: [
-                [
-                  'Bold',
-                  'Italic',
-                  'Cut',
-                  'Copy',
-                  'Paste',
-                  'PasteText',
-                  'PasteFromWord',
-                  '-',
-                  'Undo',
-                  'Redo'
+          <div [hidden]="showDescEditor">
+            <ckeditor
+              [ngModelOptions]="{ standalone: true }"
+              [data]="issueDetails.description"
+              [config]="{
+                toolbar: [
+                  [
+                    'Bold',
+                    'Italic',
+                    'Cut',
+                    'Copy',
+                    'Paste',
+                    'PasteText',
+                    'PasteFromWord',
+                    '-',
+                    'Undo',
+                    'Redo'
+                  ]
                 ]
-              ]
-            }"
-          ></ckeditor>
-          <app-save-cancel [hidden]="showDescEditor"></app-save-cancel>
+              }"
+            ></ckeditor>
+            <app-save-cancel
+              (saveOps)="updateField('desc')"
+              (cancelOps)="showUpdateField('desc')"
+            ></app-save-cancel>
+          </div>
         </div>
       </div>
       <div class="issue__edit__option_2"></div>
