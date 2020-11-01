@@ -1,0 +1,74 @@
+.issue__main__content {
+  display: flex;
+  height: 100vh;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.issue__details__card {
+  flex: 0.26;
+  min-width: 100px;
+}
+.issue__edit__options {
+  flex: 0.4;
+  min-width: fit-content;
+}
+.options__list {
+  display: flex;
+  height: 100vh;
+  max-width: 130px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.issue__edit__option_1 {
+  flex: 0.5;
+  min-width: fit-content;
+}
+.issue__edit__option_2 {
+  flex: 0.5;
+  min-width: fit-content;
+}
+.issue__card {
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+  width: 240px;
+  height: 341px;
+  margin-left: 17px;
+  margin-right: auto;
+  margin-top: 22px;
+  margin-bottom: 16px;
+  word-break: keep-all;
+}
+.title {
+  font-weight: 900;
+  font-size: 18px;
+  color: blue;
+  margin: 20px 0px 20px 0px;
+}
+.created {
+  margin: 1px 0px 28px 0px;
+}
+.reporter {
+  margin: 1px 0px 28px 0px;
+}
+.issue__bug__div {
+  display: flex;
+  margin-top: 35px;
+  color: red;
+  margin-left: -3px;
+}
+
+.bug {
+  margin: 20px 0px 20px 0px;
+  margin-top: 1px;
+  margin-left: 6px;
+  font-size: 16px;
+}
+.icon {
+  font-size: 16px !important;
+}
+code {
+  display: inline-block;
+}

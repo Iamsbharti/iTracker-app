@@ -1,2 +1,22 @@
-<p>single-issue works!</p>
-<p *ngIf="issueDetails">{{ issueDetails.title }}</p>
+<div class="issue__main__content">
+  <div class="issue__details__card">
+    <div class="issue__card" *ngIf="issueDetails">
+      <p class="title">{{ issueDetails.title }}</p>
+      <code>Created On-</code>
+      <p class="created">{{ issueDetails.createDate | date }}</p>
+      <code>Reported By-</code>
+      <p class="reporter">{{ issueDetails.reporter }}</p>
+      <p class="reporter">{{ issueDetails.priority }}</p>
+      <div class="issue__bug__div">
+        <i class="material-icons">tour</i>
+        <p class="bug">Bug</p>
+      </div>
+    </div>
+  </div>
+  <div class="issue__edit__options">
+    <div class="options__list">
+      <div class="issue__edit__option_1"></div>
+      <div class="issue__edit__option_2"></div>
+    </div>
+  </div>
+</div>
