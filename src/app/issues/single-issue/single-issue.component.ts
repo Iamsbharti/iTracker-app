@@ -9,11 +9,27 @@ import { Issue } from '../dashboard/dashboard.component';
 export class SingleIssueComponent implements OnInit {
   @Input() issueDetails: Issue;
 
+  // fields
+  public showTitleInput: boolean;
+  public showDescEditor: boolean;
   constructor() {
     console.log('issuedetails from dashboard:', this.issueDetails);
+    this.showTitleInput = true;
+    this.showDescEditor = true;
   }
 
   ngOnInit(): void {}
+  // hide and show update fields
+  public showUpdateField(field): any {
+    switch (field) {
+      case 'title':
+        this.showTitleInput = false;
+        break;
+      case 'desc':
+        this.showDescEditor = false;
+        break;
+    }
+  }
 
   // upload attachments
   public handleUpload(value): any {

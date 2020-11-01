@@ -1,6 +1,6 @@
-<div class="issue__main__content">
+<div class="issue__main__content" *ngIf="issueDetails">
   <div class="issue__details__card">
-    <div class="issue__card" *ngIf="issueDetails">
+    <div class="issue__card">
       <p class="title">{{ issueDetails.title }}</p>
       <code>Created On-</code>
       <p class="created">{{ issueDetails.createDate | date }}</p>
@@ -8,14 +8,62 @@
       <p class="reporter">{{ issueDetails.reporter }}</p>
       <p class="reporter">{{ issueDetails.priority }}</p>
       <div class="issue__bug__div">
-        <i class="material-icons">tour</i>
+        <i class="material-icons icon">tour</i>
         <p class="bug">Bug</p>
       </div>
     </div>
   </div>
   <div class="issue__edit__options">
     <div class="options__list">
-      <div class="issue__edit__option_1"></div>
+      <div class="issue__edit__option_1">
+        <div class="edit__title__div">
+          <p
+            class="title__para"
+            [hidden]="!showTitleInput"
+            (click)="showUpdateField('title')"
+          >
+            {{ issueDetails.title }}
+          </p>
+          <input
+            class="title__input"
+            type="text"
+            name="title"
+            [value]="issueDetails.title"
+            [hidden]="showTitleInput"
+          />
+        </div>
+        <div class="edit__desc__div">
+          <p class="desc__label">Description</p>
+          <p
+            class="desc__para"
+            (click)="showUpdateField('desc')"
+            [hidden]="!showDescEditor"
+          >
+            {{ issueDetails.description }}
+          </p>
+          <ckeditor
+            [hidden]="showDescEditor"
+            [ngModelOptions]="{ standalone: true }"
+            [data]="issueDetails.description"
+            [config]="{
+              toolbar: [
+                [
+                  'Bold',
+                  'Italic',
+                  'Cut',
+                  'Copy',
+                  'Paste',
+                  'PasteText',
+                  'PasteFromWord',
+                  '-',
+                  'Undo',
+                  'Redo'
+                ]
+              ]
+            }"
+          ></ckeditor>
+        </div>
+      </div>
       <div class="issue__edit__option_2"></div>
     </div>
   </div>
