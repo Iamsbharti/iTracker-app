@@ -2,8 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Issue } from '../dashboard/dashboard.component';
 import { IssuesService } from '../issues.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
-import { CKEditor4 } from 'ckeditor4-angular';
-const htmlparser2 = require('htmlparser2');
 
 @Component({
   selector: 'app-single-issue',
@@ -56,11 +54,7 @@ export class SingleIssueComponent implements OnInit {
         break;
     }
   }
-  // html parser
-  public parser(text): any {
-    const parser = new htmlparser2.Parser();
-    return parser.write(text);
-  }
+
   // update fields
   public updateField(field): any {
     console.log('updating field', field);
@@ -101,9 +95,11 @@ export class SingleIssueComponent implements OnInit {
         console.log('update issue response:', response);
         if (response.status === 200) {
           this.toaster.open({ text: 'Issue Updated', type: 'info' });
-
           // close the edit option
           this.showUpdateField(field);
+
+          // update the current issue Object
+          this.updateCurrentIssueObject(field, updateIssue);
         }
       },
       (error) => {
@@ -111,6 +107,26 @@ export class SingleIssueComponent implements OnInit {
         this.toaster.open({ text: error.error.message, type: 'danger' });
       }
     );
+  }
+  private updateCurrentIssueObject(
+    field: string,
+    updateIssue: { userId: string; issueId: string; updates: any }
+  ) {
+    console.log('updating current object');
+    switch (field) {
+      case 'title':
+        this.issueDetails = {
+          ...this.issueDetails,
+          title: updateIssue.updates.title,
+        };
+        break;
+      case 'desc':
+        this.issueDetails = {
+          ...this.issueDetails,
+          description: updateIssue.updates.description,
+        };
+        break;
+    }
   }
   // upload attachments
   public handleUpload(value): any {
