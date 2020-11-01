@@ -203,3 +203,13 @@ input[type="text"] {
 .comments__text {
   margin-left: 46px;
 }
+.comment__edit__div {
+  display: flex;
+  justify-content: flex-start;
+}
+.comment__edit__div > span {
+  display: inline-block;
+  color: #797367;
+  margin-left: 45px;
+  cursor: pointer;
+}
