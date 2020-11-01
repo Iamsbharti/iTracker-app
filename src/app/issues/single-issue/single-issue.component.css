@@ -98,7 +98,7 @@ code {
 input[type="text"] {
   height: 35px;
   outline: none;
-  width: auto;
+  width: 100%;
   padding-left: 4px;
 }
 .edit__desc__div {
@@ -114,6 +114,7 @@ input[type="text"] {
   padding: 3px;
   font-size: 17px;
   cursor: pointer;
+  width: 100%;
 }
 .desc__para:hover {
   background-color: #d9d3d3;

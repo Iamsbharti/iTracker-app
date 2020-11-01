@@ -17,11 +17,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SingleIssueComponent } from './single-issue/single-issue.component';
+import { SaveCancelComponent } from './save-cancel/save-cancel.component';
 @NgModule({
   declarations: [
     DashboardComponent,
     CreateIssueComponent,
     SingleIssueComponent,
+    SaveCancelComponent,
   ],
   imports: [
     CommonModule,

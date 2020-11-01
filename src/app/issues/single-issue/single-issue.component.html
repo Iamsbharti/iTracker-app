@@ -24,13 +24,15 @@
           >
             {{ issueDetails.title }}
           </p>
-          <input
-            class="title__input"
-            type="text"
-            name="title"
-            [value]="issueDetails.title"
-            [hidden]="showTitleInput"
-          />
+          <div [hidden]="showTitleInput">
+            <input
+              class="title__input"
+              type="text"
+              name="title"
+              [value]="issueDetails.title"
+            />
+            <app-save-cancel></app-save-cancel>
+          </div>
         </div>
         <div class="edit__desc__div">
           <p class="desc__label">Description</p>
@@ -62,6 +64,7 @@
               ]
             }"
           ></ckeditor>
+          <app-save-cancel [hidden]="showDescEditor"></app-save-cancel>
         </div>
       </div>
       <div class="issue__edit__option_2"></div>

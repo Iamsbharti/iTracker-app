@@ -1,0 +1,10 @@
+.save__cancel__main {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: -5px;
+}
+button {
+  text-transform: inherit !important;
+  cursor: pointer !important;
+  margin: 5px;
+}
