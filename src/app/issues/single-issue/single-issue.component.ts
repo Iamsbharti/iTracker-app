@@ -4,6 +4,7 @@ import { IssuesService } from '../issues.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
 import { runInThisContext } from 'vm';
+import { __core_private_testing_placeholder__ } from '@angular/core/testing';
 
 @Component({
   selector: 'app-single-issue',
@@ -44,7 +45,7 @@ export class SingleIssueComponent implements OnInit {
   }
   // hide and show update fields
   public showUpdateField(field): any {
-    console.log('hide/show update options', this.issueDetails.comments[0].text);
+    console.log('hide/show update options');
 
     switch (field) {
       case 'title':
@@ -76,7 +77,7 @@ export class SingleIssueComponent implements OnInit {
   }
 
   // update fields
-  public updateField(field): any {
+  public updateField(field, operation?): any {
     console.debug('updating field', field);
     let updateIssue = {
       userId: this.userId,
@@ -104,10 +105,6 @@ export class SingleIssueComponent implements OnInit {
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
         break;
-      case 'comment':
-        console.log('updating comment');
-        // call add comment api
-        this.showUpdateField('comment');
     }
   }
   private updateFieldServiceCall(
@@ -155,6 +152,39 @@ export class SingleIssueComponent implements OnInit {
         };
         break;
     }
+  }
+
+  // comments
+  public handleComments(operation): any {
+    let commentDetails = {};
+    switch (operation) {
+      case 'add':
+        commentDetails = {
+          ...commentDetails,
+          userId: this.userId,
+          text: this.commentText,
+          issueId: this.issueDetails.issueId,
+          operation: 'add',
+          name: this.name,
+        };
+        this.manageComments(commentDetails);
+        break;
+    }
+    this.showUpdateField('comment');
+  }
+  public manageComments(commentDetails): any {
+    this.issueService.addComment(commentDetails).subscribe(
+      (response) => {
+        console.log('add comment res:', response);
+        if (response.status === 200) {
+          this.toaster.open({ text: response.message, type: 'secondary' });
+        }
+      },
+      (error) => {
+        console.warn('Error adding comment', error);
+        this.toaster.open({ text: error.error.message, type: 'danger' });
+      }
+    );
   }
   // upload attachments
   public handleUpload(value): any {

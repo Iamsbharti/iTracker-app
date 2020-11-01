@@ -100,4 +100,20 @@ export class IssuesService {
     );
     return updatedIssues;
   }
+  // add comment
+  public addComment(commentDetails): any {
+    console.log('add comment:', commentDetails);
+    const { userId, issueId, text, name, operation } = commentDetails;
+    let commentsOpsUrl = '';
+    if (operation === 'add') {
+      commentsOpsUrl = `${this.baseUrl}/issue/comment?userId=${userId}&issueId=${issueId}&name=${name}`;
+    }
+
+    const createdComment = this.http.post(
+      commentsOpsUrl,
+      { text: text },
+      this.httpHeaderOptions
+    );
+    return createdComment;
+  }
 }

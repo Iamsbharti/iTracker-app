@@ -87,11 +87,12 @@
               <i class="material-icons face__icon">face</i>
               <p>{{ name }}</p>
             </div>
-            <div class="comments__list">
+            <div
+              class="comments__list"
+              *ngIf="issueDetails.comments.length > 0"
+            >
               <div *ngFor="let co of issueDetails.comments">
-                <p class="comments__text">
-                  {{ co.text }}
-                </p>
+                <p class="comments__text" [innerHtml]="co.text"></p>
                 <div class="comment__edit__div">
                   <span>Edit.</span>
                   <span>Delete.</span>
@@ -132,7 +133,7 @@
                 }"
               ></ckeditor>
               <app-save-cancel
-                (saveOps)="updateField('comment')"
+                (saveOps)="handleComments('add')"
                 (cancelOps)="showUpdateField('comment')"
               ></app-save-cancel>
             </div>

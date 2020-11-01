@@ -6,27 +6,11 @@ const htmlparser2 = require('htmlparser2');
   name: 'parseHtml',
 })
 export class ParseHtmlPipe implements PipeTransform {
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
     console.log('pipe');
   }
-  parser = new htmlparser2.Parser({
-    onopentag(name, attribs) {
-      if (name === 'script' && attribs.type === 'text/javascript') {
-        console.log('JS! Hooray!');
-      }
-    },
-    ontext(text) {
-      console.log('-->', text);
-    },
-    onclosetag(tagname) {
-      if (tagname === 'script') {
-        console.log("That's it?!");
-      }
-    },
-  });
 
   transform(value: string) {
-    console.log('transform:', this.parser.write(value));
-    return this.parser.write(value);
+    return this.sanitizer.bypassSecurityTrustHtml(value);
   }
 }
