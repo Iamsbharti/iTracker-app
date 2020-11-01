@@ -30,6 +30,7 @@
               type="text"
               name="title"
               [value]="issueDetails.title"
+              (change)="onChange($event, 'title')"
             />
             <app-save-cancel
               (saveOps)="updateField('title')"
@@ -43,13 +44,13 @@
             class="desc__para"
             (click)="showUpdateField('desc')"
             [hidden]="!showDescEditor"
-          >
-            {{ issueDetails.description }}
-          </p>
+            [innerHTML]="issueDetails.description"
+          ></p>
           <div [hidden]="showDescEditor">
             <ckeditor
               [ngModelOptions]="{ standalone: true }"
               [data]="issueDetails.description"
+              (change)="onChange($event, 'desc')"
               [config]="{
                 toolbar: [
                   [

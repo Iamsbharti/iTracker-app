@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Issue } from '../dashboard/dashboard.component';
+import { IssuesService } from '../issues.service';
+import { ToastConfig, Toaster } from 'ngx-toast-notifications';
+import { CKEditor4 } from 'ckeditor4-angular';
+const htmlparser2 = require('htmlparser2');
 
 @Component({
   selector: 'app-single-issue',
@@ -12,13 +16,22 @@ export class SingleIssueComponent implements OnInit {
   // fields
   public showTitleInput: boolean;
   public showDescEditor: boolean;
-  constructor() {
-    console.log('issuedetails from dashboard:', this.issueDetails);
+
+  public updatedTitle: string;
+  public editorDesc: string;
+
+  constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
     this.showDescEditor = true;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.issueDetails) {
+      console.log('UPDATING I?P FIELDS::', this.issueDetails);
+      this.updatedTitle = this.issueDetails.title;
+      this.editorDesc = this.issueDetails.description;
+    }
+  }
   // hide and show update fields
   public showUpdateField(field): any {
     console.log('hide/show update options');
@@ -31,17 +44,73 @@ export class SingleIssueComponent implements OnInit {
         break;
     }
   }
+  // capture the editor's content
+  public onChange(event: any, field) {
+    console.log(event.data);
+    switch (field) {
+      case 'title':
+        this.updatedTitle = event.target.value;
+        break;
+      case 'desc':
+        this.editorDesc = event.editor.getData();
+        break;
+    }
+  }
+  // html parser
+  public parser(text): any {
+    const parser = new htmlparser2.Parser();
+    return parser.write(text);
+  }
   // update fields
   public updateField(field): any {
     console.log('updating field', field);
+    let updateIssue = {
+      userId: this.issueDetails.userId,
+      issueId: this.issueDetails.issueId,
+      updates: {},
+    };
     switch (field) {
       case 'title':
-        console.log('title updated');
+        console.log('title updated,', this.updatedTitle);
+        updateIssue = { ...updateIssue, updates: { title: this.updatedTitle } };
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field);
         break;
       case 'desc':
-        console.log('description updated');
+        console.log('description updated', this.editorDesc);
+        updateIssue = {
+          ...updateIssue,
+          updates: { description: this.editorDesc },
+        };
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field);
+
         break;
     }
+  }
+  private updateFieldServiceCall(
+    updateIssue: {
+      userId: string;
+      issueId: string;
+      updates: {};
+    },
+    field: string
+  ) {
+    this.issueService.updateIssue(updateIssue).subscribe(
+      (response) => {
+        console.log('update issue response:', response);
+        if (response.status === 200) {
+          this.toaster.open({ text: 'Issue Updated', type: 'info' });
+
+          // close the edit option
+          this.showUpdateField(field);
+        }
+      },
+      (error) => {
+        console.warn('Error Updating Issue:', error.error);
+        this.toaster.open({ text: error.error.message, type: 'danger' });
+      }
+    );
   }
   // upload attachments
   public handleUpload(value): any {

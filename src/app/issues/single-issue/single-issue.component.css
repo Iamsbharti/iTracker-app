@@ -115,6 +115,7 @@ input[type="text"] {
   font-size: 17px;
   cursor: pointer;
   width: 100%;
+  word-break: break-all;
 }
 .desc__para:hover {
   background-color: #d9d3d3;

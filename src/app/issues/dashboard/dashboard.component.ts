@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+
 export interface Issue {
   description?: string;
   createDate?: string;
