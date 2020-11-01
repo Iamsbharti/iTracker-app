@@ -24,6 +24,7 @@
           >
             {{ issueDetails.title }}
           </p>
+          <div class="col__break__line"></div>
           <div [hidden]="showTitleInput">
             <input
               class="title__input"
@@ -44,8 +45,9 @@
             class="desc__para"
             (click)="showUpdateField('desc')"
             [hidden]="!showDescEditor"
-            [innerHTML]="issueDetails.description"
+            [innerHtml]="issueDetails.description"
           ></p>
+          <div class="col__break__line"></div>
           <div [hidden]="showDescEditor">
             <ckeditor
               [ngModelOptions]="{ standalone: true }"

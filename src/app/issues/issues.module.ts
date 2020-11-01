@@ -18,12 +18,14 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SingleIssueComponent } from './single-issue/single-issue.component';
 import { SaveCancelComponent } from './save-cancel/save-cancel.component';
+import { ParseHtmlPipe } from './pipe/parse-html.pipe';
 @NgModule({
   declarations: [
     DashboardComponent,
     CreateIssueComponent,
     SingleIssueComponent,
     SaveCancelComponent,
+    ParseHtmlPipe,
   ],
   imports: [
     CommonModule,
