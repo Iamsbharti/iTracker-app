@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Issue } from '../dashboard/dashboard.component';
 import { IssuesService } from '../issues.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
+import { Cookie } from 'ng2-cookies';
 
 @Component({
   selector: 'app-single-issue',
@@ -11,16 +12,26 @@ import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 export class SingleIssueComponent implements OnInit {
   @Input() issueDetails: Issue;
 
-  // fields
+  // fields hide and show editor
   public showTitleInput: boolean;
   public showDescEditor: boolean;
+  public showCommentEditor: boolean;
 
+  // fields updated values
   public updatedTitle: string;
   public editorDesc: string;
+  public commentText: string;
+
+  public name: string;
+  public userId: string;
 
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
     this.showDescEditor = true;
+    this.showCommentEditor = true;
+
+    this.name = Cookie.get('name');
+    this.userId = Cookie.get('userId');
   }
 
   ngOnInit(): void {
@@ -40,6 +51,9 @@ export class SingleIssueComponent implements OnInit {
       case 'desc':
         this.showDescEditor = !this.showDescEditor;
         break;
+      case 'comment':
+        this.showCommentEditor = !this.showCommentEditor;
+        break;
     }
   }
   // capture the editor's content
@@ -52,6 +66,9 @@ export class SingleIssueComponent implements OnInit {
       case 'desc':
         this.editorDesc = event.editor.getData();
         break;
+      case 'comment':
+        this.commentText = event.editor.getData();
+        break;
     }
   }
 
@@ -59,7 +76,7 @@ export class SingleIssueComponent implements OnInit {
   public updateField(field): any {
     console.debug('updating field', field);
     let updateIssue = {
-      userId: this.issueDetails.userId,
+      userId: this.userId,
       issueId: this.issueDetails.issueId,
       updates: {},
     };
@@ -78,8 +95,11 @@ export class SingleIssueComponent implements OnInit {
         };
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
-
         break;
+      case 'comment':
+        console.log('updating comment');
+        // call add comment api
+        this.showUpdateField('comment');
     }
   }
   private updateFieldServiceCall(

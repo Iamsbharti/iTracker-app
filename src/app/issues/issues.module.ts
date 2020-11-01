@@ -19,6 +19,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SingleIssueComponent } from './single-issue/single-issue.component';
 import { SaveCancelComponent } from './save-cancel/save-cancel.component';
 import { ParseHtmlPipe } from './pipe/parse-html.pipe';
+import { MatDividerModule } from '@angular/material/divider';
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -43,6 +45,7 @@ import { ParseHtmlPipe } from './pipe/parse-html.pipe';
     MatChipsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
+    MatDividerModule,
   ],
   providers: [IssuesService],
 })

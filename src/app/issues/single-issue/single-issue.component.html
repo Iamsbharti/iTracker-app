@@ -24,7 +24,7 @@
           >
             {{ issueDetails.title }}
           </p>
-          <div class="col__break__line"></div>
+          <mat-divider></mat-divider>
           <div [hidden]="showTitleInput">
             <input
               class="title__input"
@@ -47,7 +47,7 @@
             [hidden]="!showDescEditor"
             [innerHtml]="issueDetails.description"
           ></p>
-          <div class="col__break__line"></div>
+          <mat-divider></mat-divider>
           <div [hidden]="showDescEditor">
             <ckeditor
               [ngModelOptions]="{ standalone: true }"
@@ -74,6 +74,58 @@
               (saveOps)="updateField('desc')"
               (cancelOps)="showUpdateField('desc')"
             ></app-save-cancel>
+          </div>
+        </div>
+        <div class="comments__section">
+          <p class="comment__header">Comments</p>
+          <div class="col__break__line"></div>
+          <div
+            class="comments__list__section"
+            [hidden]="!issueDetails.comments.length > 0"
+          >
+            <div class="comments__list__header">
+              <i class="material-icons face__icon">face</i>
+              <p>{{ name }}</p>
+            </div>
+            <div class="comments__list"></div>
+          </div>
+          <div class="add__comment__section">
+            <div class="add__comments__header" [hidden]="!showCommentEditor">
+              <i class="material-icons face__icon">face</i>
+              <input
+                class="add__comment__input"
+                type="text"
+                name="addcomment"
+                placeholder="Add a comment..."
+                (click)="showUpdateField('comment')"
+              />
+            </div>
+            <div [hidden]="showCommentEditor">
+              <ckeditor
+                [ngModelOptions]="{ standalone: true }"
+                (change)="onChange($event, 'comment')"
+                [config]="{
+                  toolbar: [
+                    [
+                      'Bold',
+                      'Italic',
+                      'Cut',
+                      'Copy',
+                      'Paste',
+                      'PasteText',
+                      'PasteFromWord',
+                      '-',
+                      'Undo',
+                      'Redo'
+                    ]
+                  ]
+                }"
+              ></ckeditor>
+              <app-save-cancel
+                (saveOps)="updateField('comment')"
+                (cancelOps)="showUpdateField('comment')"
+              ></app-save-cancel>
+            </div>
           </div>
         </div>
       </div>
