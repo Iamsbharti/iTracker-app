@@ -3,8 +3,6 @@ import { Issue } from '../dashboard/dashboard.component';
 import { IssuesService } from '../issues.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
-import { runInThisContext } from 'vm';
-import { __core_private_testing_placeholder__ } from '@angular/core/testing';
 
 @Component({
   selector: 'app-single-issue',
@@ -18,6 +16,7 @@ export class SingleIssueComponent implements OnInit {
   public showTitleInput: boolean;
   public showDescEditor: boolean;
   public showCommentEditor: boolean;
+  public showCommentUpdateEditor: boolean;
 
   // fields updated values
   public updatedTitle: string;
@@ -26,12 +25,13 @@ export class SingleIssueComponent implements OnInit {
   public commentsList: Array<any>;
   public name: string;
   public userId: string;
+  public selectedComment: any;
 
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
     this.showDescEditor = true;
     this.showCommentEditor = true;
-
+    this.showCommentUpdateEditor = true;
     this.name = Cookie.get('name');
     this.userId = Cookie.get('userId');
   }
@@ -41,11 +41,12 @@ export class SingleIssueComponent implements OnInit {
       console.debug('UPDATING I?P FIELDS::', this.issueDetails);
       this.updatedTitle = this.issueDetails.title;
       this.editorDesc = this.issueDetails.description;
+      this.commentsList = this.issueDetails.comments;
     }
   }
   // hide and show update fields
-  public showUpdateField(field): any {
-    console.log('hide/show update options');
+  public showUpdateField(field, selectedObj?): any {
+    console.log('hide/show update options', selectedObj);
 
     switch (field) {
       case 'title':
@@ -57,6 +58,10 @@ export class SingleIssueComponent implements OnInit {
       case 'comment':
         this.showCommentEditor = !this.showCommentEditor;
         this.commentsList = this.issueDetails.comments;
+        break;
+      case 'edit-comment':
+        this.showCommentUpdateEditor = !this.showCommentUpdateEditor;
+        this.selectedComment = selectedObj;
         break;
     }
   }
@@ -155,7 +160,7 @@ export class SingleIssueComponent implements OnInit {
   }
 
   // comments
-  public handleComments(operation): any {
+  public handleComments(operation, selectedObj?): any {
     let commentDetails = {};
     switch (operation) {
       case 'add':
@@ -168,16 +173,45 @@ export class SingleIssueComponent implements OnInit {
           name: this.name,
         };
         this.manageComments(commentDetails);
+        this.showUpdateField('comment');
+        break;
+      case 'edit':
+        commentDetails = {
+          ...commentDetails,
+          userId: this.userId,
+          text: this.commentText,
+          issueId: this.issueDetails.issueId,
+          commentId: this.selectedComment.commentId,
+          operation: 'edit',
+        };
+        this.manageComments(commentDetails);
+        this.updateCurrentCommentObject(commentDetails);
+        this.showUpdateField('edit-comment');
+        break;
+      case 'delete':
+        commentDetails = {
+          ...commentDetails,
+          commentId: selectedObj.commentId,
+          userId: this.userId,
+          operation: 'delete',
+        };
+        this.manageComments(commentDetails);
+        this.updateCurrentCommentObject(commentDetails);
         break;
     }
-    this.showUpdateField('comment');
   }
   public manageComments(commentDetails): any {
-    this.issueService.addComment(commentDetails).subscribe(
+    let { operation } = commentDetails;
+    this.issueService.manageCommentService(commentDetails).subscribe(
       (response) => {
         console.log('add comment res:', response);
         if (response.status === 200) {
           this.toaster.open({ text: response.message, type: 'secondary' });
+
+          console.log('created/new comments to be updated', response.data);
+          if (operation === 'add') {
+            this.updateCurrentCommentObject({ ...response.data, operation });
+          }
         }
       },
       (error) => {
@@ -185,6 +219,30 @@ export class SingleIssueComponent implements OnInit {
         this.toaster.open({ text: error.error.message, type: 'danger' });
       }
     );
+  }
+  public updateCurrentCommentObject(newCommentObject): any {
+    console.log('update current comment object', newCommentObject);
+    const { operation, userId, commentId, text } = newCommentObject;
+    switch (operation) {
+      case 'add':
+        // add whole object to cuurent issues's comments's array
+        this.issueDetails.comments.push(newCommentObject);
+        this.selectedComment = this.issueDetails.comments;
+        break;
+      case 'edit':
+        // find the current issue's commentsid and update the text
+        this.issueDetails.comments = this.issueDetails.comments.map((iss) =>
+          iss.commentId === commentId ? { ...iss, text: text } : iss
+        );
+        console.log('new cooments list:', this.issueDetails.comments);
+        break;
+      case 'delete':
+        // filter out the current comment id object
+        this.issueDetails.comments = this.issueDetails.comments.filter(
+          (iss) => iss.commentId !== commentId
+        );
+        break;
+    }
   }
   // upload attachments
   public handleUpload(value): any {

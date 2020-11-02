@@ -1,0 +1,22 @@
+<div [hidden]="hideFlag">
+  <ckeditor
+    (change)="onChange($event)"
+    [data]="data"
+    [config]="{
+      toolbar: [
+        [
+          'Bold',
+          'Italic',
+          'Cut',
+          'Copy',
+          'Paste',
+          'PasteText',
+          'PasteFromWord',
+          '-',
+          'Undo',
+          'Redo'
+        ]
+      ]
+    }"
+  ></ckeditor>
+</div>

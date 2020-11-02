@@ -94,10 +94,24 @@
               <div *ngFor="let co of issueDetails.comments">
                 <p class="comments__text" [innerHtml]="co.text"></p>
                 <div class="comment__edit__div">
-                  <span>Edit.</span>
-                  <span>Delete.</span>
+                  <span (click)="showUpdateField('edit-comment', co)"
+                    >Edit.</span
+                  >
+                  <span (click)="handleComments('delete', co)">Delete.</span>
                 </div>
               </div>
+            </div>
+            <!--Edit commets editor-->
+            <div [hidden]="showCommentUpdateEditor" *ngIf="selectedComment">
+              <app-editor
+                [ngModelOptions]="{ standalone: true }"
+                [data]="selectedComment.text"
+                (changeEvent)="onChange($event, 'comment')"
+              ></app-editor>
+              <app-save-cancel
+                (saveOps)="handleComments('edit')"
+                (cancelOps)="showUpdateField('edit-comment')"
+              ></app-save-cancel>
             </div>
           </div>
           <div class="add__comment__section">

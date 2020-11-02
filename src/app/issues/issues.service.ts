@@ -101,19 +101,33 @@ export class IssuesService {
     return updatedIssues;
   }
   // add comment
-  public addComment(commentDetails): any {
+  public manageCommentService(commentDetails): any {
     console.log('add comment:', commentDetails);
-    const { userId, issueId, text, name, operation } = commentDetails;
+    const {
+      userId,
+      issueId,
+      text,
+      name,
+      operation,
+      commentId,
+    } = commentDetails;
     let commentsOpsUrl = '';
+    let body = {};
     if (operation === 'add') {
       commentsOpsUrl = `${this.baseUrl}/issue/comment?userId=${userId}&issueId=${issueId}&name=${name}`;
+      body = { ...body, text: text };
+    } else if (operation === 'edit') {
+      commentsOpsUrl = `${this.baseUrl}/issue/edit/comment?userId=${userId}`;
+      body = { ...body, text: text, commentId: commentId };
+    } else if (operation === 'delete') {
+      commentsOpsUrl = `${this.baseUrl}/issue/delete/comment?userId=${userId}&commentId=${commentId}`;
     }
 
-    const createdComment = this.http.post(
+    const commentActionResult = this.http.post(
       commentsOpsUrl,
-      { text: text },
+      body,
       this.httpHeaderOptions
     );
-    return createdComment;
+    return commentActionResult;
   }
 }

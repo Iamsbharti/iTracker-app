@@ -20,6 +20,7 @@ import { SingleIssueComponent } from './single-issue/single-issue.component';
 import { SaveCancelComponent } from './save-cancel/save-cancel.component';
 import { ParseHtmlPipe } from './pipe/parse-html.pipe';
 import { MatDividerModule } from '@angular/material/divider';
+import { EditorComponent } from './editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatDividerModule } from '@angular/material/divider';
     SingleIssueComponent,
     SaveCancelComponent,
     ParseHtmlPipe,
+    EditorComponent,
   ],
   imports: [
     CommonModule,
