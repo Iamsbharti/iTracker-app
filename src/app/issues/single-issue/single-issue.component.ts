@@ -292,4 +292,5 @@ export class SingleIssueComponent implements OnInit {
       }
     );
   }
+  public deleteAttachment(filename): any {}
 }

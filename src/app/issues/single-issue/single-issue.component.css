@@ -271,6 +271,10 @@ input[type="file"] {
   display: inline-block;
 }
 .delete__icon {
-  color: rgb(117, 24, 24);
-  font-size: 12px;
+  color: white;
+  font-size: 18px;
+  position: relative;
+  top: -26px;
+  left: -20px;
+  cursor: pointer;
 }

@@ -121,7 +121,14 @@
                   />
                 </a>
               </span>
-              <span><i class="material-icons delete__icon">delete</i></span>
+              <span
+                ><i
+                  class="material-icons delete__icon"
+                  title="delete"
+                  (click)="deleteAttachment(att.filename)"
+                  >delete</i
+                ></span
+              >
             </div>
           </div>
         </div>
