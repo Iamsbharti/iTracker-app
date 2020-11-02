@@ -261,6 +261,8 @@ export class SingleIssueComponent implements OnInit {
         console.log('upload response:', response);
         if (response.status === 200) {
           this.toaster.open({ text: response.message, type: 'success' });
+          // update the current arrachment array of the issue
+          this.issueDetails.attachment.push(response.data.filename);
         }
       },
       (error) => {
