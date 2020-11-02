@@ -91,7 +91,12 @@
                   >cloud_upload</i
                 >
               </label>
-              <input id="file-upload" type="file" name="attachment" />
+              <input
+                id="file-upload"
+                type="file"
+                name="attachment"
+                (change)="handleUpload($event)"
+              />
             </div>
           </div>
           <div class="col__break__line"></div>

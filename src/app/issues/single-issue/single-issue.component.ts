@@ -252,8 +252,21 @@ export class SingleIssueComponent implements OnInit {
     let data = new FormData();
     data.append('file', value.target.files[0]);
     const fileDetails = {
-      //   userId: this.userId,
-      // issueId: this.issueId,
+      userId: this.userId,
+      issueId: this.issueDetails.issueId,
+      formData: data,
     };
+    this.issueService.uploadAttachment(fileDetails).subscribe(
+      (response) => {
+        console.log('upload response:', response);
+        if (response.status === 200) {
+          this.toaster.open({ text: response.message, type: 'success' });
+        }
+      },
+      (error) => {
+        console.warn('Upload Error:', error);
+        this.toaster.open({ text: error.error.message, type: 'danger' });
+      }
+    );
   }
 }
