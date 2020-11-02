@@ -222,6 +222,16 @@ input[type="text"] {
   margin-left: 45px;
   cursor: pointer;
 }
+.span_delete:hover {
+  font-size: larger;
+  color: gray;
+  text-decoration: underline;
+}
+.span_edit:hover {
+  font-size: larger;
+  color: gray;
+  text-decoration: underline;
+}
 /**attacment styles**/
 .attachment__section {
   width: 100%;
