@@ -83,15 +83,16 @@
             class="comments__list__section"
             [hidden]="!issueDetails.comments.length > 0"
           >
-            <div class="comments__list__header">
-              <i class="material-icons face__icon">face</i>
-              <p>{{ name }}</p>
-            </div>
             <div
               class="comments__list"
               *ngIf="issueDetails.comments.length > 0"
             >
               <div *ngFor="let co of issueDetails.comments">
+                <div class="comments__list__header">
+                  <i class="material-icons face__icon">face</i>
+                  <p>{{ name }}</p>
+                  <span class="comment__date">{{ co.createdAt | date }}</span>
+                </div>
                 <p class="comments__text" [innerHtml]="co.text"></p>
                 <div class="comment__edit__div">
                   <span (click)="showUpdateField('edit-comment', co)"

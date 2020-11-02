@@ -177,6 +177,13 @@ input[type="text"] {
   margin-top: 8px;
   margin-left: 10px;
 }
+.comment__date {
+  display: inline-block;
+  color: #797367;
+  margin-top: 8px;
+  margin-left: 10px;
+  font-size: 12px;
+}
 .add__comment__section {
   width: 100%;
   height: auto;
