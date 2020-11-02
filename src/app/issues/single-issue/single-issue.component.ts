@@ -266,7 +266,7 @@ export class SingleIssueComponent implements OnInit {
         if (response.status === 200) {
           this.toaster.open({ text: response.message, type: 'success' });
           // update the current arrachment array of the issue
-          this.issueDetails.attachment.push(response.data.filename);
+          this.issueDetails.attachment.push(response.data);
         }
       },
       (error) => {
@@ -292,5 +292,26 @@ export class SingleIssueComponent implements OnInit {
       }
     );
   }
-  public deleteAttachment(filename): any {}
+  public deleteAttachment(filename): any {
+    const fileDetails = {
+      userId: this.userId,
+      filename: filename,
+    };
+    this.issueService.deleteAttachmentService(fileDetails).subscribe(
+      (response) => {
+        console.log('Delete Attachment Response:', response);
+        if (response.status === 200) {
+          this.toaster.open({ text: response.message, type: 'success' });
+          // filter the current attachment array
+          this.issueDetails.attachment = this.issueDetails.attachment.filter(
+            (iss) => iss.filename !== filename
+          );
+        }
+      },
+      (error) => {
+        console.log('Error Deleting image', error);
+        this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
+      }
+    );
+  }
 }

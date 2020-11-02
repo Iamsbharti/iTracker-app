@@ -12,7 +12,7 @@ export interface Issue {
   createDate?: string;
   watchList?: Array<Object>;
   comments?: Array<any>;
-  attachment?: Array<Object>;
+  attachment?: Array<any>;
   issueId: string;
   userId: string;
   title: string;

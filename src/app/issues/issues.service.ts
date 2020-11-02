@@ -138,4 +138,12 @@ export class IssuesService {
     );
     return img;
   }
+  public deleteAttachmentService(fileDetails): any {
+    const { filename, userId } = fileDetails;
+    const deletedAttachment = this.http.delete(
+      `${this.baseUrl}/issue/delete/attachment?userId=${userId}&filename=${filename}`,
+      this.httpHeaderOptions
+    );
+    return deletedAttachment;
+  }
 }

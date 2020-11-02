@@ -278,3 +278,6 @@ input[type="file"] {
   left: -20px;
   cursor: pointer;
 }
+.delete__icon:hover {
+  color: rgb(209, 0, 0);
+}
