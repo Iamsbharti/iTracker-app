@@ -76,6 +76,32 @@
             ></app-save-cancel>
           </div>
         </div>
+        <!--attachment section start-->
+        <div class="attachment__section">
+          <div class="attachment__header__div">
+            <p class="attachment__header">
+              Attachments (<span *ngIf="issueDetails.attachment">{{
+                issueDetails.attachment.length
+              }}</span
+              >)
+            </p>
+            <div class="upload_cover">
+              <label for="file-upload" class="custom-file-upload">
+                <i class="material-icons" title="Upload Attachment"
+                  >cloud_upload</i
+                >
+              </label>
+              <input id="file-upload" type="file" name="attachment" />
+            </div>
+          </div>
+          <div class="col__break__line"></div>
+          <div
+            class="attachment__display__img"
+            [hidden]="!issueDetails.attachment.length > 0"
+          ></div>
+          <mat-divider></mat-divider>
+        </div>
+        <!--attachment section end-->
         <div class="comments__section">
           <p class="comment__header">Comments</p>
           <div class="col__break__line"></div>

@@ -27,6 +27,8 @@ export class SingleIssueComponent implements OnInit {
   public userId: string;
   public selectedComment: any;
 
+  public attachment: any;
+
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
     this.showDescEditor = true;
