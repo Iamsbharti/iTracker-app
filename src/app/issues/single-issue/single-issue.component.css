@@ -257,3 +257,20 @@ input[type="file"] {
   padding: 6px 12px;
   cursor: pointer;
 }
+.attachment__display__img {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.attachment__img {
+  width: 120px;
+  height: 84px;
+  cursor: pointer;
+}
+.attachment__display__img > span {
+  display: inline-block;
+}
+.delete__icon {
+  color: rgb(117, 24, 24);
+  font-size: 12px;
+}

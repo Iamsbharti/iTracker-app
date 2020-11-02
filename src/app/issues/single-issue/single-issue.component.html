@@ -103,9 +103,29 @@
           <div
             class="attachment__display__img"
             [hidden]="!issueDetails.attachment.length > 0"
-          ></div>
-          <mat-divider></mat-divider>
+          >
+            <div *ngFor="let att of issueDetails.attachment">
+              <span>
+                <a
+                  href="{{ getImageUrl }}userId={{ userId }}&filename={{
+                    att.filename
+                  }}&authToken={{ authToken }}"
+                  target="_blank"
+                >
+                  <img
+                    src="{{ getImageUrl }}userId={{ userId }}&filename={{
+                      att.filename
+                    }}&authToken={{ authToken }}"
+                    alt="attachment"
+                    class="attachment__img"
+                  />
+                </a>
+              </span>
+              <span><i class="material-icons delete__icon">delete</i></span>
+            </div>
+          </div>
         </div>
+        <mat-divider></mat-divider>
         <!--attachment section end-->
         <div class="comments__section">
           <p class="comment__header">Comments</p>

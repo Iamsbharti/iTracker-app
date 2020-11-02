@@ -130,4 +130,12 @@ export class IssuesService {
     );
     return commentActionResult;
   }
+  public openImageService(imageDetails): any {
+    const { userId, filename } = imageDetails;
+    const img = this.http.get(
+      `${this.baseUrl}/issue/attachment?userId=${userId}&filename=${filename}`,
+      this.httpHeaderOptions
+    );
+    return img;
+  }
 }

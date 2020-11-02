@@ -28,6 +28,8 @@ export class SingleIssueComponent implements OnInit {
   public selectedComment: any;
 
   public attachment: any;
+  public getImageUrl: string;
+  public authToken: string;
 
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
@@ -36,6 +38,8 @@ export class SingleIssueComponent implements OnInit {
     this.showCommentUpdateEditor = true;
     this.name = Cookie.get('name');
     this.userId = Cookie.get('userId');
+    this.getImageUrl = 'http://localhost:3001/api/v1/issue/attachment?';
+    this.authToken = Cookie.get('authToken');
   }
 
   ngOnInit(): void {
@@ -268,6 +272,23 @@ export class SingleIssueComponent implements OnInit {
       (error) => {
         console.warn('Upload Error:', error);
         this.toaster.open({ text: error.error.message, type: 'danger' });
+      }
+    );
+  }
+  public openImage(filename): any {
+    let fileDetails = {
+      userId: this.userId,
+      filename: filename,
+    };
+    this.issueService.openImageService(fileDetails).subscribe(
+      (response) => {
+        if (response) {
+          return response;
+        }
+      },
+      (error) => {
+        console.log('Error Fecthing image', error);
+        this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
       }
     );
   }
