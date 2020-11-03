@@ -19,6 +19,8 @@ export class SingleIssueComponent implements OnInit {
   public showCommentUpdateEditor: boolean;
   public showAssigneeList: boolean;
   public showUpdateWatchList: boolean;
+  public showPriorityList: boolean;
+  public showStatusList: boolean;
 
   // fields updated values
   public updatedTitle: string;
@@ -39,8 +41,8 @@ export class SingleIssueComponent implements OnInit {
   public watchListOptions: Array<any>;
   public assigneeOptions: Array<any>;
   public currentAssignee: string;
-
-  public fixWatchList: Array<any>;
+  public currentPriority: string;
+  public currentStatus: string;
 
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
@@ -49,7 +51,8 @@ export class SingleIssueComponent implements OnInit {
     this.showCommentUpdateEditor = true;
     this.showAssigneeList = true;
     this.showUpdateWatchList = true;
-
+    this.showPriorityList = true;
+    this.showStatusList = true;
     this.name = Cookie.get('name');
     this.userId = Cookie.get('userId');
     this.getImageUrl = 'http://localhost:3001/api/v1/issue/attachment?';
@@ -65,10 +68,7 @@ export class SingleIssueComponent implements OnInit {
       this.updatedTitle = this.issueDetails.title;
       this.editorDesc = this.issueDetails.description;
       this.commentsList = this.issueDetails.comments;
-      this.fixWatchList = this.issueDetails.watchList;
-      // this.updatedWatchList = this.issueDetails.watchList;
     }
-    // this.fetchAllUsers();
   }
   // fetch all users
   public fetchAllUsers(): any {
@@ -136,6 +136,12 @@ export class SingleIssueComponent implements OnInit {
         break;
       case 'watchlist':
         this.showUpdateWatchList = !this.showUpdateWatchList;
+        break;
+      case 'priority':
+        this.showPriorityList = !this.showPriorityList;
+        break;
+      case 'status':
+        this.showStatusList = !this.showStatusList;
         break;
     }
   }
@@ -251,6 +257,28 @@ export class SingleIssueComponent implements OnInit {
         console.log('add to watch list:', updateIssue);
         // call update api
         this.updateFieldServiceCall(updateIssue, field, currentUserWatchObject);
+        break;
+      case 'priority':
+        console.log('updating priority', this.currentPriority);
+        updateIssue = {
+          ...updateIssue,
+          updates: {
+            priority: this.currentPriority,
+          },
+        };
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field);
+        break;
+      case 'status':
+        console.log('updating status', this.currentStatus);
+        updateIssue = {
+          ...updateIssue,
+          updates: {
+            status: this.currentStatus,
+          },
+        };
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field);
         break;
     }
   }
@@ -388,6 +416,18 @@ export class SingleIssueComponent implements OnInit {
           'updated watchlist after removal',
           this.issueDetails.watchList
         );
+        break;
+      case 'priority':
+        this.issueDetails = {
+          ...this.issueDetails,
+          priority: updateIssue.updates.priority,
+        };
+        break;
+      case 'status':
+        this.issueDetails = {
+          ...this.issueDetails,
+          status: updateIssue.updates.status,
+        };
         break;
     }
   }

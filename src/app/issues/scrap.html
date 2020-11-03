@@ -9,7 +9,7 @@
       <div *ngFor="let issue of backlogsIssues">
         <div class="issue__card">
           <p class="issue__title">{{ issue.title }}</p>
-          <p class="issue__priority__high">{{ issue.priority }}</p>
+          <p class="issue__status__high">{{ issue.status }}</p>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
       <div *ngFor="let issue of progressIssues">
         <div class="issue__card">
           <p class="issue__title">{{ issue.title }}</p>
-          <p class="issue__priority__high">{{ issue.priority }}</p>
+          <p class="issue__status__high">{{ issue.status }}</p>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
       <div *ngFor="let issue of testIssues">
         <div class="issue__card">
           <p class="issue__title">{{ issue.title }}</p>
-          <p class="issue__priority__high">{{ issue.priority }}</p>
+          <p class="issue__status__high">{{ issue.status }}</p>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <div *ngFor="let issue of doneIssues">
         <div class="issue__card">
           <p class="issue__title">{{ issue.title }}</p>
-          <p class="issue__priority__high">{{ issue.priority }}</p>
+          <p class="issue__status__high">{{ issue.status }}</p>
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
     <div *ngFor="let issue of allIssues">
       <div class="issue__card__filtered">
         <p class="issue__title">{{ issue.title }}</p>
-        <p class="issue__priority__high">{{ issue.priority }}</p>
+        <p class="issue__status__high">{{ issue.status }}</p>
         <p>-{{ issue.reporter.split(" ")[0] }}</p>
       </div>
     </div>
@@ -96,7 +96,7 @@
   <input name="reporter" required placeholder="Reporter" value="reporter" />
   <label for="proirity">Proirity</label>
   <select name="proirity" required>
-    <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
+    <option *ngFor="let p of statusOptions" [value]="p">{{ p }}</option>
   </select>
   <label for="originalest">Original Estimate</label>
   <input name="originalest" required placeholder="Original Estimate" />
@@ -106,9 +106,9 @@
   </select>
   <label for="attachment">Attachment</label>
   <input type="file" placeholder="attachements" />
-  <label for="assignee">Assignee</label>
-  <select name="assignee" required>
-    <option *ngFor="let assig of assigneeOptions" [value]="assig._id">
+  <label for="status">status</label>
+  <select name="status" required>
+    <option *ngFor="let assig of statusOptions" [value]="assig._id">
       {{ assig.name }}
     </option>
   </select>

@@ -256,7 +256,7 @@
             </div>
           </form>
         </div>
-        <!--watch list options-->
+        <!--watch list options start-->
         <div class="watchlist__options__div">
           <div class="watchlist__header" *ngIf="issueDetails.watchList">
             <p class="watchlist__label">WatchList<span>(s)</span></p>
@@ -306,6 +306,75 @@
             </button>
           </div>
         </div>
+        <!--watch list options close-->
+        <!--priority change start-->
+        <div class="priority__details__div">
+          <p class="priority__header">Priority</p>
+          <p
+            class="priority__content"
+            (click)="showUpdateField('priority')"
+            title="update priority"
+          >
+            {{ issueDetails.priority }}
+          </p>
+
+          <form
+            #updatepriorityForm="ngForm"
+            (ngSubmit)="updateField('priority')"
+            [hidden]="showPriorityList"
+          >
+            <div class="form-group">
+              <select
+                name="currentPriorityName"
+                required
+                [(ngModel)]="currentPriority"
+                class="form-control mt-1"
+                (change)="updateField('priority')"
+              >
+                <option [ngValue]="undefined" disabled>Select Another</option>
+                <option *ngFor="let p of priorityOptions" [value]="p">
+                  {{ p }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <!--priority change close-->
+        <!--status change start-->
+        <div class="status__details__div">
+          <p class="status__header">Status</p>
+          <p
+            class="status__content"
+            (click)="showUpdateField('status')"
+            title="update status"
+          >
+            {{ issueDetails.status }}
+          </p>
+
+          <form
+            #updatestatusForm="ngForm"
+            (ngSubmit)="updateField('status')"
+            [hidden]="showStatusList"
+          >
+            <div class="form-group">
+              <select
+                name="currentStatusName"
+                required
+                [(ngModel)]="currentStatus"
+                class="form-control mt-1"
+                (change)="updateField('status')"
+              >
+                <option [ngValue]="undefined" disabled>Select Another</option>
+                <option *ngFor="let s of statusOptions" [value]="s">
+                  {{ s }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <!--status change close-->
       </div>
     </div>
   </div>
