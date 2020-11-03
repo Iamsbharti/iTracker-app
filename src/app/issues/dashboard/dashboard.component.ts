@@ -341,19 +341,6 @@ export class DashboardComponent implements OnInit {
       (response) => {
         if (response.status === 200) {
           this.allUsersList = response.data;
-          /**
-          * this.issueDetails.assigneeOptions = response.data;
-          this.issueDetails.watchListOptions = response.data;
-
-          // update the assignee name
-          console.log('watchlistoptions:', this.issueDetails.watchListOptions);
-          let currentAssigneeObject = this.issueDetails.watchListOptions.find(
-            (usr) => {
-              return usr.userId == this.issueDetails.assignee;
-            }
-          );
-          this.issueDetails.assigneeName = currentAssigneeObject.name;
-          *  */
         }
       },
       // handle error response
@@ -382,6 +369,13 @@ export class DashboardComponent implements OnInit {
       }
     );
     this.issueDetails.assigneeName = currentAssigneeObject.name;
+    // filter unique values of watchers
+    let uniqueWatchers = this.removeDuplicates(
+      this.issueDetails.watchList,
+      '_id'
+    );
+    console.log('uniquewatchlist', uniqueWatchers);
+    this.issueDetails.watchList = uniqueWatchers;
     // hide categorized table view
     this.showCategorizedIssues = true;
     this.showSingleIssue = false;
@@ -392,7 +386,21 @@ export class DashboardComponent implements OnInit {
       type: 'dark',
     });
   }
+  public removeDuplicates(originalArray, prop) {
+    var newArray = [];
+    var lookupObject = {};
+
+    for (var i in originalArray) {
+      lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for (i in lookupObject) {
+      newArray.push(lookupObject[i]);
+    }
+    return newArray;
+  }
 }
+
 function compareIssues(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
