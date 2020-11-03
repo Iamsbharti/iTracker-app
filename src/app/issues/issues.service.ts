@@ -93,7 +93,7 @@ export class IssuesService {
   public updateIssue(issueDetails): any {
     console.log('Update Issue:', issueDetails);
     const { userId } = issueDetails;
-    const updatedIssues = this.http.put(
+    const updatedIssues = this.http.post(
       `${this.baseUrl}/issue/update?userId=${userId}`,
       issueDetails,
       this.httpHeaderOptions

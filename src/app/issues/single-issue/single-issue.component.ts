@@ -18,6 +18,7 @@ export class SingleIssueComponent implements OnInit {
   public showCommentEditor: boolean;
   public showCommentUpdateEditor: boolean;
   public showAssigneeList: boolean;
+  public showUpdateWatchList: boolean;
 
   // fields updated values
   public updatedTitle: string;
@@ -27,6 +28,7 @@ export class SingleIssueComponent implements OnInit {
   public name: string;
   public userId: string;
   public selectedComment: any;
+  public updatedWatchList: Array<any>;
 
   public attachment: any;
   public getImageUrl: string;
@@ -44,6 +46,8 @@ export class SingleIssueComponent implements OnInit {
     this.showCommentEditor = true;
     this.showCommentUpdateEditor = true;
     this.showAssigneeList = true;
+    this.showUpdateWatchList = true;
+
     this.name = Cookie.get('name');
     this.userId = Cookie.get('userId');
     this.getImageUrl = 'http://localhost:3001/api/v1/issue/attachment?';
@@ -59,6 +63,7 @@ export class SingleIssueComponent implements OnInit {
       this.updatedTitle = this.issueDetails.title;
       this.editorDesc = this.issueDetails.description;
       this.commentsList = this.issueDetails.comments;
+      // this.updatedWatchList = this.issueDetails.watchList;
     }
     // this.fetchAllUsers();
   }
@@ -98,6 +103,12 @@ export class SingleIssueComponent implements OnInit {
     });
     return currentAssigneeObject.name;
   }
+  public getUsersObjectIds(userList): Array<any> {
+    const objectIdList = userList.map((usr) => {
+      return usr._id;
+    });
+    return objectIdList;
+  }
   // hide and show update fields
   public showUpdateField(field, selectedObj?): any {
     console.log('hide/show update options', selectedObj);
@@ -120,11 +131,15 @@ export class SingleIssueComponent implements OnInit {
       case 'assignee':
         this.showAssigneeList = !this.showAssigneeList;
         break;
+      case 'watchlist':
+        this.showUpdateWatchList = !this.showUpdateWatchList;
+        break;
     }
   }
   // capture the editor's content
   public onChange(event: any, field) {
     console.debug(event.data);
+    console.log('event__change--watch,', event, field);
     switch (field) {
       case 'title':
         this.updatedTitle = event.target.value;
@@ -135,12 +150,15 @@ export class SingleIssueComponent implements OnInit {
       case 'comment':
         this.commentText = event.editor.getData();
         break;
+      case 'watchlist':
+        this.updatedWatchList = event;
+        break;
     }
   }
 
   // update fields
   public updateField(field, operation?): any {
-    console.debug('updating field', field);
+    console.log('updating field', field);
     let updateIssue = {
       userId: this.userId,
       issueId: this.issueDetails.issueId,
@@ -178,6 +196,34 @@ export class SingleIssueComponent implements OnInit {
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
         break;
+      case 'watchlist':
+        console.log('updating watchlist', this.updatedWatchList);
+        // filter out the ids of from watchlist and exclude the existing watch
+        console.log('current watchlist should be empty', this.issueDetails);
+        const existingWatchListIds = this.getUsersObjectIds(
+          this.issueDetails.watchList
+        );
+        console.log('existing watchersobjectids', existingWatchListIds);
+        const updatedWatchListIds = this.getUsersObjectIds(
+          this.updatedWatchList
+        );
+        console.log('updated watcher object ids:', updatedWatchListIds);
+        const newWatchListIds = updatedWatchListIds.map((usr) => {
+          //return existingWatchListIds.includes(usr) ? '' : usr;
+          if (!existingWatchListIds.includes(usr)) {
+            return usr;
+          }
+        });
+        console.log('watchlist ids to be updated', newWatchListIds);
+        updateIssue = {
+          ...updateIssue,
+          updates: {
+            watchList: newWatchListIds,
+          },
+        };
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field);
+        break;
     }
   }
   private updateFieldServiceCall(
@@ -190,7 +236,7 @@ export class SingleIssueComponent implements OnInit {
   ) {
     this.issueService.updateIssue(updateIssue).subscribe(
       (response) => {
-        console.debug('update issue response:', response);
+        console.error('update issue response:', response);
         if (response.status === 200) {
           this.toaster.open({ text: 'Issue Updated', type: 'info' });
           // close the edit option
@@ -210,7 +256,7 @@ export class SingleIssueComponent implements OnInit {
     field: string,
     updateIssue: { userId: string; issueId: string; updates: any }
   ) {
-    console.debug('updating current object', updateIssue);
+    console.error('updating current object', updateIssue);
     switch (field) {
       case 'title':
         this.issueDetails = {
@@ -236,6 +282,17 @@ export class SingleIssueComponent implements OnInit {
           ...this.issueDetails,
           assigneeName: assigneeName,
         };
+        break;
+      case 'watchlist':
+        console.log(
+          ' upating current issue with new watchlist',
+          this.updatedWatchList
+        );
+        this.issueDetails = {
+          ...this.issueDetails,
+          watchList: this.updatedWatchList,
+        };
+        break;
     }
   }
 

@@ -23,35 +23,43 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./watchers.component.css'],
 })
 export class WatchersComponent implements OnInit {
-  visible = true;
-  selectable = true;
-  removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  public visible = true;
+  public selectable = true;
+  public removable = true;
+  public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public watchersCtrl = new FormControl();
+  public filteredWatchers: Observable<string[]>;
+  // input fields
+  @Input() watchListOptions: Array<any>;
+  @Input() existingWatchList: Array<any>;
+  public currentWatchList: Array<any>;
+  // output , component will emit
+  @Output()
+  @Output()
+  updatedWatchers: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('watcherInput')
+  watcherInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor() {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) =>
-        fruit ? this._filter(fruit) : this.allFruits.slice()
-      )
-    );
+    if (this.existingWatchList && this.existingWatchList.length > 0) {
+      this.currentWatchList = this.existingWatchList;
+    }
   }
 
-  ngOnInit(): void {}
-  add(event: MatChipInputEvent): void {
+  ngOnInit(): void {
+    this.currentWatchList = this.existingWatchList;
+  }
+
+  public addWatcher(event: MatChipInputEvent): void {
+    console.log('add event', event);
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
+    // Add watchers
     if ((value || '').trim()) {
-      this.fruits.push(value.trim());
+      this.currentWatchList.push(value.trim());
     }
 
     // Reset the input value
@@ -59,28 +67,25 @@ export class WatchersComponent implements OnInit {
       input.value = '';
     }
 
-    this.fruitCtrl.setValue(null);
+    this.watchersCtrl.setValue(null);
+    console.log('after addition , current watchlist,', this.currentWatchList);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+  public removeWatcher(watcher: string): void {
+    const index = this.currentWatchList.indexOf(watcher);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.currentWatchList.splice(index, 1);
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(
-      (fruit) => fruit.toLowerCase().indexOf(filterValue) === 0
-    );
+  public selectedWatcher(event: MatAutocompleteSelectedEvent): void {
+    this.currentWatchList = [];
+    this.currentWatchList.push(event.option.value);
+    console.log('after addition , current watchlist,', this.currentWatchList);
+    // emit updated watchlist to parent component
+    this.updatedWatchers.emit(this.currentWatchList);
+    this.watcherInput.nativeElement.value = '';
+    this.watchersCtrl.setValue(null);
   }
 }

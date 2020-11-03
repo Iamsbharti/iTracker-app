@@ -1,4 +1,5 @@
 <div class="issue__main__content" *ngIf="issueDetails">
+  <!---->
   <div class="issue__details__card">
     <div class="issue__card">
       <p class="title">{{ issueDetails.title }}</p>
@@ -257,20 +258,36 @@
         </div>
         <!--watch list options-->
         <div class="watchlist__options__div">
-          <div class="watchlist__header">
+          <div class="watchlist__header" *ngIf="issueDetails.watchList">
             <p class="watchlist__label">WatchList<span>(s)</span></p>
-            <i class="material-icons visibility__icon" title="stop watching"
+            <i
+              class="material-icons visibility__icon"
+              title="stop watching"
+              (click)="showUpdateField('watchlist')"
               >visibility</i
             ><span class="watchers__no">{{
               issueDetails.watchList.length
             }}</span>
-            <i class="material-icons visibility__icon" title="start watching"
+            <i
+              class="material-icons visibility__icon"
+              title="start watching"
+              (click)="showUpdateField('watchlist')"
               >visibility_off</i
             ><span class="watchers__no">{{
               issueDetails.watchList.length
             }}</span>
           </div>
-          <div class="watchlist__content"><app-watchers></app-watchers></div>
+          <div class="watchlist__content" [hidden]="showUpdateWatchList">
+            <app-watchers
+              [watchListOptions]="issueDetails.watchListOptions"
+              [existingWatchList]="issueDetails.watchList"
+              (updatedWatchers)="onChange($event, 'watchlist')"
+            ></app-watchers>
+            <app-save-cancel
+              (saveOps)="updateField('watchlist')"
+              (cancelOps)="showUpdateField('watchlist')"
+            ></app-save-cancel>
+          </div>
         </div>
       </div>
     </div>
