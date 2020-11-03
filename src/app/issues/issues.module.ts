@@ -21,6 +21,7 @@ import { SaveCancelComponent } from './save-cancel/save-cancel.component';
 import { ParseHtmlPipe } from './pipe/parse-html.pipe';
 import { MatDividerModule } from '@angular/material/divider';
 import { EditorComponent } from './editor/editor.component';
+import { WatchersComponent } from './watchers/watchers.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { EditorComponent } from './editor/editor.component';
     SaveCancelComponent,
     ParseHtmlPipe,
     EditorComponent,
+    WatchersComponent,
   ],
   imports: [
     CommonModule,
