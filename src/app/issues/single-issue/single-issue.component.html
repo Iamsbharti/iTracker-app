@@ -244,7 +244,7 @@
                 class="form-control mt-1"
                 (change)="updateField('assignee')"
               >
-                <option [ngValue]="undefined" disabled>Add Assignee</option>
+                <option [ngValue]="undefined" disabled>Select Another</option>
                 <option
                   *ngFor="let assig of issueDetails.assigneeOptions"
                   [value]="assig.userId"
@@ -254,6 +254,29 @@
               </select>
             </div>
           </form>
+        </div>
+        <!--watch list options-->
+        <div class="watchlist__options__div">
+          <div class="watchlist__header">
+            <p class="watchlist__label">WatchList<span>(s)</span></p>
+            <i class="material-icons visibility__icon" title="stop watching"
+              >visibility</i
+            ><span class="watchers__no">{{
+              issueDetails.watchList.length
+            }}</span>
+            <i class="material-icons visibility__icon" title="start watching"
+              >visibility_off</i
+            ><span class="watchers__no">{{
+              issueDetails.watchList.length
+            }}</span>
+          </div>
+          <p
+            class="watchlist__content"
+            (click)="showUpdateField('watchList')"
+            title="update watchList"
+          >
+            WatchLists
+          </p>
         </div>
       </div>
     </div>

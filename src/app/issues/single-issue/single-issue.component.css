@@ -309,3 +309,30 @@ input[type="file"] {
   font-size: 12px;
   cursor: pointer;
 }
+/**watchlist div styles**/
+.watchlist__options__div {
+  width: 100%;
+  height: auto;
+  margin: 23px;
+}
+.watchlist__header {
+  display: flex;
+  justify-content: space-between;
+  margin: 7px 0px 4px 0px;
+  padding-top: 5px;
+  font-weight: 800;
+  font-size: 15px;
+  color: #0353a4;
+}
+.visibility__icon {
+  color: black !important;
+  cursor: pointer;
+  margin-top: -2px;
+}
+.watchers__no {
+  margin-left: -5px;
+}
+.watchlist__content {
+  font-weight: 700;
+  font-size: 12px;
+}
