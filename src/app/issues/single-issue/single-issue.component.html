@@ -292,11 +292,18 @@
               [watchListOptions]="issueDetails.watchListOptions"
               [existingWatchList]="issueDetails.watchList"
               (updatedWatchers)="onChange($event, 'watchlist')"
+              (addWatchers)="addWatchersId($event)"
+              (removeWatchers)="removeWatcherId($event)"
             ></app-watchers>
-            <app-save-cancel
-              (saveOps)="updateField('watchlist')"
-              (cancelOps)="showUpdateField('watchlist')"
-            ></app-save-cancel>
+            <button
+              mat-raised-button
+              color="secondary"
+              class="button__cancel"
+              title="cancel"
+              (click)="showUpdateField('watchlist')"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>

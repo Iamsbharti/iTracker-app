@@ -390,6 +390,7 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.issueDetails.isWatcher = isWatcher;
+
     // hide categorized table view
     this.showCategorizedIssues = true;
     this.showSingleIssue = false;

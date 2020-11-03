@@ -40,6 +40,8 @@ export class SingleIssueComponent implements OnInit {
   public assigneeOptions: Array<any>;
   public currentAssignee: string;
 
+  public fixWatchList: Array<any>;
+
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
     this.showDescEditor = true;
@@ -63,6 +65,7 @@ export class SingleIssueComponent implements OnInit {
       this.updatedTitle = this.issueDetails.title;
       this.editorDesc = this.issueDetails.description;
       this.commentsList = this.issueDetails.comments;
+      this.fixWatchList = this.issueDetails.watchList;
       // this.updatedWatchList = this.issueDetails.watchList;
     }
     // this.fetchAllUsers();
@@ -153,6 +156,8 @@ export class SingleIssueComponent implements OnInit {
       case 'watchlist':
         this.updatedWatchList = event;
         break;
+      case 'unwatchlist':
+        this.updatedWatchList = event;
     }
   }
 
@@ -198,28 +203,15 @@ export class SingleIssueComponent implements OnInit {
         break;
       case 'watchlist':
         console.log('updating watchlist', this.updatedWatchList);
-        // filter out the ids of from watchlist and exclude the existing watch
-        console.log('current watchlist should be empty', this.issueDetails);
-        const existingWatchListIds = this.getUsersObjectIds(
-          this.issueDetails.watchList
-        );
-        console.log('existing watchersobjectids', existingWatchListIds);
         const updatedWatchListIds = this.getUsersObjectIds(
           this.updatedWatchList
         );
-        console.log('updated watcher object ids:', updatedWatchListIds);
-        const newWatchListIds = updatedWatchListIds.map((usr) => {
-          //return existingWatchListIds.includes(usr) ? '' : usr;
-          if (!existingWatchListIds.includes(usr)) {
-            return usr;
-          }
-        });
-        console.log('watchlist ids to be updated', newWatchListIds);
+        console.log('watchlist ids to be updated', updatedWatchListIds);
         updateIssue = {
           ...updateIssue,
           updates: {
             operation: 'watch',
-            watchList: newWatchListIds,
+            watchList: updatedWatchListIds,
           },
         };
         // call update api
@@ -270,6 +262,43 @@ export class SingleIssueComponent implements OnInit {
     });
     return currentUserObject;
   }
+  /**
+   * These methods will add/ remove users in watchlist
+   * as soon as they added as chips
+   *
+   */
+  // add watchlist standalone rule
+  public addWatchersId(toAddList): any {
+    console.log('to add watchlist:', toAddList);
+    const { _id } = toAddList;
+    const updateIssue = {
+      userId: this.userId,
+      issueId: this.issueDetails.issueId,
+      updates: {
+        watchList: _id,
+        operation: 'watch',
+      },
+    };
+    // call update api
+    this.updateFieldServiceCall(updateIssue, 'watch', toAddList);
+  }
+  // remove watchlist standalone rule
+  public removeWatcherId(toRemoveList: any): any {
+    console.log('to remove watchlist:', toRemoveList);
+    const { _id } = toRemoveList;
+    console.log(_id);
+    const updateWatchList = {
+      userId: this.userId,
+      issueId: this.issueDetails.issueId,
+      updates: {
+        watchList: _id,
+        operation: 'unwatch',
+      },
+    };
+    console.log('updateissue:', updateWatchList);
+    // call update api
+    this.updateFieldServiceCall(updateWatchList, 'unwatch', toRemoveList);
+  }
   private updateFieldServiceCall(
     updateIssue: {
       userId: string;
@@ -279,6 +308,7 @@ export class SingleIssueComponent implements OnInit {
     field: string,
     currentObject?
   ) {
+    console.log('update options body:', updateIssue);
     this.issueService.updateIssue(updateIssue).subscribe(
       (response) => {
         console.error('update issue response:', response);
@@ -332,21 +362,32 @@ export class SingleIssueComponent implements OnInit {
       case 'watchlist':
         console.log(
           ' upating current issue with new watchlist',
-          this.updatedWatchList
+          this.issueDetails.watchList
         );
         this.issueDetails.watchList.push(this.updatedWatchList);
+        console.log('after new watchlist added,', this.issueDetails.watchList);
         break;
       case 'watch':
         console.log('update currentuser as watchlist');
         this.issueDetails.watchList.push(currentObject);
-        this.issueDetails.isWatcher = true;
+        if (currentObject.userId === this.userId) {
+          console.log('set iswatcher flag');
+          this.issueDetails.isWatcher = true;
+        }
         break;
       case 'unwatch':
         console.log('remove watcher', currentObject.userId);
         this.issueDetails.watchList = this.issueDetails.watchList.filter(
           (usr) => usr.userId !== currentObject.userId
         );
-        this.issueDetails.isWatcher = false;
+        if (currentObject.userId === this.userId) {
+          console.log('set iswatcher flag');
+          this.issueDetails.isWatcher = false;
+        }
+        console.log(
+          'updated watchlist after removal',
+          this.issueDetails.watchList
+        );
         break;
     }
   }

@@ -345,3 +345,8 @@ input[type="file"] {
   font-weight: 700;
   font-size: 12px;
 }
+.button {
+  text-transform: inherit !important;
+  cursor: pointer !important;
+  margin: 5px;
+}

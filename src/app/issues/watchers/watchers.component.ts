@@ -32,11 +32,17 @@ export class WatchersComponent implements OnInit {
   // input fields
   @Input() watchListOptions: Array<any>;
   @Input() existingWatchList: Array<any>;
-  public currentWatchList: Array<any>;
+
+  public currentWatchList = [];
+  public updatedWatchList = [];
+  //@Input() currentWatchList: Array<any>;
   // output , component will emit
   @Output()
+  removeWatchers: EventEmitter<any> = new EventEmitter<any>();
   @Output()
   updatedWatchers: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  addWatchers: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('watcherInput')
   watcherInput: ElementRef<HTMLInputElement>;
@@ -44,11 +50,13 @@ export class WatchersComponent implements OnInit {
 
   constructor() {
     if (this.existingWatchList && this.existingWatchList.length > 0) {
+      console.log('constructur update');
       this.currentWatchList = this.existingWatchList;
     }
   }
 
   ngOnInit(): void {
+    console.log('nginit update');
     this.currentWatchList = this.existingWatchList;
   }
 
@@ -72,19 +80,31 @@ export class WatchersComponent implements OnInit {
   }
 
   public removeWatcher(watcher: string): void {
+    console.log('remove', watcher);
+
     const index = this.currentWatchList.indexOf(watcher);
 
     if (index >= 0) {
       this.currentWatchList.splice(index, 1);
     }
+    this.updatedWatchList = [];
+    this.updatedWatchList.push(watcher);
+    console.log('updated list removal:', this.updatedWatchList);
+    // emitt removal event
+    this.removeWatchers.emit(this.updatedWatchList[0]);
+    console.log('after removing', this.currentWatchList);
+    console.log('current watchlist', this.existingWatchList);
   }
 
   public selectedWatcher(event: MatAutocompleteSelectedEvent): void {
-    this.currentWatchList = [];
+    //this.currentWatchList = [];
     this.currentWatchList.push(event.option.value);
     console.log('after addition , current watchlist,', this.currentWatchList);
+    this.updatedWatchList.push(event.option.value);
     // emit updated watchlist to parent component
-    this.updatedWatchers.emit(this.currentWatchList);
+    console.log('updated list:', this.updatedWatchList);
+    this.addWatchers.emit(this.updatedWatchList[0]);
+    //this.updatedWatchers.emit(this.updatedWatchList);
     this.watcherInput.nativeElement.value = '';
     this.watchersCtrl.setValue(null);
   }
