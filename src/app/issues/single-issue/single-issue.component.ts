@@ -218,13 +218,57 @@ export class SingleIssueComponent implements OnInit {
         updateIssue = {
           ...updateIssue,
           updates: {
+            operation: 'watch',
             watchList: newWatchListIds,
           },
         };
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
         break;
+      case 'watch':
+        console.log('add current user to watchlist');
+
+        const currentUserObject = this.getCurrentObjectId(
+          this.issueDetails.watchListOptions
+        );
+        console.log('currentuserobjectid', currentUserObject);
+        updateIssue = {
+          ...updateIssue,
+          updates: {
+            watchList: currentUserObject._id,
+            operation: 'watch',
+          },
+        };
+        console.log('add to watch list:', updateIssue);
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field, currentUserObject);
+        break;
+      case 'unwatch':
+        console.log('remove current user to watchlist');
+        const currentUserWatchObject = this.getCurrentObjectId(
+          this.issueDetails.watchListOptions
+        );
+        console.log('currentuserobjectid', currentUserWatchObject);
+        updateIssue = {
+          ...updateIssue,
+          updates: {
+            watchList: currentUserWatchObject._id,
+            operation: 'unwatch',
+          },
+        };
+        console.log('add to watch list:', updateIssue);
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field, currentUserWatchObject);
+        break;
     }
+  }
+  public getCurrentObjectId(watchListOptions: any[]) {
+    const currentUserObject = watchListOptions.find((usr) => {
+      if (usr.userId === this.userId) {
+        return usr;
+      }
+    });
+    return currentUserObject;
   }
   private updateFieldServiceCall(
     updateIssue: {
@@ -232,7 +276,8 @@ export class SingleIssueComponent implements OnInit {
       issueId: string;
       updates: {};
     },
-    field: string
+    field: string,
+    currentObject?
   ) {
     this.issueService.updateIssue(updateIssue).subscribe(
       (response) => {
@@ -243,7 +288,7 @@ export class SingleIssueComponent implements OnInit {
           this.showUpdateField(field);
 
           // update the current issue Object
-          this.updateCurrentIssueObject(field, updateIssue);
+          this.updateCurrentIssueObject(field, updateIssue, currentObject);
         }
       },
       (error) => {
@@ -254,7 +299,8 @@ export class SingleIssueComponent implements OnInit {
   }
   private updateCurrentIssueObject(
     field: string,
-    updateIssue: { userId: string; issueId: string; updates: any }
+    updateIssue: { userId: string; issueId: string; updates: any },
+    currentObject?
   ) {
     console.error('updating current object', updateIssue);
     switch (field) {
@@ -288,10 +334,19 @@ export class SingleIssueComponent implements OnInit {
           ' upating current issue with new watchlist',
           this.updatedWatchList
         );
-        this.issueDetails = {
-          ...this.issueDetails,
-          watchList: this.updatedWatchList,
-        };
+        this.issueDetails.watchList.push(this.updatedWatchList);
+        break;
+      case 'watch':
+        console.log('update currentuser as watchlist');
+        this.issueDetails.watchList.push(currentObject);
+        this.issueDetails.isWatcher = true;
+        break;
+      case 'unwatch':
+        console.log('remove watcher', currentObject.userId);
+        this.issueDetails.watchList = this.issueDetails.watchList.filter(
+          (usr) => usr.userId !== currentObject.userId
+        );
+        this.issueDetails.isWatcher = false;
         break;
     }
   }

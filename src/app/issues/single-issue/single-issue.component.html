@@ -260,22 +260,32 @@
         <div class="watchlist__options__div">
           <div class="watchlist__header" *ngIf="issueDetails.watchList">
             <p class="watchlist__label">WatchList<span>(s)</span></p>
+            <div [hidden]="issueDetails.isWatcher">
+              <i
+                class="material-icons visibility__icon"
+                title="start watching"
+                (click)="updateField('watch')"
+                >visibility</i
+              ><span class="watchers__no">{{
+                issueDetails.watchList.length
+              }}</span>
+            </div>
+            <div [hidden]="!issueDetails.isWatcher">
+              <i
+                class="material-icons visibility__icon"
+                title="stop watching"
+                (click)="updateField('unwatch')"
+                >visibility_off</i
+              ><span class="unwatchers__no">{{
+                issueDetails.watchList.length
+              }}</span>
+            </div>
             <i
               class="material-icons visibility__icon"
-              title="stop watching"
+              title="manage watchlist"
               (click)="showUpdateField('watchlist')"
-              >visibility</i
-            ><span class="watchers__no">{{
-              issueDetails.watchList.length
-            }}</span>
-            <i
-              class="material-icons visibility__icon"
-              title="start watching"
-              (click)="showUpdateField('watchlist')"
-              >visibility_off</i
-            ><span class="watchers__no">{{
-              issueDetails.watchList.length
-            }}</span>
+              >add_box</i
+            >
           </div>
           <div class="watchlist__content" [hidden]="showUpdateWatchList">
             <app-watchers

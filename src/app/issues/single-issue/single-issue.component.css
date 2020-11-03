@@ -330,7 +330,16 @@ input[type="file"] {
   margin-top: -2px;
 }
 .watchers__no {
-  margin-left: -5px;
+  display: inline-block;
+  margin-left: 5px;
+  position: relative;
+  top: -20%;
+}
+.unwatchers__no {
+  display: inline-block;
+  margin-left: 5px;
+  position: relative;
+  top: -20%;
 }
 .watchlist__content {
   font-weight: 700;

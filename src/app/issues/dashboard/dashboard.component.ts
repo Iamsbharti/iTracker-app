@@ -10,7 +10,7 @@ import { Sort } from '@angular/material/sort';
 export interface Issue {
   description?: string;
   createDate?: string;
-  watchList?: Array<Object>;
+  watchList?: Array<any>;
   comments?: Array<any>;
   attachment?: Array<any>;
   issueId: string;
@@ -24,6 +24,7 @@ export interface Issue {
   assigneeOptions: Array<any>;
   watchListOptions: Array<any>;
   assigneeName: string;
+  isWatcher: boolean;
 }
 @Component({
   selector: 'app-dashboard',
@@ -376,6 +377,19 @@ export class DashboardComponent implements OnInit {
     );
     console.log('uniquewatchlist', uniqueWatchers);
     this.issueDetails.watchList = uniqueWatchers;
+    // compute isWatcher flag for current logged in user
+    console.log(
+      'computing isWatcher:',
+      this.issueDetails.watchList,
+      this.userId
+    );
+    let isWatcher = false;
+    this.issueDetails.watchList.map((usr) => {
+      if (usr.userId === this.userId) {
+        isWatcher = true;
+      }
+    });
+    this.issueDetails.isWatcher = isWatcher;
     // hide categorized table view
     this.showCategorizedIssues = true;
     this.showSingleIssue = false;
