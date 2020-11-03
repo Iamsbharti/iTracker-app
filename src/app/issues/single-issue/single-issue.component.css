@@ -291,3 +291,21 @@ input[type="file"] {
 .delete__icon:hover {
   color: rgb(209, 0, 0);
 }
+/**assignee div styles**/
+.assignee__details__div {
+  width: 100%;
+  height: auto;
+  margin: 23px;
+}
+.assignee__header {
+  margin: 7px 0px 4px 0px;
+  padding-top: 5px;
+  font-weight: 800;
+  font-size: 15px;
+  color: #0353a4;
+}
+.assignee__content {
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}

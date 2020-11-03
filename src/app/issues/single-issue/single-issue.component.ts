@@ -17,6 +17,7 @@ export class SingleIssueComponent implements OnInit {
   public showDescEditor: boolean;
   public showCommentEditor: boolean;
   public showCommentUpdateEditor: boolean;
+  public showAssigneeList: boolean;
 
   // fields updated values
   public updatedTitle: string;
@@ -31,15 +32,25 @@ export class SingleIssueComponent implements OnInit {
   public getImageUrl: string;
   public authToken: string;
 
+  public statusOptions: Array<string>;
+  public priorityOptions: Array<string>;
+  public watchListOptions: Array<any>;
+  public assigneeOptions: Array<any>;
+  public currentAssignee: string;
+
   constructor(private issueService: IssuesService, private toaster: Toaster) {
     this.showTitleInput = true;
     this.showDescEditor = true;
     this.showCommentEditor = true;
     this.showCommentUpdateEditor = true;
+    this.showAssigneeList = true;
     this.name = Cookie.get('name');
     this.userId = Cookie.get('userId');
     this.getImageUrl = 'http://localhost:3001/api/v1/issue/attachment?';
     this.authToken = Cookie.get('authToken');
+
+    this.statusOptions = ['Backlogs', 'Progress', 'Test', 'Done'];
+    this.priorityOptions = ['High', 'Medium', 'Low'];
   }
 
   ngOnInit(): void {
@@ -49,6 +60,43 @@ export class SingleIssueComponent implements OnInit {
       this.editorDesc = this.issueDetails.description;
       this.commentsList = this.issueDetails.comments;
     }
+    // this.fetchAllUsers();
+  }
+  // fetch all users
+  public fetchAllUsers(): any {
+    console.log('user id from dashboard', this.userId);
+    const authDetails = {
+      userId: this.userId,
+    };
+    this.issueService.getAllUsers(authDetails).subscribe(
+      // handle success response
+      (response) => {
+        if (response.status === 200) {
+          this.assigneeOptions = response.data;
+          this.watchListOptions = response.data;
+
+          // update the assignee name
+          const assigneeName = this.getAssigneeName(
+            this.watchListOptions,
+            this.issueDetails.assignee
+          );
+          this.issueDetails.assigneeName = assigneeName;
+        }
+      },
+      // handle error response
+      (error) => {
+        console.log('Error fetching user details', error);
+        this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+      }
+    );
+  }
+  public getAssigneeName(userList, assigneeId): string {
+    // update the assignee name
+    console.log('get assignee name user list:', userList, assigneeId);
+    const currentAssigneeObject = userList.find((usr) => {
+      return usr.userId == assigneeId;
+    });
+    return currentAssigneeObject.name;
   }
   // hide and show update fields
   public showUpdateField(field, selectedObj?): any {
@@ -68,6 +116,9 @@ export class SingleIssueComponent implements OnInit {
       case 'edit-comment':
         this.showCommentUpdateEditor = !this.showCommentUpdateEditor;
         this.selectedComment = selectedObj;
+        break;
+      case 'assignee':
+        this.showAssigneeList = !this.showAssigneeList;
         break;
     }
   }
@@ -116,6 +167,17 @@ export class SingleIssueComponent implements OnInit {
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
         break;
+      case 'assignee':
+        console.log('updating assignee', this.currentAssignee);
+        updateIssue = {
+          ...updateIssue,
+          updates: {
+            assignee: this.currentAssignee,
+          },
+        };
+        // call update api
+        this.updateFieldServiceCall(updateIssue, field);
+        break;
     }
   }
   private updateFieldServiceCall(
@@ -148,7 +210,7 @@ export class SingleIssueComponent implements OnInit {
     field: string,
     updateIssue: { userId: string; issueId: string; updates: any }
   ) {
-    console.debug('updating current object');
+    console.debug('updating current object', updateIssue);
     switch (field) {
       case 'title':
         this.issueDetails = {
@@ -162,6 +224,18 @@ export class SingleIssueComponent implements OnInit {
           description: updateIssue.updates.description,
         };
         break;
+      case 'assignee':
+        // get name for assignee id
+        const { assigneeOptions } = this.issueDetails;
+        const assigneeName = this.getAssigneeName(
+          assigneeOptions,
+          this.currentAssignee
+        );
+        console.log('assigneename upating to ', assigneeName);
+        this.issueDetails = {
+          ...this.issueDetails,
+          assigneeName: assigneeName,
+        };
     }
   }
 

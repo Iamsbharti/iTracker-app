@@ -219,7 +219,43 @@
           </div>
         </div>
       </div>
-      <div class="issue__edit__option_2"></div>
+      <div class="issue__edit__option_2">
+        <div class="assignee__details__div">
+          <p class="assignee__header">Assignee</p>
+          <p
+            class="assignee__content"
+            (click)="showUpdateField('assignee')"
+            title="update assignee"
+          >
+            {{ issueDetails.assigneeName }}
+          </p>
+
+          <form
+            #updateAssigneeForm="ngForm"
+            (ngSubmit)="updateField('assignee')"
+            *ngIf="issueDetails.assigneeOptions"
+            [hidden]="showAssigneeList"
+          >
+            <div class="form-group">
+              <select
+                name="currentAssigneeName"
+                required
+                [(ngModel)]="currentAssignee"
+                class="form-control mt-1"
+                (change)="updateField('assignee')"
+              >
+                <option [ngValue]="undefined" disabled>Add Assignee</option>
+                <option
+                  *ngFor="let assig of issueDetails.assigneeOptions"
+                  [value]="assig.userId"
+                >
+                  {{ assig.name }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

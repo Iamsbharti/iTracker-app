@@ -20,6 +20,10 @@ export interface Issue {
   reporter: string;
   priority: string;
   estimates: string;
+  assignee: string;
+  assigneeOptions: Array<any>;
+  watchListOptions: Array<any>;
+  assigneeName: string;
 }
 @Component({
   selector: 'app-dashboard',
@@ -64,7 +68,7 @@ export class DashboardComponent implements OnInit {
   // single issue fields
   public showSingleIssue = true;
   public issueDetails: Issue;
-
+  public allUsersList: Array<any>;
   // issue interface
 
   constructor(
@@ -96,6 +100,7 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllIssues();
+    this.fetchAllUsers();
     this.showFilteredIssues = false;
   }
   // page event change
@@ -325,19 +330,61 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+  // fetch all users
+  public fetchAllUsers(): any {
+    console.log('user id from dashboard-get allusers', this.userId);
+    const authDetails = {
+      userId: this.userId,
+    };
+    this.issueService.getAllUsers(authDetails).subscribe(
+      // handle success response
+      (response) => {
+        if (response.status === 200) {
+          this.allUsersList = response.data;
+          /**
+          * this.issueDetails.assigneeOptions = response.data;
+          this.issueDetails.watchListOptions = response.data;
 
+          // update the assignee name
+          console.log('watchlistoptions:', this.issueDetails.watchListOptions);
+          let currentAssigneeObject = this.issueDetails.watchListOptions.find(
+            (usr) => {
+              return usr.userId == this.issueDetails.assignee;
+            }
+          );
+          this.issueDetails.assigneeName = currentAssigneeObject.name;
+          *  */
+        }
+      },
+      // handle error response
+      (error) => {
+        console.log('Error fetching user details', error);
+        this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+      }
+    );
+  }
   // single issue view
   public viewSingleIssue(issueId): any {
     console.log('View single Issue component');
 
-    // hide categorized table view
-    this.showCategorizedIssues = true;
-    this.showSingleIssue = false;
-
     // find the single issue details
+
     this.issueDetails = this.activePageDataChunks.find(
       (iss) => iss.issueId === issueId
     );
+    this.issueDetails.assigneeOptions = this.allUsersList;
+    this.issueDetails.watchListOptions = this.allUsersList;
+    console.log('issuedetails-modifying additional onbj', this.issueDetails);
+    // update the assignee name
+    let currentAssigneeObject = this.issueDetails.watchListOptions.find(
+      (usr) => {
+        return usr.userId == this.issueDetails.assignee;
+      }
+    );
+    this.issueDetails.assigneeName = currentAssigneeObject.name;
+    // hide categorized table view
+    this.showCategorizedIssues = true;
+    this.showSingleIssue = false;
 
     console.log('Single Issue details', this.issueDetails);
     this.toaster.open({
