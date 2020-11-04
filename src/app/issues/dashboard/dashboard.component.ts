@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit {
   public testIssues: Array<any>;
   public doneIssues: Array<any>;
   public allAvailableIssues: Array<any>;
+  public showProgressBar: boolean;
   // pagination inputs
   public pageSize: number;
   public length: number;
@@ -89,7 +90,7 @@ export class DashboardComponent implements OnInit {
     this.authToken = Cookie.get('authToken');
     this.pageSizeOptions = [5, 10];
     this.sortedData = this.activePageDataChunks.slice();
-
+    this.showProgressBar = true;
     if (
       this.userName == null ||
       this.userId == null ||
@@ -186,6 +187,8 @@ export class DashboardComponent implements OnInit {
   // logout user
   public logout(): any {
     console.log('logout clicks');
+    this.showProgressBar = false;
+    console.log('show progress bar:', this.showProgressBar);
     // delete cookies
     Cookie.delete('name');
     Cookie.delete('email');
@@ -195,8 +198,10 @@ export class DashboardComponent implements OnInit {
 
     // delete localstorage
     localStorage.removeItem('userInfo');
-    this.signOut();
-    setTimeout(() => this.router.navigate(['/login']), 1200);
+    //this.signOut();
+
+    setTimeout(() => this.router.navigate(['/login']), 1500);
+    this.showProgressBar = true;
   }
   public signOut(): void {
     this.authService.signOut();

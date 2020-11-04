@@ -35,6 +35,9 @@
       (click)="logout()"
     />
   </div>
+  <div [hidden]="showProgressBar">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
   <div class="dashboard__main__content">
     <div class="dasboard__filter__sidebar">
       <div class="dasboard__username">

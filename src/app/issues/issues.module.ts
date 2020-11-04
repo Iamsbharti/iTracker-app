@@ -22,6 +22,8 @@ import { ParseHtmlPipe } from './pipe/parse-html.pipe';
 import { MatDividerModule } from '@angular/material/divider';
 import { EditorComponent } from './editor/editor.component';
 import { WatchersComponent } from './watchers/watchers.component';
+import { RouterGuardService } from './router-guard.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,17 @@ import { WatchersComponent } from './watchers/watchers.component';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatDividerModule,
+    MatProgressBarModule,
+    RouterModule.forRoot([
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        pathMatch: 'full',
+        canActivate: [RouterGuardService],
+      },
+    ]),
   ],
-  providers: [IssuesService],
+  providers: [IssuesService, RouterGuardService],
+  exports: [DashboardComponent],
 })
 export class IssuesModule {}
