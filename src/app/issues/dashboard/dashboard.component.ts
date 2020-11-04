@@ -224,6 +224,7 @@ export class DashboardComponent implements OnInit {
           } else {
             this.showCategorizedIssues = false;
             this.displayFilterType = 'your assgined issues';
+            this.isIssueListEmpty = false;
           }
 
           // init pagination values
@@ -301,6 +302,7 @@ export class DashboardComponent implements OnInit {
             // show categorized view and hide the filtered one
             this.showCategorizedIssues = false;
             this.showSingleIssue = true;
+            this.isIssueListEmpty = false;
           }
         }
       },
@@ -381,6 +383,7 @@ export class DashboardComponent implements OnInit {
           } else {
             this.showCategorizedIssues = false;
             this.showSingleIssue = true;
+            this.isIssueListEmpty = false;
             this.displayFilterType = 'Search Results';
           }
 
