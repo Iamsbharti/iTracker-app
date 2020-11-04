@@ -54,3 +54,21 @@ span {
   background-color: rgb(64, 148, 175) !important;
   color: aliceblue !important;
 }
+/**responsive styles**/
+@media (max-width: 800px) {
+  .home {
+    display: block;
+    width: 265px;
+    margin: 56px;
+    padding: 0px;
+    margin-top: 135px;
+    height: 60vh;
+  }
+
+  .home__box__intro {
+    margin-top: 66px;
+    margin-bottom: 76px;
+    font-weight: 900;
+    font-size: 18px;
+  }
+}
