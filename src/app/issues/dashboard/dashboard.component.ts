@@ -76,6 +76,10 @@ export class DashboardComponent implements OnInit {
 
   //socket fields
   public authToken: string;
+
+  // mobile view
+  public showSidebarMenu: boolean;
+
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,
@@ -91,6 +95,7 @@ export class DashboardComponent implements OnInit {
     this.pageSizeOptions = [5, 10];
     this.sortedData = this.activePageDataChunks.slice();
     this.showProgressBar = true;
+    this.showSidebarMenu = true;
     if (
       this.userName == null ||
       this.userId == null ||
@@ -100,6 +105,10 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/login']);
       this.authToken = Cookie.get('authToken');
     }
+  }
+  // mobile implementation
+  public toggleSideMenu(): any {
+    this.showSidebarMenu = !this.showSidebarMenu;
   }
   // init socket auth
   public handShakeAuthentication(): any {

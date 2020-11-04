@@ -175,4 +175,106 @@
     </ng-template>
   </div>
 </div>
+<!--Mobile Design-->
+<div class="dashboard__mobile">
+  <div class="menu__bar" [hidden]="!showSidebarMenu">
+    <i
+      class="material-icons menu__bar__icon"
+      title="menu"
+      (click)="toggleSideMenu()"
+      >menu</i
+    >
+  </div>
+  <div class="dashboard__sideBar" [hidden]="showSidebarMenu">
+    <div class="sidebar__responsive">
+      <div class="sidebar_responsive_header">
+        <img src="assets/virus.png" alt="" (click)="getAllIssues()" />
+        <p>Welcome To iTracker</p>
+        <span class="close__icon">
+          <i class="material-icons" title="close" (click)="toggleSideMenu()"
+            >close</i
+          >
+        </span>
+      </div>
+      <div class="sidebar_responsive__userinfo">
+        <p>{{ name }}</p>
+        <div>
+          <button
+            mat-raised-button
+            color="primary"
+            class="navbar__button__responsive"
+            title="create a issue"
+            (click)="open(createModal)"
+          >
+            Create
+          </button>
+        </div>
+      </div>
+      <div class="div__break__line"></div>
+      <div class="sidebar__input">
+        <input
+          type="search"
+          name="search"
+          placeholder="Search title,desc"
+          title="search by keywords"
+          class="navbar__input__search__res"
+          (change)="searchIssues($event.target.value)"
+        />
+      </div>
+      <div class="div__break__line"></div>
+      <div class="sidebar__filters">
+        <p class="option__bold__text">Filters</p>
+        <p class="filters" (click)="getAllIssues()">Main view</p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'all', 'status', userName)"
+        >
+          All Issues
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'reportedByMe', 'status', name)"
+        >
+          Reported by me
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'openIssues', 'status', userName)"
+        >
+          My Open Issues
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'closedIssues', 'status', userName)"
+        >
+          Done Issues
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'resolvedRecent', 'time', userName)"
+        >
+          Resolved recently
+        </p>
+        <p
+          class="filters"
+          (click)="filterIssues(userId, 'updatedRecent', 'time', userName)"
+        >
+          Updated recently
+        </p>
+        <div class="div__break__line"></div>
+        <div class="logout__btn">
+          <img
+            src="assets/shutdown-96.png"
+            title="logout"
+            alt=""
+            (click)="logout()"
+          />
+        </div>
+        <div class="div__break__line"></div>
+      </div>
+    </div>
+  </div>
+  <div class="issue_list"></div>
+  <div class="single__issue__view"></div>
+</div>
 <router-outlet></router-outlet>
