@@ -158,6 +158,15 @@ export class IssuesService {
     return deletedAttachment;
   }
   // socket emitters and listeners
+  // listen to intiate authentication event
+  public initSocketAuthentication = () => {
+    console.log('listen to init authentication');
+    return Observable.create((observer) => {
+      this.socket.on('authenticate', (data) => {
+        observer.next(data);
+      });
+    });
+  };
   // emit authenticate user event
   public authenticateUser = (authDetails) => {
     console.log('EMit Authenticate User Event', authDetails);

@@ -72,6 +72,8 @@ export class DashboardComponent implements OnInit {
   public allUsersList: Array<any>;
   // issue interface
 
+  //socket fields
+  public authToken: string;
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,
@@ -81,6 +83,7 @@ export class DashboardComponent implements OnInit {
     this.userName = Cookie.get('username');
     this.userId = Cookie.get('userId');
     this.name = Cookie.get('name');
+    this.authToken = Cookie.get('authToken');
     this.pageSizeOptions = [5, 10];
     this.sortedData = this.activePageDataChunks.slice();
 
@@ -91,7 +94,24 @@ export class DashboardComponent implements OnInit {
       this.userId === undefined
     ) {
       this.router.navigate(['/login']);
+      this.authToken = Cookie.get('authToken');
     }
+  }
+  // init socket auth
+  public handShakeAuthentication(): any {
+    this.issueService.initSocketAuthentication().subscribe((data) => {
+      // emit authentication with authToken
+      let authDetails = { userId: this.userId, authToken: this.authToken };
+      this.issueService.authenticateUser(authDetails);
+    });
+    this.checkSocketStatus();
+  }
+  // auth status listener
+  private checkSocketStatus() {
+    console.log('Checking for auth--status');
+    this.issueService.isUserSocketVerified().subscribe((data) => {
+      this.toaster.open({ text: data, type: 'info' });
+    });
   }
   // set page chunks
   public setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -103,6 +123,7 @@ export class DashboardComponent implements OnInit {
     this.getAllIssues();
     this.fetchAllUsers();
     this.showFilteredIssues = false;
+    this.handShakeAuthentication();
   }
   // page event change
   public onPageChanged(e) {
