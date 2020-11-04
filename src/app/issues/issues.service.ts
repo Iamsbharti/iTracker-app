@@ -4,8 +4,9 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { observable, Observable, throwError } from 'rxjs';
 import { UserService } from '../user/user.service';
+import * as io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,17 @@ import { UserService } from '../user/user.service';
 export class IssuesService {
   // intiliaze
   public baseUrl = 'http://localhost:3001/api/v1';
-  constructor(private http: HttpClient, private userService: UserService) {}
+  public socketUrl = 'http://localhost:3001/issue/notify';
+  private socket;
+  constructor(private http: HttpClient, private userService: UserService) {
+    // initialize socket client
+    this.socket = io(this.socketUrl, {
+      'auto connect': true,
+      'max reconnection attempts': 10,
+      multiplex: false,
+      'try multiple transports': true,
+    });
+  }
 
   // handle exceptions
   public handleError(error: HttpErrorResponse): any {
@@ -146,4 +157,36 @@ export class IssuesService {
     );
     return deletedAttachment;
   }
+  // socket emitters and listeners
+  // emit authenticate user event
+  public authenticateUser = (authDetails) => {
+    console.log('EMit Authenticate User Event', authDetails);
+    this.socket.emit('auth', authDetails);
+  };
+
+  // listen to authenticated event
+  public isUserSocketVerified = () => {
+    console.log('Auth Status Listener');
+    return Observable.create((observer) => {
+      this.socket.on('authStatus', (data) => {
+        observer.next(data);
+      });
+    });
+  };
+
+  // emit issue update event
+  public notifyWatchListOnIssueUpdates = (issueDetails) => {
+    console.log('Emit issue update event:', issueDetails);
+    this.socket.emit('issue-updates-client', issueDetails);
+  };
+
+  // listen to issue update event for notifying watchlist users
+  public issueUpdatesForWatchListListener = () => {
+    console.log('issueupdates listener');
+    return Observable.create((observer) => {
+      this.socket.on('issue-updates-server', (data) => {
+        observer.next(data);
+      });
+    });
+  };
 }
