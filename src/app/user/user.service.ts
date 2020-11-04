@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { UseExistingWebDriver } from 'protractor/built/driverProviders';
 @Injectable({
   providedIn: 'root',
 })
@@ -40,5 +41,14 @@ export class UserService {
     console.log('get user auth');
     const authInfo = JSON.parse(localStorage.getItem('userInfo'));
     return authInfo === null ? '' : authInfo;
+  }
+  // social login verification
+  public verifySocialLoginService(userDetails): any {
+    console.log('verify social login serice:', userDetails);
+    const { name, email } = userDetails;
+    const verficationResult = this.http.get(
+      `${this.baseUrl}/user/social/verify?email=${email}&name=${name}`
+    );
+    return verficationResult;
   }
 }

@@ -18,4 +18,13 @@
       (click)="linkedInSignIn()"
     />
   </div>
+  <div
+    class="login__response"
+    [ngClass]="{
+      successLoginMessage: responseType,
+      errorLoginMessage: !responseType
+    }"
+  >
+    {{ responseMsg }}
+  </div>
 </div>

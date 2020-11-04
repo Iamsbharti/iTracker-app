@@ -7,6 +7,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'ng-social-login-module';
 export interface Issue {
   description?: string;
   createDate?: string;
@@ -79,7 +80,8 @@ export class DashboardComponent implements OnInit {
     private toaster: Toaster,
     private router: Router,
     private modalService: NgbModal,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private authService: AuthService
   ) {
     this.userName = Cookie.get('username');
     this.userId = Cookie.get('userId');
@@ -168,8 +170,7 @@ export class DashboardComponent implements OnInit {
     this.fetchAllUsers();
     this.showFilteredIssues = false;
     this.handShakeAuthentication();
-    this.getAllAvalableIssues();
-    //this.listenForAnyIssueUpdates();
+    setTimeout(() => this.getAllAvalableIssues(), 1200);
   }
   // page event change
   public onPageChanged(e) {
@@ -194,8 +195,11 @@ export class DashboardComponent implements OnInit {
 
     // delete localstorage
     localStorage.removeItem('userInfo');
-
+    this.signOut();
     setTimeout(() => this.router.navigate(['/login']), 1200);
+  }
+  public signOut(): void {
+    this.authService.signOut();
   }
   public getAllIssues(): any {
     console.log('get all issue api call');

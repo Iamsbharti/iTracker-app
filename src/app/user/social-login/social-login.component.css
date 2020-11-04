@@ -8,3 +8,13 @@ img {
   height: 40px;
   cursor: pointer;
 }
+.login__response {
+  margin-left: auto;
+  margin-right: auto;
+}
+.successMessage {
+  color: green;
+}
+.errorMessage {
+  color: red;
+}
