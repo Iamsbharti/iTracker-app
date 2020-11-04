@@ -589,7 +589,16 @@ i {
   .paginator__div__mobile {
     margin: 4px 0px 0px 0px;
   }
-
+  .issuee__not__found__mobile {
+    display: flex;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 20px;
+    color: #931f1d;
+    position: absolute;
+    top: 300px;
+    left: 86px;
+  }
   .sidebar_responsive_header > span {
     color: var(--twitter-color);
   }

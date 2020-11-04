@@ -262,7 +262,7 @@ export class DashboardComponent implements OnInit {
   }
 
   // filter issues based on conditions
-  public filterIssues(userId, option, type, name): any {
+  public filterIssues(userId, option, type, name, view?): any {
     const filterOptions = {
       userId,
       option,
@@ -300,7 +300,6 @@ export class DashboardComponent implements OnInit {
           // conditional render issue table
           if (this.allIssues.length <= 0) {
             this.showCategorizedIssues = true;
-
             this.emptyIssueMessage = 'No Issues Found';
             this.isIssueListEmpty = true;
           } else {
@@ -310,13 +309,16 @@ export class DashboardComponent implements OnInit {
 
             // chunks
             this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-            console.debug('active page chunks:', this.activePageDataChunks);
+            console.log('active page chunks:', this.activePageDataChunks);
 
             this.toaster.open({ text: 'Filtered Issues', type: 'success' });
             // show categorized view and hide the filtered one
             this.showCategorizedIssues = false;
             this.showSingleIssue = true;
             this.isIssueListEmpty = false;
+          }
+          if (view === 'mobile') {
+            this.showSidebarMenu = true;
           }
         }
       },

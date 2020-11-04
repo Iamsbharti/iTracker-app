@@ -227,37 +227,47 @@
         <p class="filters" (click)="getAllIssues()">Main view</p>
         <p
           class="filters"
-          (click)="filterIssues(userId, 'all', 'status', userName)"
+          (click)="filterIssues(userId, 'all', 'status', userName, 'mobile')"
         >
           All Issues
         </p>
         <p
           class="filters"
-          (click)="filterIssues(userId, 'reportedByMe', 'status', name)"
+          (click)="
+            filterIssues(userId, 'reportedByMe', 'status', name, 'mobile')
+          "
         >
           Reported by me
         </p>
         <p
           class="filters"
-          (click)="filterIssues(userId, 'openIssues', 'status', userName)"
+          (click)="
+            filterIssues(userId, 'openIssues', 'status', userName, 'mobile')
+          "
         >
           My Open Issues
         </p>
         <p
           class="filters"
-          (click)="filterIssues(userId, 'closedIssues', 'status', userName)"
+          (click)="
+            filterIssues(userId, 'closedIssues', 'status', userName, 'mobile')
+          "
         >
           Done Issues
         </p>
         <p
           class="filters"
-          (click)="filterIssues(userId, 'resolvedRecent', 'time', userName)"
+          (click)="
+            filterIssues(userId, 'resolvedRecent', 'time', userName, 'mobile')
+          "
         >
           Resolved recently
         </p>
         <p
           class="filters"
-          (click)="filterIssues(userId, 'updatedRecent', 'time', userName)"
+          (click)="
+            filterIssues(userId, 'updatedRecent', 'time', userName, 'mobile')
+          "
         >
           Updated recently
         </p>
@@ -313,6 +323,22 @@
       </div>
     </div>
   </div>
-  <div class="single__issue__view"></div>
+  <!--No issue Found Div Start-->
+  <div class="issue_list__mobile" [hidden]="!isIssueListEmpty">
+    <div class="issuee__not__found__mobile">
+      {{ emptyIssueMessage }}
+      <i class="material-icons">warning</i>
+    </div>
+    <div class="dashboard__footbar"></div>
+  </div>
+  <!--No Issue Found Div End-->
+
+  <!--Single Issue Component Start-->
+
+  <div class="dashboard__issue__list" [hidden]="showSingleIssue">
+    <app-single-issue [issueDetails]="issueDetails"></app-single-issue>
+  </div>
+
+  <!--Single Issue Compoenent End-->
 </div>
 <router-outlet></router-outlet>
