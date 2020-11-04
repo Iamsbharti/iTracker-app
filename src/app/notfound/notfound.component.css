@@ -1,0 +1,9 @@
+.page__not__found {
+  height: 100vh;
+  width: 100hh;
+}
+img {
+  width: 90%;
+  height: 100%;
+  cursor: pointer;
+}
