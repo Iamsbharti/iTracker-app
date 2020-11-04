@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,11 +14,14 @@ export class LoginComponent implements OnInit {
   public password: string;
   public loginResponse: string;
   public responseType: boolean;
-
+  private toastConfig = {
+    timeOut: 1000,
+  };
   constructor(
     private userService: UserService,
     private router: Router,
-    private toaster: Toaster
+    private toaster: Toaster,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {}
@@ -44,7 +47,8 @@ export class LoginComponent implements OnInit {
 
         this.userService.setUserAuth(response.data);
 
-        this.toaster.open({ text: response.message, type: 'success' });
+        //this.toaster.open({ text: response.message, type: 'success' });
+        this.toast.success(`${response.message}`, 'Login', this.toastConfig);
 
         setTimeout(() => this.router.navigate(['/dashboard']), 2000);
       },
@@ -53,7 +57,8 @@ export class LoginComponent implements OnInit {
         console.warn('Error Login', error);
         this.loginResponse = error.error.message + '- Try Again';
         this.responseType = false;
-        this.toaster.open({ text: 'Login Error', type: 'danger' });
+        //this.toaster.open({ text: 'Login Error', type: 'danger' });
+        this.toast.error('Login Error', 'Login', this.toastConfig);
 
         setTimeout(() => {
           (this.loginId = ''), (this.password = '');

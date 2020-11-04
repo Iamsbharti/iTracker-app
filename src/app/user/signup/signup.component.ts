@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { ToastConfig, Toaster } from 'ngx-toast-notifications';
 import { Cookie } from 'ng2-cookies';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -20,10 +20,14 @@ export class SignupComponent implements OnInit {
   public signUpResponse: string;
   public passwordError: string;
   public responseType: boolean;
+  private toastConfig = {
+    timeOut: 1000,
+  };
   constructor(
     private userService: UserService,
     private router: Router,
-    private toaster: Toaster
+    private toaster: Toaster,
+    private toast: ToastrService
   ) {
     this.passwordError = `Password should have at least 1 Lowercase,Uppercase,Special
     Character & of min length 8 `;
@@ -46,7 +50,8 @@ export class SignupComponent implements OnInit {
           this.responseType = true;
         }
         this.signUpResponse = response.message + 'Redirecting to Login page';
-        this.toaster.open({ text: 'SignUp Succes', type: 'success' });
+        //this.toaster.open({ text: 'SignUp Succes', type: 'success' });
+        this.toast.success(`${response.message}`, 'Signup', this.toastConfig);
 
         setTimeout(() => this.router.navigate(['/login']), 2000);
       },
@@ -54,7 +59,8 @@ export class SignupComponent implements OnInit {
         console.warn('Error Login', error);
         this.signUpResponse = error.error.message + '- Try Again';
         this.responseType = false;
-        this.toaster.open({ text: 'SignUp Error', type: 'danger' });
+        //this.toaster.open({ text: 'SignUp Error', type: 'danger' });
+        this.toast.error('SignUp Error', 'Signup', this.toastConfig);
 
         setTimeout(() => {
           this.name = '';

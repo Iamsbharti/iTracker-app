@@ -79,7 +79,9 @@ export class DashboardComponent implements OnInit {
 
   // mobile view
   public showSidebarMenu: boolean;
-
+  private toastConfig = {
+    timeOut: 1000,
+  };
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,
@@ -123,7 +125,8 @@ export class DashboardComponent implements OnInit {
   private checkSocketStatus() {
     console.log('Checking for auth--status');
     this.issueService.isUserSocketVerified().subscribe((data) => {
-      this.toaster.open({ text: data, type: 'info' });
+      //this.toaster.open({ text: data, type: 'info' });
+      this.toast.success(`${data}`, 'Notification', this.toastConfig);
     });
     this.listenForAnyIssueUpdates();
   }
@@ -250,13 +253,15 @@ export class DashboardComponent implements OnInit {
           console.debug('active page chunks:', this.activePageDataChunks);
 
           // toast
-          this.toaster.open({ text: 'Issues Fetched', type: 'success' });
+          //this.toaster.open({ text: 'Issues Fetched', type: 'success' });
+          this.toast.success(`${response.message}`, 'Issue', this.toastConfig);
         }
       },
       // error handler
       (error) => {
         console.warn('Error Login', error);
-        this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+        //this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+        this.toast.error('Something went wrong', 'Issue', this.toastConfig);
       }
     );
   }
@@ -311,7 +316,12 @@ export class DashboardComponent implements OnInit {
             this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
             console.log('active page chunks:', this.activePageDataChunks);
 
-            this.toaster.open({ text: 'Filtered Issues', type: 'success' });
+            //this.toaster.open({ text: 'Filtered Issues', type: 'success' });
+            this.toast.success(
+              `${response.message}`,
+              'Filter Issue',
+              this.toastConfig
+            );
             // show categorized view and hide the filtered one
             this.showCategorizedIssues = false;
             this.showSingleIssue = true;
@@ -325,7 +335,12 @@ export class DashboardComponent implements OnInit {
       // error
       (error) => {
         console.warn('Error Login', error);
-        this.toaster.open({ text: error.error.message, type: 'danger' });
+        //this.toaster.open({ text: error.error.message, type: 'danger' });
+        this.toast.success(
+          `${error.error.message}`,
+          'Filter Issue',
+          this.toastConfig
+        );
       }
     );
   }
@@ -411,13 +426,23 @@ export class DashboardComponent implements OnInit {
           this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
           console.debug('active page chunks:', this.activePageDataChunks);
 
-          this.toaster.open({ text: 'Searched Issues', type: 'success' });
+          //this.toaster.open({ text: 'Searched Issues', type: 'success' });
+          this.toast.success(
+            `${response.message}`,
+            'Search Issue',
+            this.toastConfig
+          );
         }
       },
       // error
       (error) => {
         console.error('Error Fetching Issues', error);
-        this.toaster.open({ text: error.error.message, type: 'danger' });
+        //this.toaster.open({ text: error.error.message, type: 'danger' });
+        this.toast.success(
+          `${error.error.message}`,
+          'Search Issue',
+          this.toastConfig
+        );
       }
     );
   }
@@ -437,7 +462,12 @@ export class DashboardComponent implements OnInit {
       // handle error response
       (error) => {
         console.log('Error fetching user details', error);
-        this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+        //this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+        this.toast.success(
+          'Something went wrong',
+          'All Users',
+          this.toastConfig
+        );
       }
     );
   }
@@ -493,10 +523,15 @@ export class DashboardComponent implements OnInit {
     this.showSingleIssue = false;
 
     console.log('Single Issue details', this.issueDetails);
-    this.toaster.open({
+    /*this.toaster.open({
       text: `openning ${this.issueDetails.title}`,
       type: 'dark',
-    });
+    });*/
+    this.toast.success(
+      `openning ${this.issueDetails.title}`,
+      'View Issue',
+      this.toastConfig
+    );
   }
   public removeDuplicates(originalArray, prop) {
     var newArray = [];

@@ -44,6 +44,10 @@ export class SingleIssueComponent implements OnInit {
   public currentPriority: string;
   public currentStatus: string;
 
+  private toastConfig = {
+    timeOut: 1000,
+  };
+
   constructor(
     private issueService: IssuesService,
     private toaster: Toaster,
@@ -515,8 +519,12 @@ export class SingleIssueComponent implements OnInit {
       (response) => {
         console.log('add comment res:', response);
         if (response.status === 200) {
-          this.toaster.open({ text: response.message, type: 'secondary' });
-
+          //this.toaster.open({ text: response.message, type: 'secondary' });
+          this.toast.success(
+            `${response.message}`,
+            'Comments',
+            this.toastConfig
+          );
           console.log('created/new comments to be updated', response.data);
           if (operation === 'add') {
             this.updateCurrentCommentObject({ ...response.data, operation });
@@ -525,7 +533,12 @@ export class SingleIssueComponent implements OnInit {
       },
       (error) => {
         console.warn('Error adding comment', error);
-        this.toaster.open({ text: error.error.message, type: 'danger' });
+        // this.toaster.open({ text: error.error.message, type: 'danger' });
+        this.toast.error(
+          `${error.error.message}`,
+          'Comments',
+          this.toastConfig
+        );
       }
     );
   }
@@ -577,14 +590,24 @@ export class SingleIssueComponent implements OnInit {
       (response) => {
         console.log('upload response:', response);
         if (response.status === 200) {
-          this.toaster.open({ text: response.message, type: 'success' });
+          //this.toaster.open({ text: response.message, type: 'success' });
+          this.toast.success(
+            `${response.message}`,
+            'Attachment',
+            this.toastConfig
+          );
           // update the current arrachment array of the issue
           this.issueDetails.attachment.push(response.data);
         }
       },
       (error) => {
         console.warn('Upload Error:', error);
-        this.toaster.open({ text: error.error.message, type: 'danger' });
+        //this.toaster.open({ text: error.error.message, type: 'danger' });
+        this.toast.success(
+          `${error.error.message}`,
+          'Attachment',
+          this.toastConfig
+        );
       }
     );
   }
@@ -603,7 +626,12 @@ export class SingleIssueComponent implements OnInit {
       },
       (error) => {
         console.log('Error Fecthing image', error);
-        this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
+        //this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
+        this.toast.success(
+          `${error.error.message}`,
+          'Image View',
+          this.toastConfig
+        );
       }
     );
   }
@@ -617,7 +645,12 @@ export class SingleIssueComponent implements OnInit {
       (response) => {
         console.log('Delete Attachment Response:', response);
         if (response.status === 200) {
-          this.toaster.open({ text: response.message, type: 'success' });
+          //this.toaster.open({ text: response.message, type: 'success' });
+          this.toast.success(
+            `${response.message}`,
+            'Attachment',
+            this.toastConfig
+          );
           // filter the current attachment array
           this.issueDetails.attachment = this.issueDetails.attachment.filter(
             (iss) => iss.filename !== filename
@@ -626,7 +659,12 @@ export class SingleIssueComponent implements OnInit {
       },
       (error) => {
         console.log('Error Deleting image', error);
-        this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
+        //this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
+        this.toast.success(
+          'Something went Wrong',
+          'Attachment',
+          this.toastConfig
+        );
       }
     );
   }
