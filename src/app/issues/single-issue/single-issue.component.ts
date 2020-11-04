@@ -646,7 +646,7 @@ export class SingleIssueComponent implements OnInit {
       ...upadtedIssueDetails,
       field: field,
       message: message,
-      watchList: watchListUsersIds,
+      watchList: watchListUsersIds.filter((ids) => ids !== this.userId),
     };
 
     console.log('emit event from client::issuedetails', upadtedIssueDetails);

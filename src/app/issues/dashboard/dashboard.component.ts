@@ -115,6 +115,7 @@ export class DashboardComponent implements OnInit {
     });
     this.listenForAnyIssueUpdates();
   }
+  // listen for any issue updates and notify to the users
   private listenForAnyIssueUpdates(): any {
     console.log('listen for any issue updates');
     this.issueService.issueUpdatesForWatchListListener().subscribe((data) => {
