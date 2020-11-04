@@ -274,7 +274,45 @@
       </div>
     </div>
   </div>
-  <div class="issue_list"></div>
+  <div class="issue_list__mobile" [hidden]="showCategorizedIssues">
+    <div class="issue__table__header">
+      <p>
+        Currently showing
+        <span style="color: blueviolet"> {{ displayFilterType }}</span>
+      </p>
+    </div>
+    <div class="issue__table__mobile">
+      <table matSort (matSortChange)="sortData($event)">
+        <tr>
+          <th mat-sort-header="title">Title</th>
+          <th mat-sort-header="reporter">Reporter</th>
+          <th mat-sort-header="createDate">created On</th>
+          <th mat-sort-header="status">Status</th>
+        </tr>
+        <tr *ngFor="let issue of activePageDataChunks">
+          <td
+            class="title__col__mobile"
+            (click)="viewSingleIssue(issue.issueId)"
+          >
+            {{ issue.title }}
+          </td>
+          <td>{{ issue.reporter }}</td>
+          <td>{{ issue.createDate | date }}</td>
+          <td>{{ issue.status }}</td>
+        </tr>
+      </table>
+      <div class="paginator__div__mobile">
+        <mat-paginator
+          class="issues__paginator__mobile"
+          [length]="length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="onPageChanged($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
   <div class="single__issue__view"></div>
 </div>
 <router-outlet></router-outlet>

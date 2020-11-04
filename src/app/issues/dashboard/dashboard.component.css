@@ -469,18 +469,7 @@ i {
   .issue__table {
     padding-top: 20px;
   }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    border: 1px solid #ddd;
-  }
-  td,
-  th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 10px;
-  }
+
   .dashboard__mobile {
     height: 100vh;
     background-image: var(--bg-grad);
@@ -564,6 +553,43 @@ i {
     width: 28px;
     height: 28px;
   }
+  .issue__table__mobile {
+    margin: 52px 9px 0px 8px;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 6px;
+  }
+  .title__col__mobile {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: blue;
+    cursor: pointer;
+  }
+  .title__col__mobile:hover {
+    font-weight: 900;
+    font-size: 16px;
+    text-decoration-line: underline;
+  }
+  .issues__paginator__mobile {
+    width: fit-content !important;
+    padding: 0px !important;
+    background-image: var(--bg-grad) !important;
+  }
+
+  .paginator__div__mobile {
+    margin: 4px 0px 0px 0px;
+  }
+
   .sidebar_responsive_header > span {
     color: var(--twitter-color);
   }
