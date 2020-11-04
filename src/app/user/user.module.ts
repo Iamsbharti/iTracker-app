@@ -7,9 +7,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './user.service';
 import { MatButtonModule } from '@angular/material/button';
+import { SocialLoginComponent } from './social-login/social-login.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent],
+  declarations: [LoginComponent, SignupComponent, SocialLoginComponent],
   imports: [
     CommonModule,
     MatButtonModule,

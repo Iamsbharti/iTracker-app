@@ -20,6 +20,45 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ToastrModule } from 'ngx-toastr';
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+  LinkedinLoginProvider,
+} from 'ng-social-login-module';
+/**
+ * config takes two params
+ * 1. Provider config array
+ * 2. Boolean to auto logged
+ * {
+      id: GoogleLoginProvider.PROVIDER_ID,
+      provider: new GoogleLoginProvider('895741338792-t2t3ndlqu4p11qr6tv7b536dgbfve46g.apps.googleusercontent.com'),
+    },
+ */
+const CONFIG = new AuthServiceConfig(
+  [
+    {
+      id: GoogleLoginProvider.PROVIDER_ID,
+      provider: new GoogleLoginProvider(
+        '895741338792-t2t3ndlqu4p11qr6tv7b536dgbfve46g.apps.googleusercontent.com'
+      ),
+    },
+    {
+      id: FacebookLoginProvider.PROVIDER_ID,
+      provider: new FacebookLoginProvider('2442783682683614'),
+    },
+    {
+      id: LinkedinLoginProvider.PROVIDER_ID,
+      provider: new LinkedinLoginProvider('86p5fb7z33c0xy'),
+    },
+  ],
+  true
+);
+
+export function provideConfig() {
+  return CONFIG;
+}
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
@@ -50,8 +89,15 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    SocialLoginModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig,
+    },
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -72,6 +72,12 @@ h4 {
 h4:hover {
   color: blue;
 }
+code {
+  margin: 1px 0px 1px 0px;
+  font-size: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .login__response {
   margin-left: auto;
   margin-right: auto;
