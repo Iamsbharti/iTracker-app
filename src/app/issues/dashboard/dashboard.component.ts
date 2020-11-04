@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-
+import { ToastrService } from 'ngx-toastr';
 export interface Issue {
   description?: string;
   createDate?: string;
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   public progressIssues: Array<any>;
   public testIssues: Array<any>;
   public doneIssues: Array<any>;
-
+  public allAvailableIssues: Array<any>;
   // pagination inputs
   public pageSize: number;
   public length: number;
@@ -78,7 +78,8 @@ export class DashboardComponent implements OnInit {
     private issueService: IssuesService,
     private toaster: Toaster,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toast: ToastrService
   ) {
     this.userName = Cookie.get('username');
     this.userId = Cookie.get('userId');
@@ -112,6 +113,48 @@ export class DashboardComponent implements OnInit {
     this.issueService.isUserSocketVerified().subscribe((data) => {
       this.toaster.open({ text: data, type: 'info' });
     });
+    this.listenForAnyIssueUpdates();
+  }
+  private listenForAnyIssueUpdates(): any {
+    console.log('listen for any issue updates');
+    this.issueService.issueUpdatesForWatchListListener().subscribe((data) => {
+      const { issueId, field, message, watchList } = data;
+      console.log('issue update listener:', data);
+      if (watchList.includes(this.userId)) {
+        // current user is in the watchlist ,show notification
+        const notification = this.toast.info(`${message}`, 'Issue Updated');
+
+        // observer function when notification is clicked - show the updated issueId
+        notification.onTap.subscribe(() => {
+          // fetch all the issues
+          //this.filterIssues(this.userId, 'all', 'status', this.name);
+          this.viewSingleIssue(issueId, 'notification');
+        });
+      }
+    });
+  }
+  public getAllAvalableIssues(): any {
+    const filterOptions = {
+      name: this.name,
+      userId: this.userId,
+      option: 'all',
+      type: 'status',
+    };
+    this.issueService.getFilteredIssues(filterOptions).subscribe(
+      // success
+      (response) => {
+        if (response.status === 200) {
+          //clear any previous data
+          this.allAvailableIssues = response.data;
+        }
+      },
+
+      // error
+      (error) => {
+        console.warn('Error Login', error);
+        //this.toaster.open({ text: error.error.message, type: 'danger' });
+      }
+    );
   }
   // set page chunks
   public setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -124,6 +167,8 @@ export class DashboardComponent implements OnInit {
     this.fetchAllUsers();
     this.showFilteredIssues = false;
     this.handShakeAuthentication();
+    this.getAllAvalableIssues();
+    //this.listenForAnyIssueUpdates();
   }
   // page event change
   public onPageChanged(e) {
@@ -373,14 +418,21 @@ export class DashboardComponent implements OnInit {
     );
   }
   // single issue view
-  public viewSingleIssue(issueId): any {
-    console.log('View single Issue component');
+  public viewSingleIssue(issueId, type?: string): any {
+    console.log('View single Issue component', issueId);
 
     // find the single issue details
-
-    this.issueDetails = this.activePageDataChunks.find(
-      (iss) => iss.issueId === issueId
-    );
+    if (type === 'notification') {
+      console.log('type:-notification', this.allAvailableIssues);
+      this.issueDetails = this.allAvailableIssues.find(
+        (iss) => iss.issueId === issueId
+      );
+    } else {
+      this.issueDetails = this.activePageDataChunks.find(
+        (iss) => iss.issueId === issueId
+      );
+    }
+    console.log('issueDetails', this.issueDetails);
     this.issueDetails.assigneeOptions = this.allUsersList;
     this.issueDetails.watchListOptions = this.allUsersList;
     console.log('issuedetails-modifying additional onbj', this.issueDetails);

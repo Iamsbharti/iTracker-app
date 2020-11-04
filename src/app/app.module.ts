@@ -19,6 +19,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotfoundComponent],
@@ -43,6 +44,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
       type: 'primary',
       autoClose: true,
       position: 'top-right',
+    }),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
     }),
   ],
   providers: [],
