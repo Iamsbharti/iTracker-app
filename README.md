@@ -1,27 +1,29 @@
-# ITrackerApp
+# KanbanBoard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+[Feel It!!](http://i-Tracker.in/)
 
-## Development server
+### Made Of...
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+> This app has been created using Angular,Express,NodeMailer,HapiJoi,JsonWebToken and MongoDB as persistence manager.
+> Hapi Joi helps in Parameter Validation
+> Authentication is provided by JsonWebToken
+> Ckeditor is used for editor.
 
-## Code scaffolding
+### What's in it for me ? :metal:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- You can create issues and track their whole lifecycle.K
+- App allows to login from social media.
+- Notify watchlist upon any field update in issue.
+- You can edit issue, assign assignee and status.
+- Get Real Time Updates upon any change.
+- You can manage attachments on any issue.
 
-## Build
+## Run on LocalHost
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- Clone the [repo](https://github.com/Iamsbharti/iTracker-app.git)
+- Run npm install
+- Run npm run start
+- Run npm run build
+- API server is hosted at [Here](http://api.i-Tracker.in/)
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[API Documentation](http://api.i-Tracker.in/)

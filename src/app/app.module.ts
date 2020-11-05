@@ -85,7 +85,7 @@ export function provideConfig() {
       position: 'top-right',
     }),
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 20000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
