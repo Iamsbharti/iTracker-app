@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
         this.userService.setUserAuth(response.data);
 
-        //this.toaster.open({ text: response.message, type: 'success' });
+        // this.toaster.open({ text: response.message, type: 'success' });
         this.toast.success(`${response.message}`, 'Login', this.toastConfig);
 
         setTimeout(() => this.router.navigate(['/dashboard']), 2000);
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
         console.warn('Error Login', error);
         this.loginResponse = error.error.message + '- Try Again';
         this.responseType = false;
-        //this.toaster.open({ text: 'Login Error', type: 'danger' });
+        // this.toaster.open({ text: 'Login Error', type: 'danger' });
         this.toast.error('Login Error', 'Login', this.toastConfig);
 
         setTimeout(() => {

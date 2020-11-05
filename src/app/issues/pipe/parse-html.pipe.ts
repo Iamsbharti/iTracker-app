@@ -10,7 +10,7 @@ export class ParseHtmlPipe implements PipeTransform {
     console.log('pipe');
   }
 
-  transform(value: string) {
+  transform(value: string): any {
     return this.sanitizer.bypassSecurityTrustHtml(value);
   }
 }

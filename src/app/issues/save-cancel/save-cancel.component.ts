@@ -10,9 +10,9 @@ export class SaveCancelComponent implements OnInit {
 
   // component will emit
   @Output()
-  saveOps: EventEmitter<String> = new EventEmitter<String>();
+  saveOps: EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  cancelOps: EventEmitter<String> = new EventEmitter<String>();
+  cancelOps: EventEmitter<string> = new EventEmitter<string>();
 
   ngOnInit(): void {}
 

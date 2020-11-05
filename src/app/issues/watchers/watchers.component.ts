@@ -35,7 +35,7 @@ export class WatchersComponent implements OnInit {
 
   public currentWatchList = [];
   public updatedWatchList = [];
-  //@Input() currentWatchList: Array<any>;
+  // @Input() currentWatchList: Array<any>;
   // output , component will emit
   @Output()
   removeWatchers: EventEmitter<any> = new EventEmitter<any>();
@@ -97,14 +97,14 @@ export class WatchersComponent implements OnInit {
   }
 
   public selectedWatcher(event: MatAutocompleteSelectedEvent): void {
-    //this.currentWatchList = [];
+    // this.currentWatchList = [];
     this.currentWatchList.push(event.option.value);
     console.log('after addition , current watchlist,', this.currentWatchList);
     this.updatedWatchList.push(event.option.value);
     // emit updated watchlist to parent component
     console.log('updated list:', this.updatedWatchList);
     this.addWatchers.emit(this.updatedWatchList[0]);
-    //this.updatedWatchers.emit(this.updatedWatchList);
+    // this.updatedWatchers.emit(this.updatedWatchList);
     this.watcherInput.nativeElement.value = '';
     this.watchersCtrl.setValue(null);
   }

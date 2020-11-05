@@ -8,8 +8,8 @@ export class RouterGuardService {
   constructor(private router: Router) {}
   canActivate(router: ActivatedRouteSnapshot): boolean {
     console.log('Guard Route');
-    let authToken = Cookie.get('authToken');
-    if (authToken == null || authToken == undefined || authToken == '') {
+    const authToken = Cookie.get('authToken');
+    if (authToken === null || authToken === undefined || authToken === '') {
       this.router.navigate(['/login']);
       return false;
     } else {

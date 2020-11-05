@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
           this.responseType = true;
         }
         this.signUpResponse = response.message + 'Redirecting to Login page';
-        //this.toaster.open({ text: 'SignUp Succes', type: 'success' });
+        // this.toaster.open({ text: 'SignUp Succes', type: 'success' });
         this.toast.success(`${response.message}`, 'Signup', this.toastConfig);
 
         setTimeout(() => this.router.navigate(['/login']), 2000);
@@ -59,7 +59,7 @@ export class SignupComponent implements OnInit {
         console.warn('Error Login', error);
         this.signUpResponse = error.error.message + '- Try Again';
         this.responseType = false;
-        //this.toaster.open({ text: 'SignUp Error', type: 'danger' });
+        // this.toaster.open({ text: 'SignUp Error', type: 'danger' });
         this.toast.error('SignUp Error', 'Signup', this.toastConfig);
 
         setTimeout(() => {

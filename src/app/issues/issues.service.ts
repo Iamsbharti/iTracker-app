@@ -12,6 +12,11 @@ import * as io from 'socket.io-client';
   providedIn: 'root',
 })
 export class IssuesService {
+  public httpHeaderOptions = {
+    headers: new HttpHeaders({
+      authToken: this.userService.getUserAuth().authToken,
+    }),
+  };
   // intiliaze
   public baseUrl = 'http://localhost:3001/api/v1';
   public socketUrl = 'http://localhost:3001/issue/notify';
@@ -31,11 +36,7 @@ export class IssuesService {
     console.error('Http Error:', error.message);
     return throwError(error.message);
   }
-  public httpHeaderOptions = {
-    headers: new HttpHeaders({
-      authToken: this.userService.getUserAuth().authToken,
-    }),
-  };
+
   // get all issues for a id
   public getAllIssuesByIdService(userInfo): any {
     console.log('Get All Issue Service', userInfo);
@@ -126,10 +127,10 @@ export class IssuesService {
     let body = {};
     if (operation === 'add') {
       commentsOpsUrl = `${this.baseUrl}/issue/comment?userId=${userId}&issueId=${issueId}&name=${name}`;
-      body = { ...body, text: text };
+      body = { ...body, text };
     } else if (operation === 'edit') {
       commentsOpsUrl = `${this.baseUrl}/issue/edit/comment?userId=${userId}`;
-      body = { ...body, text: text, commentId: commentId };
+      body = { ...body, text, commentId };
     } else if (operation === 'delete') {
       commentsOpsUrl = `${this.baseUrl}/issue/delete/comment?userId=${userId}&commentId=${commentId}`;
     }
@@ -161,7 +162,7 @@ export class IssuesService {
   // listen to intiate authentication event
   public initSocketAuthentication = () => {
     console.log('listen to init authentication');
-    return Observable.create((observer) => {
+    return new Observable((observer) => {
       this.socket.on('authenticate', (data) => {
         observer.next(data);
       });
@@ -176,7 +177,7 @@ export class IssuesService {
   // listen to authenticated event
   public isUserSocketVerified = () => {
     console.log('Auth Status Listener');
-    return Observable.create((observer) => {
+    return new Observable((observer) => {
       this.socket.on('authStatus', (data) => {
         observer.next(data);
       });
@@ -192,7 +193,7 @@ export class IssuesService {
   // listen to issue update event for notifying watchlist users
   public issueUpdatesForWatchListListener = () => {
     console.log('issueupdates listener');
-    return Observable.create((observer) => {
+    return new Observable((observer) => {
       this.socket.on('issue-updates-server', (data) => {
         observer.next(data);
       });

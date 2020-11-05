@@ -28,6 +28,8 @@ export class SocialLoginComponent implements OnInit {
   private loggedIn: boolean;
   public responseMsg: string;
   public responseType: boolean;
+  public name: string;
+  public email: string;
 
   private toastConfig = {
     timeOut: 1200,
@@ -48,6 +50,8 @@ export class SocialLoginComponent implements OnInit {
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((userdata) => {
         this.user = userdata;
+        this.name = userdata.name;
+        this.email = userdata.email;
         console.log('userdata-google', userdata);
       })
       .catch((error) => {
@@ -60,6 +64,8 @@ export class SocialLoginComponent implements OnInit {
       .signIn(FacebookLoginProvider.PROVIDER_ID)
       .then((userdata) => {
         this.user = userdata;
+        this.name = userdata.name;
+        this.email = userdata.email;
         console.log('userdata -fb', userdata);
         this.setUserInfo();
       });
@@ -76,6 +82,8 @@ export class SocialLoginComponent implements OnInit {
       .signIn(LinkedinLoginProvider.PROVIDER_ID)
       .then((userdata) => {
         this.user = userdata;
+        this.name = userdata.name;
+        this.email = userdata.email;
         console.log('userdata -linked ini', userdata);
       })
       .catch((error) => {
@@ -91,10 +99,10 @@ export class SocialLoginComponent implements OnInit {
     // save user info to db
     // check email id in db , if not present trigger signup ,route to dashboard
     // if present route to dashboard
-    const { email, name } = this.user;
-    let userDetails = {
-      email: email,
-      name: name,
+    // const { email, name } = this.user;
+    const userDetails = {
+      email: this.email,
+      name: this.name,
     };
     this.userService.verifySocialLoginService(userDetails).subscribe(
       (response) => {

@@ -24,9 +24,9 @@ export class CreateIssueComponent implements OnInit {
 
   // component willemit
   @Output()
-  closeModal: EventEmitter<String> = new EventEmitter<String>();
+  closeModal: EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  newCreatedIssue: EventEmitter<String> = new EventEmitter<String>();
+  newCreatedIssue: EventEmitter<string> = new EventEmitter<string>();
 
   public title: string;
   public reporter: string;
@@ -45,7 +45,7 @@ export class CreateIssueComponent implements OnInit {
     // init select type of fields
     this.statusOptions = ['Backlogs', 'Progress', 'Test', 'Done'];
     this.priorityOptions = ['High', 'Medium', 'Low'];
-    //this.userId = Cookie.get('userId');
+    // this.userId = Cookie.get('userId');
     console.log(this.userId);
   }
 

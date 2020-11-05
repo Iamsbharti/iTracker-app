@@ -14,15 +14,16 @@ export class EditorComponent implements OnInit {
   @Output()
   changeEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output()
-  saveOperation: EventEmitter<String> = new EventEmitter<String>();
+  saveOperation: EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  cancelOperation: EventEmitter<String> = new EventEmitter<String>();
+  cancelOperation: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
   public onChange(value): any {
+    console.debug('dshdg');
     this.changeEvent.emit(value);
   }
 }

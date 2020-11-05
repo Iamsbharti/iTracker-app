@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   public displayFilterType: string;
   public isIssueListEmpty: boolean;
   public emptyIssueMessage: string;
-  //sort
+  // sort
   public sortedData = [];
 
   // create issue modal
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
   public allUsersList: Array<any>;
   // issue interface
 
-  //socket fields
+  // socket fields
   public authToken: string;
 
   // mobile view
@@ -116,16 +116,16 @@ export class DashboardComponent implements OnInit {
   public handShakeAuthentication(): any {
     this.issueService.initSocketAuthentication().subscribe((data) => {
       // emit authentication with authToken
-      let authDetails = { userId: this.userId, authToken: this.authToken };
+      const authDetails = { userId: this.userId, authToken: this.authToken };
       this.issueService.authenticateUser(authDetails);
     });
     this.checkSocketStatus();
   }
   // auth status listener
-  private checkSocketStatus() {
+  private checkSocketStatus(): any {
     console.log('Checking for auth--status');
     this.issueService.isUserSocketVerified().subscribe((data) => {
-      //this.toaster.open({ text: data, type: 'info' });
+      // this.toaster.open({ text: data, type: 'info' });
       this.toast.success(`${data}`, 'Notification', this.toastConfig);
     });
     this.listenForAnyIssueUpdates();
@@ -133,21 +133,23 @@ export class DashboardComponent implements OnInit {
   // listen for any issue updates and notify to the users
   private listenForAnyIssueUpdates(): any {
     console.log('listen for any issue updates');
-    this.issueService.issueUpdatesForWatchListListener().subscribe((data) => {
-      const { issueId, field, message, watchList } = data;
-      console.log('issue update listener:', data);
-      if (watchList.includes(this.userId)) {
-        // current user is in the watchlist ,show notification
-        const notification = this.toast.info(`${message}`, 'Issue Updated');
+    this.issueService
+      .issueUpdatesForWatchListListener()
+      .subscribe((data: any) => {
+        const { issueId, field, message, watchList } = data;
+        console.log('issue update listener:', data);
+        if (watchList.includes(this.userId)) {
+          // current user is in the watchlist ,show notification
+          const notification = this.toast.info(`${message}`, 'Issue Updated');
 
-        // observer function when notification is clicked - show the updated issueId
-        notification.onTap.subscribe(() => {
-          // fetch all the issues
-          //this.filterIssues(this.userId, 'all', 'status', this.name);
-          this.viewSingleIssue(issueId, 'notification');
-        });
-      }
-    });
+          // observer function when notification is clicked - show the updated issueId
+          notification.onTap.subscribe(() => {
+            // fetch all the issues
+            // this.filterIssues(this.userId, 'all', 'status', this.name);
+            this.viewSingleIssue(issueId, 'notification');
+          });
+        }
+      });
   }
   public getAllAvalableIssues(): any {
     const filterOptions = {
@@ -160,7 +162,7 @@ export class DashboardComponent implements OnInit {
       // success
       (response) => {
         if (response.status === 200) {
-          //clear any previous data
+          // clear any previous data
           this.allAvailableIssues = response.data;
         }
       },
@@ -168,12 +170,12 @@ export class DashboardComponent implements OnInit {
       // error
       (error) => {
         console.warn('Error Login', error);
-        //this.toaster.open({ text: error.error.message, type: 'danger' });
+        // this.toaster.open({ text: error.error.message, type: 'danger' });
       }
     );
   }
   // set page chunks
-  public setPageSizeOptions(setPageSizeOptionsInput: string) {
+  public setPageSizeOptions(setPageSizeOptionsInput: string): any {
     this.pageSizeOptions = setPageSizeOptionsInput
       .split(',')
       .map((str) => +str);
@@ -186,14 +188,14 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => this.getAllAvalableIssues(), 1200);
   }
   // page event change
-  public onPageChanged(e) {
-    let firstCut = e.pageIndex * e.pageSize;
-    let secondCut = firstCut + e.pageSize;
+  public onPageChanged(e): any {
+    const firstCut = e.pageIndex * e.pageSize;
+    const secondCut = firstCut + e.pageSize;
     this.activePageDataChunks = this.allIssues.slice(firstCut, secondCut);
   }
   // listener for new issue creates
   public updateNewIssue(values): any {
-    console.debug('new issue from create-issue-compoennet', values);
+    console.error('new issue from create-issue-compoennet', values);
     this.activePageDataChunks.push(values);
   }
   // logout user
@@ -210,7 +212,7 @@ export class DashboardComponent implements OnInit {
 
     // delete localstorage
     localStorage.removeItem('userInfo');
-    //this.signOut();
+    // this.signOut();
 
     setTimeout(() => this.router.navigate(['/login']), 1500);
     this.showProgressBar = true;
@@ -250,17 +252,17 @@ export class DashboardComponent implements OnInit {
 
           // chunks
           this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-          console.debug('active page chunks:', this.activePageDataChunks);
+          console.error('active page chunks:', this.activePageDataChunks);
 
           // toast
-          //this.toaster.open({ text: 'Issues Fetched', type: 'success' });
+          // this.toaster.open({ text: 'Issues Fetched', type: 'success' });
           this.toast.success(`${response.message}`, 'Issue', this.toastConfig);
         }
       },
       // error handler
       (error) => {
         console.warn('Error Login', error);
-        //this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+        // this.toaster.open({ text: 'Something went wrong', type: 'danger' });
         this.toast.error('Something went wrong', 'Issue', this.toastConfig);
       }
     );
@@ -299,7 +301,7 @@ export class DashboardComponent implements OnInit {
       // success
       (response) => {
         if (response.status === 200) {
-          //clear any previous data
+          // clear any previous data
           this.allIssues = [];
           this.allIssues = response.data;
           // conditional render issue table
@@ -316,7 +318,7 @@ export class DashboardComponent implements OnInit {
             this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
             console.log('active page chunks:', this.activePageDataChunks);
 
-            //this.toaster.open({ text: 'Filtered Issues', type: 'success' });
+            // this.toaster.open({ text: 'Filtered Issues', type: 'success' });
             this.toast.success(
               `${response.message}`,
               'Filter Issue',
@@ -335,7 +337,7 @@ export class DashboardComponent implements OnInit {
       // error
       (error) => {
         console.warn('Error Login', error);
-        //this.toaster.open({ text: error.error.message, type: 'danger' });
+        // this.toaster.open({ text: error.error.message, type: 'danger' });
         this.toast.success(
           `${error.error.message}`,
           'Filter Issue',
@@ -345,8 +347,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  /**open modal */
-  open(content) {
+  // open create modal
+  open(content): any {
     // console.debug('modal open::', ops, id);
 
     this.modalService
@@ -367,7 +369,7 @@ export class DashboardComponent implements OnInit {
   }
 
   // sort columns asending and decending
-  public sortData(sort: Sort) {
+  public sortData(sort: Sort): any {
     const data = this.activePageDataChunks.slice();
     if (!sort.active || sort.direction === '') {
       this.activePageDataChunks = data;
@@ -395,7 +397,7 @@ export class DashboardComponent implements OnInit {
     console.log('Seach issue service call', search);
     const searchDetails = {
       userId: this.userId,
-      search: search,
+      search,
     };
     this.issueService.searchIssues(searchDetails).subscribe(
       // success
@@ -424,9 +426,9 @@ export class DashboardComponent implements OnInit {
 
           // chunks
           this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-          console.debug('active page chunks:', this.activePageDataChunks);
+          console.error('active page chunks:', this.activePageDataChunks);
 
-          //this.toaster.open({ text: 'Searched Issues', type: 'success' });
+          // this.toaster.open({ text: 'Searched Issues', type: 'success' });
           this.toast.success(
             `${response.message}`,
             'Search Issue',
@@ -437,7 +439,7 @@ export class DashboardComponent implements OnInit {
       // error
       (error) => {
         console.error('Error Fetching Issues', error);
-        //this.toaster.open({ text: error.error.message, type: 'danger' });
+        // this.toaster.open({ text: error.error.message, type: 'danger' });
         this.toast.success(
           `${error.error.message}`,
           'Search Issue',
@@ -462,7 +464,7 @@ export class DashboardComponent implements OnInit {
       // handle error response
       (error) => {
         console.log('Error fetching user details', error);
-        //this.toaster.open({ text: 'Something went wrong', type: 'danger' });
+        // this.toaster.open({ text: 'Something went wrong', type: 'danger' });
         this.toast.success(
           'Something went wrong',
           'All Users',
@@ -491,14 +493,14 @@ export class DashboardComponent implements OnInit {
     this.issueDetails.watchListOptions = this.allUsersList;
     console.log('issuedetails-modifying additional onbj', this.issueDetails);
     // update the assignee name
-    let currentAssigneeObject = this.issueDetails.watchListOptions.find(
+    const currentAssigneeObject = this.issueDetails.watchListOptions.find(
       (usr) => {
-        return usr.userId == this.issueDetails.assignee;
+        return usr.userId === this.issueDetails.assignee;
       }
     );
     this.issueDetails.assigneeName = currentAssigneeObject.name;
     // filter unique values of watchers
-    let uniqueWatchers = this.removeDuplicates(
+    const uniqueWatchers = this.removeDuplicates(
       this.issueDetails.watchList,
       '_id'
     );
@@ -533,21 +535,29 @@ export class DashboardComponent implements OnInit {
       this.toastConfig
     );
   }
-  public removeDuplicates(originalArray, prop) {
-    var newArray = [];
-    var lookupObject = {};
+  public removeDuplicates(array, objectProperty): any {
+    const newArray = [];
+    const lookupObject = {};
 
-    for (var i in originalArray) {
-      lookupObject[originalArray[i][prop]] = originalArray[i];
+    for (const i in array) {
+      if (i) {
+        lookupObject[array[i][objectProperty]] = array[i];
+      }
     }
 
-    for (i in lookupObject) {
-      newArray.push(lookupObject[i]);
+    for (const i in lookupObject) {
+      if (i) {
+        newArray.push(lookupObject[i]);
+      }
     }
     return newArray;
   }
 }
 
-function compareIssues(a: number | string, b: number | string, isAsc: boolean) {
+function compareIssues(
+  a: number | string,
+  b: number | string,
+  isAsc: boolean
+): any {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

@@ -27,15 +27,7 @@ import {
   FacebookLoginProvider,
   LinkedinLoginProvider,
 } from 'ng-social-login-module';
-/**
- * config takes two params
- * 1. Provider config array
- * 2. Boolean to auto logged
- * {
-      id: GoogleLoginProvider.PROVIDER_ID,
-      provider: new GoogleLoginProvider('895741338792-t2t3ndlqu4p11qr6tv7b536dgbfve46g.apps.googleusercontent.com'),
-    },
- */
+
 const CONFIG = new AuthServiceConfig(
   [
     {
@@ -56,7 +48,7 @@ const CONFIG = new AuthServiceConfig(
   true
 );
 
-export function provideConfig() {
+export function provideConfig(): any {
   return CONFIG;
 }
 
