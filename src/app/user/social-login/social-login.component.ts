@@ -39,6 +39,11 @@ export class SocialLoginComponent implements OnInit {
 
   public googleSignIn(): void {
     console.log('login with google');
+    this.toast.info(
+      'Please user different login methods- ClientId Error- OAuth Rejected',
+      'Google Login',
+      { timeOut: 22000 }
+    );
     this.authService
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((userdata) => {
@@ -62,6 +67,11 @@ export class SocialLoginComponent implements OnInit {
 
   public linkedInSignIn(): void {
     console.log(LinkedinLoginProvider.PROVIDER_ID);
+    this.toast.info(
+      'Please user different login methods- OAuth Rejected by linkedin',
+      'LinkenId Login',
+      { timeOut: 22000 }
+    );
     this.authService
       .signIn(LinkedinLoginProvider.PROVIDER_ID)
       .then((userdata) => {
