@@ -29,7 +29,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ]
+            ],
+            "allowedCommonJsDependencies": ["ng2-cookies"]
           },
           "configurations": {
             "production": {
