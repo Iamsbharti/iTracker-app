@@ -7,7 +7,9 @@ import { UseExistingWebDriver } from 'protractor/built/driverProviders';
 })
 export class UserService {
   // initialize
-  public baseUrl = 'http://localhost:3001/api/v1';
+  // public baseUrl = 'http://localhost:3001/api/v1';
+  public baseUrl = 'http://api.itracker.kanbanboard.co.in/api/v1';
+
   constructor(private http: HttpClient) {}
 
   // handle exceptions
@@ -18,33 +20,33 @@ export class UserService {
 
   // user registration service
   public signUpService(newUser): any {
-    console.log('Signup service apicall', newUser);
+    console.debug('Signup service apicall', newUser);
     const signUpRes = this.http.post(`${this.baseUrl}/user/register`, newUser);
     return signUpRes;
   }
 
   // login service
   public loginService(userData): any {
-    console.log('Login api call', userData);
+    console.debug('Login api call', userData);
     const loginRes = this.http.post(`${this.baseUrl}/user/login`, userData);
     return loginRes;
   }
 
   // store authenticated user info
   public setUserAuth(data): any {
-    console.log('Set user auth data', data);
+    console.debug('Set user auth data', data);
     localStorage.setItem('userInfo', JSON.stringify(data));
   }
 
   // get auth info
   public getUserAuth(): any {
-    console.log('get user auth');
+    console.debug('get user auth');
     const authInfo = JSON.parse(localStorage.getItem('userInfo'));
     return authInfo === null ? '' : authInfo;
   }
   // social login verification
   public verifySocialLoginService(userDetails): any {
-    console.log('verify social login serice:', userDetails);
+    console.debug('verify social login serice:', userDetails);
     const { name, email } = userDetails;
     const verficationResult = this.http.get(
       `${this.baseUrl}/user/social/verify?email=${email}&name=${name}`

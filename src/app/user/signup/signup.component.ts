@@ -45,7 +45,7 @@ export class SignupComponent implements OnInit {
     };
     this.userService.signUpService(userData).subscribe(
       (response) => {
-        console.log('register user', userData);
+        console.debug('register user', userData);
         if (response.status === 200) {
           this.responseType = true;
         }
@@ -90,7 +90,7 @@ export class SignupComponent implements OnInit {
   }
   // naviagation
   public navigateToHome(): any {
-    console.log('navigation');
+    console.debug('navigation');
     this.router.navigate(['/home']);
   }
 }

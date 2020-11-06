@@ -46,7 +46,7 @@ export class CreateIssueComponent implements OnInit {
     this.statusOptions = ['Backlogs', 'Progress', 'Test', 'Done'];
     this.priorityOptions = ['High', 'Medium', 'Low'];
     // this.userId = Cookie.get('userId');
-    console.log(this.userId);
+    console.debug(this.userId);
   }
 
   ngOnInit(): void {
@@ -64,16 +64,16 @@ export class CreateIssueComponent implements OnInit {
       estimates: this.originalEstimates,
       assignee: this.assignee,
     };
-    console.log('Issue __ new:', newIssue);
+    console.debug('Issue __ new:', newIssue);
 
     this.issueService.createIssue(newIssue).subscribe(
       (response) => {
-        console.log('create issue response:', response);
+        console.debug('create issue response:', response);
         if (response.status === 200) {
-          console.log('issue create success');
+          console.debug('issue create success');
           this.toaster.open({ text: 'Issue Created', type: 'success' });
           this.closeModal.emit();
-          console.log('New Issue Create event', typeof response.data);
+          console.debug('New Issue Create event', typeof response.data);
           this.newCreatedIssue.emit('response.data');
         }
       },
@@ -86,7 +86,7 @@ export class CreateIssueComponent implements OnInit {
   }
   // fetch all users
   public fetchAllUsers(): any {
-    console.log('user id from dashboard', this.userId, this.username);
+    console.debug('user id from dashboard', this.userId, this.username);
     const authDetails = {
       userId: this.userId,
     };
@@ -97,11 +97,11 @@ export class CreateIssueComponent implements OnInit {
           this.assigneeOptions = response.data;
           this.watchList = response.data;
         }
-        console.log(response.data);
+        console.debug(response.data);
       },
       // handle error response
       (error) => {
-        console.log('Error fetching user details', error);
+        console.warn('Error fetching user details', error);
         this.toaster.open({ text: 'Something went wrong', type: 'danger' });
       }
     );

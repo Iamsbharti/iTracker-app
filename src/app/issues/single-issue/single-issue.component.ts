@@ -63,7 +63,9 @@ export class SingleIssueComponent implements OnInit {
     this.showStatusList = true;
     this.name = Cookie.get('name');
     this.userId = Cookie.get('userId');
-    this.getImageUrl = 'http://localhost:3001/api/v1/issue/attachment?';
+    // this.getImageUrl = 'http://localhost:3001/api/v1/issue/attachment?';
+    this.getImageUrl =
+      'http://api.itracker.kanbanboard.co.in/api/v1/issue/attachment?';
     this.authToken = Cookie.get('authToken');
 
     this.statusOptions = ['Backlogs', 'Progress', 'Test', 'Done'];
@@ -72,7 +74,7 @@ export class SingleIssueComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.issueDetails) {
-      console.error('UPDATING I?P FIELDS::', this.issueDetails);
+      console.debug('UPDATING I?P FIELDS::', this.issueDetails);
       this.updatedTitle = this.issueDetails.title;
       this.editorDesc = this.issueDetails.description;
       this.commentsList = this.issueDetails.comments;
@@ -80,7 +82,7 @@ export class SingleIssueComponent implements OnInit {
   }
   // fetch all users
   public fetchAllUsers(): any {
-    console.log('user id from dashboard', this.userId);
+    console.debug('user id from dashboard', this.userId);
     const authDetails = {
       userId: this.userId,
     };
@@ -101,14 +103,14 @@ export class SingleIssueComponent implements OnInit {
       },
       // handle error response
       (error) => {
-        console.log('Error fetching user details', error);
+        console.warn('Error fetching user details', error);
         this.toaster.open({ text: 'Something went wrong', type: 'danger' });
       }
     );
   }
   public getAssigneeName(userList, assigneeId): string {
     // update the assignee name
-    console.log('get assignee name user list:', userList, assigneeId);
+    console.debug('get assignee name user list:', userList, assigneeId);
     const currentAssigneeObject = userList.find((usr) => {
       return usr.userId === assigneeId;
     });
@@ -122,7 +124,7 @@ export class SingleIssueComponent implements OnInit {
   }
   // hide and show update fields
   public showUpdateField(field, selectedObj?): any {
-    console.log('hide/show update options', selectedObj);
+    console.debug('hide/show update options', selectedObj);
 
     switch (field) {
       case 'title':
@@ -155,8 +157,8 @@ export class SingleIssueComponent implements OnInit {
   }
   // capture the editor's content
   public onChange(event: any, field): any {
-    console.error(event.data);
-    console.log('event__change--watch,', event, field);
+    console.debug(event.data);
+    console.debug('event__change--watch,', event, field);
     switch (field) {
       case 'title':
         this.updatedTitle = event.target.value;
@@ -177,7 +179,7 @@ export class SingleIssueComponent implements OnInit {
 
   // update fields
   public updateField(field, operation?): any {
-    console.log('updating field', field);
+    console.debug('updating field', field);
     let updateIssue = {
       userId: this.userId,
       issueId: this.issueDetails.issueId,
@@ -185,13 +187,13 @@ export class SingleIssueComponent implements OnInit {
     };
     switch (field) {
       case 'title':
-        console.error('title updated,', this.updatedTitle);
+        console.debug('title updated,', this.updatedTitle);
         updateIssue = { ...updateIssue, updates: { title: this.updatedTitle } };
         // call update api
         this.updateFieldServiceCall(updateIssue, field);
         break;
       case 'desc':
-        console.error('description updated', this.editorDesc);
+        console.debug('description updated', this.editorDesc);
         updateIssue = {
           ...updateIssue,
           updates: {
@@ -205,7 +207,7 @@ export class SingleIssueComponent implements OnInit {
         this.updateFieldServiceCall(updateIssue, field);
         break;
       case 'assignee':
-        console.log('updating assignee', this.currentAssignee);
+        console.debug('updating assignee', this.currentAssignee);
         updateIssue = {
           ...updateIssue,
           updates: {
@@ -216,11 +218,11 @@ export class SingleIssueComponent implements OnInit {
         this.updateFieldServiceCall(updateIssue, field);
         break;
       case 'watchlist':
-        console.log('updating watchlist', this.updatedWatchList);
+        console.debug('updating watchlist', this.updatedWatchList);
         const updatedWatchListIds = this.getUsersObjectIds(
           this.updatedWatchList
         );
-        console.log('watchlist ids to be updated', updatedWatchListIds);
+        console.debug('watchlist ids to be updated', updatedWatchListIds);
         updateIssue = {
           ...updateIssue,
           updates: {
@@ -232,12 +234,12 @@ export class SingleIssueComponent implements OnInit {
         this.updateFieldServiceCall(updateIssue, field);
         break;
       case 'watch':
-        console.log('add current user to watchlist');
+        console.debug('add current user to watchlist');
 
         const currentUserObject: any = this.getCurrentObjectId(
           this.issueDetails.watchListOptions
         );
-        console.log('currentuserobjectid', currentUserObject);
+        console.debug('currentuserobjectid', currentUserObject);
         updateIssue = {
           ...updateIssue,
           updates: {
@@ -245,16 +247,16 @@ export class SingleIssueComponent implements OnInit {
             operation: 'watch',
           },
         };
-        console.log('add to watch list:', updateIssue);
+        console.debug('add to watch list:', updateIssue);
         // call update api
         this.updateFieldServiceCall(updateIssue, field, currentUserObject);
         break;
       case 'unwatch':
-        console.log('remove current user to watchlist');
+        console.debug('remove current user to watchlist');
         const currentUserWatchObject: any = this.getCurrentObjectId(
           this.issueDetails.watchListOptions
         );
-        console.log('currentuserobjectid', currentUserWatchObject);
+        console.debug('currentuserobjectid', currentUserWatchObject);
         updateIssue = {
           ...updateIssue,
           updates: {
@@ -262,12 +264,12 @@ export class SingleIssueComponent implements OnInit {
             operation: 'unwatch',
           },
         };
-        console.log('add to watch list:', updateIssue);
+        console.debug('add to watch list:', updateIssue);
         // call update api
         this.updateFieldServiceCall(updateIssue, field, currentUserWatchObject);
         break;
       case 'priority':
-        console.log('updating priority', this.currentPriority);
+        console.debug('updating priority', this.currentPriority);
         updateIssue = {
           ...updateIssue,
           updates: {
@@ -278,7 +280,7 @@ export class SingleIssueComponent implements OnInit {
         this.updateFieldServiceCall(updateIssue, field);
         break;
       case 'status':
-        console.log('updating status', this.currentStatus);
+        console.debug('updating status', this.currentStatus);
         updateIssue = {
           ...updateIssue,
           updates: {
@@ -305,7 +307,7 @@ export class SingleIssueComponent implements OnInit {
    */
   // add watchlist standalone rule
   public addWatchersId(toAddList): any {
-    console.log('to add watchlist:', toAddList);
+    console.debug('to add watchlist:', toAddList);
     const { _id } = toAddList;
     const updateIssue = {
       userId: this.userId,
@@ -320,9 +322,9 @@ export class SingleIssueComponent implements OnInit {
   }
   // remove watchlist standalone rule
   public removeWatcherId(toRemoveList: any): any {
-    console.log('to remove watchlist:', toRemoveList);
+    console.debug('to remove watchlist:', toRemoveList);
     const { _id } = toRemoveList;
-    console.log(_id);
+    console.debug(_id);
     const updateWatchList = {
       userId: this.userId,
       issueId: this.issueDetails.issueId,
@@ -331,7 +333,7 @@ export class SingleIssueComponent implements OnInit {
         operation: 'unwatch',
       },
     };
-    console.log('updateissue:', updateWatchList);
+    console.debug('updateissue:', updateWatchList);
     // call update api
     this.updateFieldServiceCall(updateWatchList, 'unwatch', toRemoveList);
   }
@@ -344,10 +346,10 @@ export class SingleIssueComponent implements OnInit {
     field: string,
     currentObject?
   ): any {
-    console.log('update options body:', updateIssue);
+    console.debug('update options body:', updateIssue);
     this.issueService.updateIssue(updateIssue).subscribe(
       (response) => {
-        console.error('update issue response:', response);
+        console.debug('update issue response:', response);
         if (response.status === 200) {
           // this.toaster.open({ text: 'Issue Updated', type: 'info' });
           const toasterObj = this.toast.success(
@@ -375,7 +377,7 @@ export class SingleIssueComponent implements OnInit {
     updateIssue: { userId: string; issueId: string; updates: any },
     currentObject?
   ): any {
-    console.error('updating current object', updateIssue);
+    console.debug('updating current object', updateIssue);
     let message = ''; // for socket notification
     switch (field) {
       case 'title':
@@ -403,7 +405,7 @@ export class SingleIssueComponent implements OnInit {
           assigneeOptions,
           this.currentAssignee
         );
-        console.log('assigneename upating to ', assigneeName);
+        console.debug('assigneename upating to ', assigneeName);
         this.issueDetails = {
           ...this.issueDetails,
           assigneeName,
@@ -413,21 +415,24 @@ export class SingleIssueComponent implements OnInit {
         this.emitIssueUpdateEvent(updateIssue, field, message);
         break;
       case 'watchlist':
-        console.log(
+        console.debug(
           ' upating current issue with new watchlist',
           this.issueDetails.watchList
         );
         this.issueDetails.watchList.push(this.updatedWatchList);
-        console.log('after new watchlist added,', this.issueDetails.watchList);
+        console.debug(
+          'after new watchlist added,',
+          this.issueDetails.watchList
+        );
         message = `${this.name} updated watchlist`;
         // emit update event
         this.emitIssueUpdateEvent(updateIssue, field, message);
         break;
       case 'watch':
-        console.log('update currentuser as watchlist');
+        console.debug('update currentuser as watchlist');
         this.issueDetails.watchList.push(currentObject);
         if (currentObject.userId === this.userId) {
-          console.log('set iswatcher flag');
+          console.debug('set iswatcher flag');
           this.issueDetails.isWatcher = true;
         }
         message = `${this.name} updated watchlist`;
@@ -435,15 +440,15 @@ export class SingleIssueComponent implements OnInit {
         this.emitIssueUpdateEvent(updateIssue, field, message);
         break;
       case 'unwatch':
-        console.log('remove watcher', currentObject.userId);
+        console.debug('remove watcher', currentObject.userId);
         this.issueDetails.watchList = this.issueDetails.watchList.filter(
           (usr) => usr.userId !== currentObject.userId
         );
         if (currentObject.userId === this.userId) {
-          console.log('set iswatcher flag');
+          console.debug('set iswatcher flag');
           this.issueDetails.isWatcher = false;
         }
-        console.log(
+        console.debug(
           'updated watchlist after removal',
           this.issueDetails.watchList
         );
@@ -517,7 +522,7 @@ export class SingleIssueComponent implements OnInit {
     const { operation } = commentDetails;
     this.issueService.manageCommentService(commentDetails).subscribe(
       (response) => {
-        console.log('add comment res:', response);
+        console.debug('add comment res:', response);
         if (response.status === 200) {
           // this.toaster.open({ text: response.message, type: 'secondary' });
           this.toast.success(
@@ -525,7 +530,7 @@ export class SingleIssueComponent implements OnInit {
             'Comments',
             this.toastConfig
           );
-          console.log('created/new comments to be updated', response.data);
+          console.debug('created/new comments to be updated', response.data);
           if (operation === 'add') {
             this.updateCurrentCommentObject({ ...response.data, operation });
           }
@@ -543,7 +548,7 @@ export class SingleIssueComponent implements OnInit {
     );
   }
   public updateCurrentCommentObject(newCommentObject): any {
-    console.log('update current comment object', newCommentObject);
+    console.debug('update current comment object', newCommentObject);
     const { operation, userId, commentId, text } = newCommentObject;
     let message = '';
     switch (operation) {
@@ -566,7 +571,7 @@ export class SingleIssueComponent implements OnInit {
         this.issueDetails.comments = this.issueDetails.comments.map((iss) =>
           iss.commentId === commentId ? { ...iss, text } : iss
         );
-        console.log('new comments list:', this.issueDetails.comments);
+        console.debug('new comments list:', this.issueDetails.comments);
         break;
       case 'delete':
         // filter out the current comment id object
@@ -578,7 +583,7 @@ export class SingleIssueComponent implements OnInit {
   }
   // upload attachments
   public handleUpload(value): any {
-    console.error('handle upload', value.target.files);
+    console.debug('handle upload', value.target.files);
     const data = new FormData();
     data.append('file', value.target.files[0]);
     const fileDetails = {
@@ -588,7 +593,7 @@ export class SingleIssueComponent implements OnInit {
     };
     this.issueService.uploadAttachment(fileDetails).subscribe(
       (response) => {
-        console.log('upload response:', response);
+        console.debug('upload response:', response);
         if (response.status === 200) {
           // this.toaster.open({ text: response.message, type: 'success' });
           this.toast.success(
@@ -625,7 +630,7 @@ export class SingleIssueComponent implements OnInit {
         }
       },
       (error) => {
-        console.log('Error Fecthing image', error);
+        console.warn('Error Fecthing image', error);
         // this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
         this.toast.success(
           `${error.error.message}`,
@@ -643,7 +648,7 @@ export class SingleIssueComponent implements OnInit {
     };
     this.issueService.deleteAttachmentService(fileDetails).subscribe(
       (response) => {
-        console.log('Delete Attachment Response:', response);
+        console.debug('Delete Attachment Response:', response);
         if (response.status === 200) {
           // this.toaster.open({ text: response.message, type: 'success' });
           this.toast.success(
@@ -658,7 +663,7 @@ export class SingleIssueComponent implements OnInit {
         }
       },
       (error) => {
-        console.log('Error Deleting image', error);
+        console.warn('Error Deleting image', error);
         // this.toaster.open({ text: 'Something went Wrong', type: 'danger' });
         this.toast.success(
           'Something went Wrong',
@@ -678,7 +683,7 @@ export class SingleIssueComponent implements OnInit {
     const watchListUsersIds = this.issueDetails.watchList.map((usr) => {
       return usr.userId;
     });
-    console.log('watchlist with userids', watchListUsersIds);
+    console.debug('watchlist with userids', watchListUsersIds);
 
     upadtedIssueDetails = {
       ...upadtedIssueDetails,
@@ -687,7 +692,7 @@ export class SingleIssueComponent implements OnInit {
       watchList: watchListUsersIds.filter((ids) => ids !== this.userId),
     };
 
-    console.log('emit event from client::issuedetails', upadtedIssueDetails);
+    console.debug('emit event from client::issuedetails', upadtedIssueDetails);
     this.issueService.notifyWatchListOnIssueUpdates(upadtedIssueDetails);
   }
 }

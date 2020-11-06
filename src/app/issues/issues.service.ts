@@ -18,8 +18,11 @@ export class IssuesService {
     }),
   };
   // intiliaze
-  public baseUrl = 'http://localhost:3001/api/v1';
-  public socketUrl = 'http://localhost:3001/issue/notify';
+  // public baseUrl = 'http://localhost:3001/api/v1';
+  // public socketUrl = 'http://localhost:3001/issue/notify';
+  public baseUrl = 'http://api.itracker.kanbanboard.co.in/api/v1';
+  public socketUrl = 'http://api.itracker.kanbanboard.co.in/issue/notify';
+
   private socket;
   constructor(private http: HttpClient, private userService: UserService) {
     // initialize socket client
@@ -39,7 +42,7 @@ export class IssuesService {
 
   // get all issues for a id
   public getAllIssuesByIdService(userInfo): any {
-    console.log('Get All Issue Service', userInfo);
+    console.debug('Get All Issue Service', userInfo);
     const allIssuesRes = this.http.get(
       `${this.baseUrl}/issue/allIssues?userId=${userInfo.userId}`,
       this.httpHeaderOptions
@@ -49,7 +52,7 @@ export class IssuesService {
 
   // get allIssues in the system
   public getFilteredIssues(filterOptions): any {
-    console.log('filter issues in the system', filterOptions);
+    console.debug('filter issues in the system', filterOptions);
     const { userId, name, option, type } = filterOptions;
     const allIssues = this.http.get(
       `${this.baseUrl}/issue/filter?userId=${userId}&name=${name}&option=${option}&type=${type}`,
@@ -60,7 +63,7 @@ export class IssuesService {
 
   // get watchlist/assignee list
   public getAllUsers(authDetails): any {
-    console.log('Get all users service', authDetails);
+    console.debug('Get all users service', authDetails);
     const { userId } = authDetails;
     const allUsers = this.http.get(
       `${this.baseUrl}/user/all?userId=${userId}`,
@@ -71,7 +74,7 @@ export class IssuesService {
 
   // create issue
   public createIssue(issueDetails): any {
-    console.log('Create issue service', issueDetails);
+    console.debug('Create issue service', issueDetails);
     const { userId } = issueDetails;
     const createdIssue = this.http.post(
       `${this.baseUrl}/issue/create?userId=${userId}`,
@@ -82,7 +85,7 @@ export class IssuesService {
   }
   // search Issue
   public searchIssues(searchDeatils): any {
-    console.log('Issue Search', searchDeatils);
+    console.debug('Issue Search', searchDeatils);
     const { userId, search } = searchDeatils;
     const searchResults = this.http.get(
       `${this.baseUrl}/issue/search?userId=${userId}&search=${search}`,
@@ -92,7 +95,7 @@ export class IssuesService {
   }
   // upload attachment
   public uploadAttachment(fileDetails): any {
-    console.log('Attachment upload:', fileDetails);
+    console.debug('Attachment upload:', fileDetails);
     const { userId, issueId, formData } = fileDetails;
     const uploadResults = this.http.post(
       `${this.baseUrl}/issue/upload?userId=${userId}&issueId=${issueId}`,
@@ -103,7 +106,7 @@ export class IssuesService {
   }
   // update issue
   public updateIssue(issueDetails): any {
-    console.log('Update Issue:', issueDetails);
+    console.debug('Update Issue:', issueDetails);
     const { userId } = issueDetails;
     const updatedIssues = this.http.post(
       `${this.baseUrl}/issue/update?userId=${userId}`,
@@ -114,7 +117,7 @@ export class IssuesService {
   }
   // add comment
   public manageCommentService(commentDetails): any {
-    console.log('add comment:', commentDetails);
+    console.debug('add comment:', commentDetails);
     const {
       userId,
       issueId,
@@ -161,7 +164,7 @@ export class IssuesService {
   // socket emitters and listeners
   // listen to intiate authentication event
   public initSocketAuthentication = () => {
-    console.log('listen to init authentication');
+    console.debug('listen to init authentication');
     return new Observable((observer) => {
       this.socket.on('authenticate', (data) => {
         observer.next(data);
@@ -170,13 +173,13 @@ export class IssuesService {
   };
   // emit authenticate user event
   public authenticateUser = (authDetails) => {
-    console.log('EMit Authenticate User Event', authDetails);
+    console.debug('EMit Authenticate User Event', authDetails);
     this.socket.emit('auth', authDetails);
   };
 
   // listen to authenticated event
   public isUserSocketVerified = () => {
-    console.log('Auth Status Listener');
+    console.debug('Auth Status Listener');
     return new Observable((observer) => {
       this.socket.on('authStatus', (data) => {
         observer.next(data);
@@ -186,13 +189,13 @@ export class IssuesService {
 
   // emit issue update event
   public notifyWatchListOnIssueUpdates = (issueDetails) => {
-    console.log('Emit issue update event:', issueDetails);
+    console.debug('Emit issue update event:', issueDetails);
     this.socket.emit('issue-updates-client', issueDetails);
   };
 
   // listen to issue update event for notifying watchlist users
   public issueUpdatesForWatchListListener = () => {
-    console.log('issueupdates listener');
+    console.debug('issueupdates listener');
     return new Observable((observer) => {
       this.socket.on('issue-updates-server', (data) => {
         observer.next(data);

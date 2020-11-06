@@ -7,7 +7,7 @@ import { Cookie } from 'ng2-cookies';
 export class RouterGuardService {
   constructor(private router: Router) {}
   canActivate(router: ActivatedRouteSnapshot): boolean {
-    console.log('Guard Route');
+    console.debug('Guard Route');
     const authToken = Cookie.get('authToken');
     if (authToken === null || authToken === undefined || authToken === '') {
       this.router.navigate(['/login']);

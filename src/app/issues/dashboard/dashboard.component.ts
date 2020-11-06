@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
   }
   // auth status listener
   private checkSocketStatus(): any {
-    console.log('Checking for auth--status');
+    console.debug('Checking for auth--status');
     this.issueService.isUserSocketVerified().subscribe((data) => {
       // this.toaster.open({ text: data, type: 'info' });
       this.toast.success(`${data}`, 'Notification', this.toastConfig);
@@ -132,12 +132,12 @@ export class DashboardComponent implements OnInit {
   }
   // listen for any issue updates and notify to the users
   private listenForAnyIssueUpdates(): any {
-    console.log('listen for any issue updates');
+    console.debug('listen for any issue updates');
     this.issueService
       .issueUpdatesForWatchListListener()
       .subscribe((data: any) => {
         const { issueId, field, message, watchList } = data;
-        console.log('issue update listener:', data);
+        console.debug('issue update listener:', data);
         if (watchList.includes(this.userId)) {
           // current user is in the watchlist ,show notification
           const notification = this.toast.info(`${message}`, 'Issue Updated');
@@ -195,14 +195,14 @@ export class DashboardComponent implements OnInit {
   }
   // listener for new issue creates
   public updateNewIssue(values): any {
-    console.error('new issue from create-issue-compoennet', values);
+    console.debug('new issue from create-issue-compoennet', values);
     this.activePageDataChunks.push(values);
   }
   // logout user
   public logout(): any {
-    console.log('logout clicks');
+    console.debug('logout clicks');
     this.showProgressBar = false;
-    console.log('show progress bar:', this.showProgressBar);
+    console.debug('show progress bar:', this.showProgressBar);
     // delete cookies
     Cookie.delete('name');
     Cookie.delete('email');
@@ -221,15 +221,15 @@ export class DashboardComponent implements OnInit {
     this.authService.signOut();
   }
   public getAllIssues(): any {
-    console.log('get all issue api call');
+    console.debug('get all issue api call');
     const userInfo = {
       userId: this.userId,
     };
-    console.log(userInfo);
+    console.debug(userInfo);
     this.issueService.getAllIssuesByIdService(userInfo).subscribe(
       // success response
       (response) => {
-        console.log('All issues response');
+        console.debug('All issues response');
         this.allIssues = response.data;
 
         if (response.status === 200) {
@@ -252,7 +252,7 @@ export class DashboardComponent implements OnInit {
 
           // chunks
           this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-          console.error('active page chunks:', this.activePageDataChunks);
+          console.debug('active page chunks:', this.activePageDataChunks);
 
           // toast
           // this.toaster.open({ text: 'Issues Fetched', type: 'success' });
@@ -276,7 +276,7 @@ export class DashboardComponent implements OnInit {
       type,
       name,
     };
-    console.log(filterOptions);
+    console.debug(filterOptions);
     switch (option) {
       case 'all':
         this.displayFilterType = 'All issues in the tracker';
@@ -316,7 +316,7 @@ export class DashboardComponent implements OnInit {
 
             // chunks
             this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-            console.log('active page chunks:', this.activePageDataChunks);
+            console.debug('active page chunks:', this.activePageDataChunks);
 
             // this.toaster.open({ text: 'Filtered Issues', type: 'success' });
             this.toast.success(
@@ -394,7 +394,7 @@ export class DashboardComponent implements OnInit {
   }
   // search issues
   public searchIssues(search: string): any {
-    console.log('Seach issue service call', search);
+    console.debug('Seach issue service call', search);
     const searchDetails = {
       userId: this.userId,
       search,
@@ -402,7 +402,7 @@ export class DashboardComponent implements OnInit {
     this.issueService.searchIssues(searchDetails).subscribe(
       // success
       (response) => {
-        console.log('Search issue response:', response);
+        console.debug('Search issue response:', response);
         if (response.status === 200) {
           this.allIssues = response.data;
 
@@ -426,7 +426,7 @@ export class DashboardComponent implements OnInit {
 
           // chunks
           this.activePageDataChunks = this.allIssues.slice(0, this.pageSize);
-          console.error('active page chunks:', this.activePageDataChunks);
+          console.debug('active page chunks:', this.activePageDataChunks);
 
           // this.toaster.open({ text: 'Searched Issues', type: 'success' });
           this.toast.success(
@@ -438,7 +438,7 @@ export class DashboardComponent implements OnInit {
       },
       // error
       (error) => {
-        console.error('Error Fetching Issues', error);
+        console.warn('Error Fetching Issues', error);
         // this.toaster.open({ text: error.error.message, type: 'danger' });
         this.toast.success(
           `${error.error.message}`,
@@ -450,7 +450,7 @@ export class DashboardComponent implements OnInit {
   }
   // fetch all users
   public fetchAllUsers(): any {
-    console.log('user id from dashboard-get allusers', this.userId);
+    console.debug('user id from dashboard-get allusers', this.userId);
     const authDetails = {
       userId: this.userId,
     };
@@ -463,7 +463,7 @@ export class DashboardComponent implements OnInit {
       },
       // handle error response
       (error) => {
-        console.log('Error fetching user details', error);
+        console.warn('Error fetching user details', error);
         // this.toaster.open({ text: 'Something went wrong', type: 'danger' });
         this.toast.success(
           'Something went wrong',
@@ -475,11 +475,11 @@ export class DashboardComponent implements OnInit {
   }
   // single issue view
   public viewSingleIssue(issueId, type?: string): any {
-    console.log('View single Issue component', issueId);
+    console.debug('View single Issue component', issueId);
 
     // find the single issue details
     if (type === 'notification') {
-      console.log('type:-notification', this.allAvailableIssues);
+      console.debug('type:-notification', this.allAvailableIssues);
       this.issueDetails = this.allAvailableIssues.find(
         (iss) => iss.issueId === issueId
       );
@@ -488,10 +488,10 @@ export class DashboardComponent implements OnInit {
         (iss) => iss.issueId === issueId
       );
     }
-    console.log('issueDetails', this.issueDetails);
+    console.debug('issueDetails', this.issueDetails);
     this.issueDetails.assigneeOptions = this.allUsersList;
     this.issueDetails.watchListOptions = this.allUsersList;
-    console.log('issuedetails-modifying additional onbj', this.issueDetails);
+    console.debug('issuedetails-modifying additional onbj', this.issueDetails);
     // update the assignee name
     const currentAssigneeObject = this.issueDetails.watchListOptions.find(
       (usr) => {
@@ -504,10 +504,10 @@ export class DashboardComponent implements OnInit {
       this.issueDetails.watchList,
       '_id'
     );
-    console.log('uniquewatchlist', uniqueWatchers);
+    console.debug('uniquewatchlist', uniqueWatchers);
     this.issueDetails.watchList = uniqueWatchers;
     // compute isWatcher flag for current logged in user
-    console.log(
+    console.debug(
       'computing isWatcher:',
       this.issueDetails.watchList,
       this.userId
@@ -524,7 +524,7 @@ export class DashboardComponent implements OnInit {
     this.showCategorizedIssues = true;
     this.showSingleIssue = false;
 
-    console.log('Single Issue details', this.issueDetails);
+    console.debug('Single Issue details', this.issueDetails);
     /*this.toaster.open({
       text: `openning ${this.issueDetails.title}`,
       type: 'dark',

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
     this.userService.loginService(userData).subscribe(
       (response) => {
-        console.log('login res:', response);
+        console.debug('login res:', response);
         this.loginResponse = `${response.message} --taking you to dashboard`;
         this.responseType = true;
 
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
   }
 
   public navigateToHome(): any {
-    console.log('navigation');
+    console.debug('navigation');
     this.router.navigate(['/home']);
   }
 }

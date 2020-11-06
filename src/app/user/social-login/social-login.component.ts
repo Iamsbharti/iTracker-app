@@ -40,7 +40,7 @@ export class SocialLoginComponent implements OnInit {
   ngOnInit(): void {}
 
   public googleSignIn(): void {
-    console.log('login with google');
+    console.debug('login with google');
     this.toast.info(
       'Please user different login methods- ClientId Error- OAuth Rejected',
       'Google Login',
@@ -52,10 +52,10 @@ export class SocialLoginComponent implements OnInit {
         this.user = userdata;
         this.name = userdata.name;
         this.email = userdata.email;
-        console.log('userdata-google', userdata);
+        console.debug('userdata-google', userdata);
       })
       .catch((error) => {
-        console.log('google login error', error);
+        console.debug('google login error', error);
       });
   }
 
@@ -66,13 +66,13 @@ export class SocialLoginComponent implements OnInit {
         this.user = userdata;
         this.name = userdata.name;
         this.email = userdata.email;
-        console.log('userdata -fb', userdata);
+        console.debug('userdata -fb', userdata);
         this.setUserInfo();
       });
   }
 
   public linkedInSignIn(): void {
-    console.log(LinkedinLoginProvider.PROVIDER_ID);
+    console.debug(LinkedinLoginProvider.PROVIDER_ID);
     this.toast.info(
       'Please user different login methods- OAuth Rejected by linkedin',
       'LinkenId Login',
@@ -84,10 +84,10 @@ export class SocialLoginComponent implements OnInit {
         this.user = userdata;
         this.name = userdata.name;
         this.email = userdata.email;
-        console.log('userdata -linked ini', userdata);
+        console.debug('userdata -linked ini', userdata);
       })
       .catch((error) => {
-        console.log('google login error', error);
+        console.debug('google login error', error);
       });
   }
 
@@ -106,7 +106,7 @@ export class SocialLoginComponent implements OnInit {
     };
     this.userService.verifySocialLoginService(userDetails).subscribe(
       (response) => {
-        console.log('login res:', response);
+        console.debug('login res:', response);
         this.responseMsg = `${response.message} --taking you to dashboard`;
         this.responseType = true;
 

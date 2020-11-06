@@ -23,7 +23,6 @@ export class EditorComponent implements OnInit {
   ngOnInit(): void {}
 
   public onChange(value): any {
-    console.debug('dshdg');
     this.changeEvent.emit(value);
   }
 }

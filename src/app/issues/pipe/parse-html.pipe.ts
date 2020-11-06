@@ -7,7 +7,7 @@ const htmlparser2 = require('htmlparser2');
 })
 export class ParseHtmlPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {
-    console.log('pipe');
+    console.debug('pipe');
   }
 
   transform(value: string): any {

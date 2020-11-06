@@ -17,11 +17,11 @@ export class SaveCancelComponent implements OnInit {
   ngOnInit(): void {}
 
   public save(): any {
-    console.log('save ops in save-cancel comp');
+    console.debug('save ops in save-cancel comp');
     this.saveOps.emit();
   }
   public cancel(): any {
-    console.log('cancel ops in save-cancel comp');
+    console.debug('cancel ops in save-cancel comp');
     this.cancelOps.emit();
   }
 }
